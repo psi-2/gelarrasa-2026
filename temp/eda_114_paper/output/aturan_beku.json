@@ -1,0 +1,12 @@
+{
+  "waktu": "2026-10-31 18:01:05",
+  "hash": {
+    "label_v6.py": "a1726047222ec46d160aebcc44b2e0dffb19cc6bec480101c2ffba9acec24392",
+    "kosakata_material.py": "f0eaf1f6157d1b5daacc3a7f4e9600f4d62f27406d9de206abc571171bd532e4"
+  },
+  "AMBANG_FOIL": 0.2,
+  "P_MIN": 0.8,
+  "AMBANG_VOC": 0.2,
+  "AMBANG_DMS": 0.3,
+  "catatan": "dibekukan sebelum label_folds_v6.csv ada"
+}

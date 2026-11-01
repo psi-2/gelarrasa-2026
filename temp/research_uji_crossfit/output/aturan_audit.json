@@ -1,0 +1,33 @@
+{
+  "koreksi_n": 3,
+  "buang_n": 14,
+  "paruh_1_n": 18,
+  "paruh_2_n": 17,
+  "paruh_iris": 16,
+  "paruh_jaccard": 0.8421,
+  "eomt_setuju_label_semua": 0.8665,
+  "koreksi_eomt_setuju_lama": 1.0,
+  "koreksi_eomt_setuju_alt": 0.0,
+  "buang_eomt_setuju_lama": 0.5,
+  "buang_eomt_setuju_alt": 0.4286,
+  "sel_langka_semua": 0.0166,
+  "koreksi_sel_langka": 0.0,
+  "koreksi_porsi_fam_lama_median": 0.223,
+  "buang_sel_langka": 0.0714,
+  "buang_porsi_fam_lama_median": 0.154,
+  "koreksi_porsi_fam_alt_median": 0.281,
+  "koreksi_alt_lebih_umum_di_fam": 1.0,
+  "citra_beda_mayoritas_group": 2,
+  "koreksi_dalam_group": 2,
+  "koreksi_ke_mayoritas_group": 2,
+  "sha1_deteksi": "eaafc4012ec1bc6bca7696d4752648b4473e97fb",
+  "konstanta": {
+    "LUPA": 0.2,
+    "R": 5,
+    "S": 3,
+    "N_FOLD": 5,
+    "TOLAK": 0.9,
+    "YAKIN": 0.9,
+    "SEED_DASAR": 2026
+  }
+}

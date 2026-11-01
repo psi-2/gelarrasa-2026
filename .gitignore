@@ -1,0 +1,16 @@
+# Local credentials and environment settings
+.env
+.env.*
+kaggle.json
+**/kaggle.json
+# Large generated artifacts that are not part of the portable experiment archive
+**/p22k_*.npy
+**/tokens.npy
+**/model_fold*.pt
+**/potongan_cnn/
+**/smoke_out/
+**/__pycache__/
+**/.ipynb_checkpoints/
+.cache/
+# Keep private test annotations out of the repository
+data/temuan/anotate.csv

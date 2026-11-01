@@ -1,0 +1,10 @@
+kelas,n,harapan_salah,q<.5,q<.9,tanpa_dukungan_luar
+glass,206,6.4,6,7,0
+paper,239,2.1,2,2,0
+electronic,186,0.1,0,0,18
+metal,240,4.9,4,5,8
+plastic,277,2.5,2,2,0
+cardboard,227,1.1,1,1,0
+textile,218,1.0,1,1,0
+foodwaste,244,0.2,0,0,0
+TOTAL,1837,18.3,16,18,26

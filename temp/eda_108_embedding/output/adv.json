@@ -1,0 +1,6 @@
+{
+  "auc_dinov3_pca128": 0.6375,
+  "auc_forensik_lr": 0.6118,
+  "auc_forensik_gbm": 0.7121,
+  "ess_train_bobot_iw": 1731.9
+}

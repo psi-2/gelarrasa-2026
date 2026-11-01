@@ -1,0 +1,19 @@
+{
+  "test_setuju_vit_cnn": 0.9292,
+  "test_beda_vit_cnn": 34,
+  "test_setuju_gabung_finetune": 0.9542,
+  "test_setuju_vit_finetune": 0.9479,
+  "test_setuju_cnn_finetune": 0.9417,
+  "distribusi_test_gabung": {
+    "glass": 56,
+    "paper": 67,
+    "electronic": 54,
+    "metal": 69,
+    "plastic": 52,
+    "cardboard": 57,
+    "textile": 63,
+    "foodwaste": 62
+  },
+  "suhu_vit": 0.332,
+  "suhu_cnn": 0.467
+}

@@ -1,0 +1,14 @@
+{
+  "convnext_l": {
+    "detik": 72.7,
+    "vram_gib": 1.92
+  },
+  "swinv2_l": {
+    "detik": 58.0,
+    "vram_gib": 1.85
+  },
+  "beitv2_l": {
+    "detik": 63.1,
+    "vram_gib": 2.07
+  }
+}

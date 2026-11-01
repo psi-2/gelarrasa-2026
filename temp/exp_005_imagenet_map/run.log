@@ -1,0 +1,320 @@
+﻿System.Management.Automation.RemoteException
+Loading weights:   0%|          | 0/380 [00:00<?, ?it/s]
+Loading weights:   1%|          | 2/380 [00:02<06:30,  1.03s/it]
+Loading weights:  13%|█▎        | 48/380 [00:02<00:12, 25.75it/s]
+Loading weights:  14%|█▍        | 55/380 [00:02<00:13, 24.50it/s]
+Loading weights:  16%|█▌        | 60/380 [00:04<00:30, 10.49it/s]
+Loading weights:  18%|█▊        | 70/380 [00:05<00:27, 11.09it/s]
+Loading weights:  19%|█▉        | 74/380 [00:07<00:42,  7.28it/s]
+Loading weights:  22%|██▏       | 82/380 [00:10<01:08,  4.37it/s]
+Loading weights:  22%|██▏       | 84/380 [00:13<01:32,  3.20it/s]
+Loading weights:  24%|██▍       | 92/380 [00:13<01:01,  4.66it/s]
+Loading weights:  25%|██▍       | 94/380 [00:18<02:12,  2.15it/s]
+Loading weights:  27%|██▋       | 102/380 [00:22<02:13,  2.09it/s]
+Loading weights:  27%|██▋       | 104/380 [00:23<02:11,  2.10it/s]
+Loading weights:  30%|███       | 114/380 [00:24<01:20,  3.28it/s]
+Loading weights:  32%|███▏      | 122/380 [00:28<01:44,  2.47it/s]
+Loading weights:  33%|███▎      | 124/380 [00:29<01:40,  2.55it/s]
+Loading weights:  35%|███▍      | 132/380 [00:30<01:09,  3.56it/s]
+Loading weights:  35%|███▌      | 134/380 [00:32<01:38,  2.51it/s]
+Loading weights:  37%|███▋      | 142/380 [00:33<01:07,  3.54it/s]
+Loading weights:  40%|████      | 152/380 [00:34<00:42,  5.33it/s]
+Loading weights:  41%|████      | 154/380 [00:36<01:07,  3.34it/s]
+Loading weights:  43%|████▎     | 162/380 [00:37<00:44,  4.90it/s]
+Loading weights:  45%|████▌     | 172/380 [00:39<00:47,  4.42it/s]
+Loading weights:  46%|████▌     | 174/380 [00:42<01:06,  3.11it/s]
+Loading weights:  48%|████▊     | 182/380 [00:44<01:05,  3.00it/s]
+Loading weights:  51%|█████     | 192/380 [00:47<00:59,  3.17it/s]
+Loading weights:  51%|█████     | 194/380 [00:48<00:56,  3.31it/s]
+Loading weights:  53%|█████▎    | 202/380 [00:51<01:00,  2.94it/s]
+Loading weights:  56%|█████▌    | 212/380 [00:56<01:08,  2.46it/s]
+Loading weights:  59%|█████▉    | 224/380 [00:59<00:52,  2.98it/s]
+Loading weights:  61%|██████    | 232/380 [00:59<00:38,  3.80it/s]
+Loading weights:  62%|██████▏   | 234/380 [01:03<00:57,  2.52it/s]
+Loading weights:  64%|██████▎   | 242/380 [01:09<01:13,  1.89it/s]
+Loading weights:  67%|██████▋   | 254/380 [01:11<00:45,  2.77it/s]
+Loading weights:  69%|██████▉   | 262/380 [01:12<00:34,  3.43it/s]
+Loading weights:  69%|██████▉   | 264/380 [01:17<00:57,  2.00it/s]
+Loading weights:  74%|███████▍  | 282/380 [01:18<00:24,  3.94it/s]
+Loading weights:  75%|███████▍  | 284/380 [01:22<00:38,  2.50it/s]
+Loading weights:  77%|███████▋  | 292/380 [01:24<00:31,  2.80it/s]
+Loading weights:  77%|███████▋  | 294/380 [01:24<00:28,  2.97it/s]
+Loading weights:  79%|███████▉  | 302/380 [01:25<00:19,  4.06it/s]
+Loading weights:  80%|████████  | 304/380 [01:28<00:31,  2.45it/s]
+Loading weights:  82%|████████▏ | 312/380 [01:30<00:24,  2.77it/s]
+Loading weights:  83%|████████▎ | 314/380 [01:36<00:41,  1.59it/s]
+Loading weights:  88%|████████▊ | 334/380 [01:44<00:22,  2.03it/s]
+Loading weights:  90%|█████████ | 342/380 [01:44<00:13,  2.71it/s]
+Loading weights:  91%|█████████ | 344/380 [01:46<00:15,  2.33it/s]
+Loading weights:  92%|█████████▏| 348/380 [01:49<00:15,  2.11it/s]
+Loading weights:  94%|█████████▎| 356/380 [02:02<00:21,  1.12it/s]
+Loading weights:  94%|█████████▍| 358/380 [02:05<00:21,  1.04it/s]
+Loading weights:  99%|█████████▉| 376/380 [02:10<00:02,  1.84it/s]
+Loading weights: 100%|██████████| 380/380 [02:10<00:00,  2.92it/s]
+kelas terpetakan: 231 dari 1000 | per kategori: {'glass': 11, 'paper': 9, 'electronic': 51, 'metal': 39, 'plastic': 12, 'cardboard': 3, 'textile': 59, 'foodwaste': 47}
+test selesai, 78s
+train selesai, 266s
+{
+  "test": {
+    "distribusi": {
+      "glass": 30,
+      "paper": 39,
+      "electronic": 71,
+      "metal": 58,
+      "plastic": 126,
+      "cardboard": 47,
+      "textile": 58,
+      "foodwaste": 51
+    },
+    "cakupan_median": 0.8311,
+    "porsi_cakupan_lt_0.2": 0.0604,
+    "porsi_top1_tak_terpetakan": 0.1646,
+    "keyakinan_rata": 0.7824,
+    "porsi_keyakinan_ge_0.9": 0.4854,
+    "top1_tak_terpetakan": {
+      "ashcan": 9,
+      "electric guitar": 5,
+      "eggnog": 5,
+      "restaurant": 4,
+      "oxygen mask": 4,
+      "mailbag": 4,
+      "window screen": 4,
+      "mousetrap": 3,
+      "shower cap": 3,
+      "upright": 2,
+      "spotlight": 2,
+      "nipple": 2,
+      "tobacco shop": 2,
+      "hamper": 2,
+      "cup": 2,
+      "wardrobe": 1,
+      "vending machine": 1,
+      "spider web": 1,
+      "grocery store": 1,
+      "hen-of-the-woods": 1,
+      "bulletproof vest": 1,
+      "warplane": 1,
+      "barrel": 1,
+      "diaper": 1,
+      "red wine": 1,
+      "puck": 1,
+      "jigsaw puzzle": 1,
+      "chainlink fence": 1,
+      "mixing bowl": 1,
+      "saltshaker": 1
+    },
+    "top1_per_kategori": {
+      "glass": {
+        "beer bottle": 5,
+        "wine bottle": 5,
+        "beer glass": 4,
+        "goblet": 3,
+        "beaker": 2,
+        "cup": 1,
+        "red wine": 1,
+        "eggnog": 1
+      },
+      "paper": {
+        "envelope": 11,
+        "paper towel": 8,
+        "mailbag": 4,
+        "crossword puzzle": 4,
+        "binder": 4,
+        "book jacket": 2,
+        "shower cap": 1,
+        "tobacco shop": 1
+      },
+      "electronic": {
+        "modem": 9,
+        "notebook": 7,
+        "mouse": 6,
+        "electric guitar": 5,
+        "washer": 4,
+        "projector": 3,
+        "space bar": 3,
+        "dishwasher": 3
+      },
+      "metal": {
+        "can opener": 19,
+        "ashcan": 4,
+        "hair spray": 4,
+        "lighter": 3,
+        "hook": 3,
+        "nail": 3,
+        "cocktail shaker": 2,
+        "oil filter": 2
+      },
+      "plastic": {
+        "water bottle": 37,
+        "pop bottle": 18,
+        "packet": 16,
+        "plastic bag": 15,
+        "tray": 15,
+        "water jug": 5,
+        "pill bottle": 4,
+        "ashcan": 3
+      },
+      "cardboard": {
+        "carton": 43,
+        "crate": 2,
+        "tobacco shop": 1,
+        "mousetrap": 1
+      },
+      "textile": {
+        "jean": 12,
+        "wool": 11,
+        "sweatshirt": 5,
+        "jersey": 4,
+        "pajama": 2,
+        "velvet": 2,
+        "swimming trunks": 2,
+        "maillot": 2
+      },
+      "foodwaste": {
+        "plate": 23,
+        "Granny Smith": 6,
+        "eggnog": 4,
+        "tray": 3,
+        "head cabbage": 2,
+        "pizza": 1,
+        "mashed potato": 1,
+        "mixing bowl": 1
+      }
+    },
+    "hash": "ccb57004dcca3e75"
+  },
+  "train": {
+    "distribusi": {
+      "glass": 142,
+      "paper": 148,
+      "electronic": 219,
+      "metal": 189,
+      "plastic": 624,
+      "cardboard": 202,
+      "textile": 214,
+      "foodwaste": 182
+    },
+    "cakupan_median": 0.8556,
+    "porsi_cakupan_lt_0.2": 0.0547,
+    "porsi_top1_tak_terpetakan": 0.1391,
+    "keyakinan_rata": 0.7883,
+    "porsi_keyakinan_ge_0.9": 0.4995,
+    "top1_tak_terpetakan": {
+      "ashcan": 47,
+      "restaurant": 15,
+      "spotlight": 13,
+      "nipple": 10,
+      "Band Aid": 9,
+      "cup": 8,
+      "oxygen mask": 7,
+      "coil": 6,
+      "eggnog": 5,
+      "mousetrap": 5,
+      "shower curtain": 5,
+      "hen-of-the-woods": 5,
+      "jigsaw puzzle": 5,
+      "rubber eraser": 4,
+      "mailbag": 4,
+      "window screen": 4,
+      "garbage truck": 4,
+      "hair slide": 3,
+      "earthstar": 3,
+      "harmonica": 3,
+      "barrel": 3,
+      "trilobite": 3,
+      "lumbermill": 3,
+      "dining table": 3,
+      "pencil sharpener": 3,
+      "shower cap": 3,
+      "thimble": 3,
+      "bow": 3,
+      "bulletproof vest": 3,
+      "hay": 2
+    },
+    "top1_per_kategori": {
+      "glass": {
+        "beer bottle": 59,
+        "wine bottle": 18,
+        "goblet": 11,
+        "whiskey jug": 8,
+        "cup": 6,
+        "beer glass": 6,
+        "Petri dish": 4,
+        "vase": 4
+      },
+      "paper": {
+        "envelope": 66,
+        "binder": 11,
+        "crossword puzzle": 11,
+        "toilet tissue": 11,
+        "paper towel": 8,
+        "book jacket": 5,
+        "web site": 5,
+        "packet": 3
+      },
+      "electronic": {
+        "modem": 37,
+        "cellular telephone": 18,
+        "iron": 13,
+        "remote control": 11,
+        "electric fan": 10,
+        "hand-held computer": 10,
+        "spotlight": 10,
+        "dial telephone": 9
+      },
+      "metal": {
+        "can opener": 67,
+        "ashcan": 11,
+        "bucket": 10,
+        "oil filter": 9,
+        "cocktail shaker": 7,
+        "bottlecap": 6,
+        "milk can": 5,
+        "lighter": 5
+      },
+      "plastic": {
+        "packet": 147,
+        "water bottle": 117,
+        "plastic bag": 112,
+        "pop bottle": 67,
+        "tray": 51,
+        "pill bottle": 28,
+        "water jug": 16,
+        "ashcan": 12
+      },
+      "cardboard": {
+        "carton": 180,
+        "ashcan": 4,
+        "crate": 3,
+        "lumbermill": 3,
+        "moving van": 2,
+        "Band Aid": 2,
+        "mailbag": 1,
+        "window screen": 1
+      },
+      "textile": {
+        "jersey": 57,
+        "jean": 19,
+        "wool": 18,
+        "pajama": 17,
+        "velvet": 16,
+        "sweatshirt": 11,
+        "swimming trunks": 10,
+        "handkerchief": 6
+      },
+      "foodwaste": {
+        "plate": 79,
+        "consomme": 9,
+        "Granny Smith": 8,
+        "fig": 7,
+        "banana": 7,
+        "ashcan": 7,
+        "restaurant": 6,
+        "French loaf": 5
+      }
+    },
+    "hash": "05f979be59c05e62"
+  },
+  "vram_puncak_gib": 4.53,
+  "detik": 266.1
+}

@@ -1,0 +1,63 @@
+{
+  "skor": {
+    "EXP-005 ConvNeXtV2 pemetaan": {
+      "macro_f1": 0.7113,
+      "accuracy": 0.7104,
+      "benar": 341,
+      "macro_f1_ci95": [
+        0.6697,
+        0.7491
+      ]
+    },
+    "EXP-006 DINOv3 label cluster": {
+      "macro_f1": 0.8574,
+      "accuracy": 0.8542,
+      "benar": 410,
+      "macro_f1_ci95": [
+        0.8254,
+        0.8855
+      ]
+    },
+    "ensemble_8": {
+      "macro_f1": 0.9771,
+      "accuracy": 0.9771,
+      "benar": 469,
+      "macro_f1_ci95": [
+        0.963,
+        0.9899
+      ]
+    }
+  },
+  "per_kelas": {
+    "EXP-005 ConvNeXtV2 pemetaan": {
+      "glass": 0.5778,
+      "paper": 0.5714,
+      "electronic": 0.8244,
+      "metal": 0.678,
+      "plastic": 0.6022,
+      "cardboard": 0.8519,
+      "textile": 0.8644,
+      "foodwaste": 0.7207
+    },
+    "EXP-006 DINOv3 label cluster": {
+      "glass": 0.7843,
+      "paper": 0.6804,
+      "electronic": 0.9298,
+      "metal": 0.9134,
+      "plastic": 0.6867,
+      "cardboard": 0.95,
+      "textile": 0.9573,
+      "foodwaste": 0.9573
+    },
+    "ensemble_8": {
+      "glass": 0.958,
+      "paper": 0.9587,
+      "electronic": 0.9916,
+      "metal": 0.9836,
+      "plastic": 0.9744,
+      "cardboard": 0.9672,
+      "textile": 0.9833,
+      "foodwaste": 1.0
+    }
+  }
+}

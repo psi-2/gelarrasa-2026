@@ -1,0 +1,108 @@
+{
+  "train": {
+    "jumlah": 1920,
+    "subfolder": [],
+    "ekstensi": {
+      ".jpg": 1816,
+      ".jpeg": 104
+    },
+    "panjang_nama": {
+      "4": 1920
+    },
+    "id_min": 1,
+    "id_max": 1920,
+    "id_hilang": [],
+    "stem_duplikat": [],
+    "format_mode": {
+      "JPEG/RGB": 1918,
+      "PNG/P": 1,
+      "PNG/RGBA": 1
+    },
+    "gagal_buka": [],
+    "lebar": {
+      "count": 1920.0,
+      "mean": 549.2,
+      "std": 259.5,
+      "min": 100.0,
+      "25%": 416.0,
+      "50%": 509.0,
+      "75%": 640.0,
+      "max": 2605.0
+    },
+    "tinggi": {
+      "count": 1920.0,
+      "mean": 545.2,
+      "std": 273.3,
+      "min": 100.0,
+      "25%": 416.0,
+      "50%": 485.5,
+      "75%": 640.0,
+      "max": 4032.0
+    }
+  },
+  "test": {
+    "jumlah": 480,
+    "subfolder": [],
+    "ekstensi": {
+      ".jpg": 477,
+      ".png": 1,
+      ".jpeg": 2
+    },
+    "panjang_nama": {
+      "3": 480
+    },
+    "id_min": 1,
+    "id_max": 480,
+    "id_hilang": [],
+    "stem_duplikat": [],
+    "format_mode": {
+      "JPEG/RGB": 479,
+      "PNG/RGB": 1
+    },
+    "gagal_buka": [],
+    "lebar": {
+      "count": 480.0,
+      "mean": 500.3,
+      "std": 162.5,
+      "min": 129.0,
+      "25%": 416.0,
+      "50%": 416.0,
+      "75%": 640.0,
+      "max": 1600.0
+    },
+    "tinggi": {
+      "count": 480.0,
+      "mean": 479.8,
+      "std": 136.3,
+      "min": 168.0,
+      "25%": 416.0,
+      "50%": 416.0,
+      "75%": 640.0,
+      "max": 1167.0
+    }
+  },
+  "sample_submission": {
+    "baris": 480,
+    "kolom": [
+      "image_id",
+      "waste_category"
+    ],
+    "panjang_id": {
+      "3": 480
+    },
+    "id_cocok_test": true,
+    "distribusi_kelas": {
+      "electronic": 60,
+      "metal": 60,
+      "cardboard": 60,
+      "glass": 60,
+      "foodwaste": 60,
+      "plastic": 60,
+      "textile": 60,
+      "paper": 60
+    }
+  },
+  "berkas_non_citra_di_data": [
+    "data\\SampleSubmission_DSC.csv"
+  ]
+}

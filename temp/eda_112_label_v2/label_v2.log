@@ -1,0 +1,55 @@
+﻿group identik dengan berkas lama: 1626
+LR cross-fit setuju label lama: 0.9883
+prior DS: {'glass': 0.108, 'paper': 0.138, 'electronic': 0.103, 'metal': 0.134, 'plastic': 0.156, 'cardboard': 0.119, 'textile': 0.113, 'foodwaste': 0.13}
+diagonal matriks per annotator:
+            c_in1k  c_in22k  c_dms  b_in22k  b_dms   e_lr
+glass        0.653    0.716  0.484    0.832  0.770  0.950
+paper        0.587    0.705  0.565    0.893  0.723  0.973
+electronic   0.890    0.851  0.004    0.851  0.004  0.917
+metal        0.689    0.791  0.411    0.841  0.702  0.953
+plastic      0.853    0.369  0.523    0.442  0.815  0.955
+cardboard    0.829    0.804  0.696    0.936  0.843  0.968
+textile      0.893    0.920  0.907    0.951  0.964  0.968
+foodwaste    0.765    0.912  0.539    0.943  0.663  0.968
+
+keputusan: {'tetap': 1623, 'tambah': 211, 'kosong': 83, 'koreksi': 3}
+koreksi lama -> baru:
+akhir  cardboard  foodwaste  paper
+label                             
+glass          0          0      1
+metal          0          1      0
+paper          1          0      0
+koreksi per keluarga: {'F_q75_4x3': 1, 'F_q2527_400x': 1, 'F_416': 1}
+tambah per kelas: {'glass': 40, 'paper': 23, 'electronic': 7, 'metal': 38, 'plastic': 56, 'cardboard': 21, 'textile': 9, 'foodwaste': 17}
+tambah per keluarga: {'F_416': 85, 'F_640': 43, 'F_q75_4x3': 32, 'F_lain_web': 22, 'F_q74fb': 16, 'F_q75_lain': 10, 'F_q4885_besar': 3}
+kosong: 83 per keluarga {'F_416': 37, 'F_640': 16, 'F_lain_web': 12, 'F_q75_4x3': 9, 'F_q74fb': 7, 'F_q75_lain': 2}
+
+cek EXP-009 pada tambah: setuju 0.9052 n 211
+cek EXP-009 pada koreksi di hold-out: n 0 setuju baru 0 setuju lama 0
+
+v2: 1837 label, fold 0: 388 fold 1: 1449 | fold 0 baru: 0
+per kelas v2: {'glass': 206, 'paper': 239, 'electronic': 186, 'metal': 240, 'plastic': 277, 'cardboard': 227, 'textile': 218, 'foodwaste': 244}
+
+perkiraan label masih berpotensi salah:
+     kelas    n  harapan_salah  q<.5  q<.9  tanpa_dukungan_luar
+     glass  206            6.4     6     7                    0
+     paper  239            2.1     2     2                    0
+electronic  186            0.1     0     0                   18
+     metal  240            4.9     4     5                    8
+   plastic  277            2.5     2     2                    0
+ cardboard  227            1.1     1     1                    0
+   textile  218            1.0     1     1                    0
+ foodwaste  244            0.2     0     0                    0
+     TOTAL 1837           18.3    16    18                   26
+
+test, pembandingan saja. DS: {'glass': 59, 'paper': 67, 'electronic': 54, 'metal': 63, 'plastic': 57, 'cardboard': 57, 'textile': 61, 'foodwaste': 62} setuju EXP-009 0.9521
+beda dari EXP-009 dengan q>=.9: 10
+ds         foodwaste  glass  metal  paper  plastic
+e9                                                
+cardboard          0      0      0      2        1
+glass              0      0      1      0        3
+metal              0      1      0      0        0
+paper              0      0      0      0        1
+plastic            1      0      0      0        0
+
+sha256 aturan: 239142f667e2615f3d557036f99306c19887a38fb4fb43659645e23c7e80266b

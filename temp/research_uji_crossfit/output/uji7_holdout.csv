@@ -1,0 +1,5 @@
+jenis,laju,vit_kotor,gabung_kotor,vit_aturan,gabung_aturan
+bersih,0.0,0.9899,0.9859,0.9869,0.9836
+bingung,0.05,0.986,0.9836,0.9877,0.983
+cluster,0.05,0.9634,0.9667,0.9777,0.973
+cluster,0.1,0.9191,0.926,0.9758,0.9744

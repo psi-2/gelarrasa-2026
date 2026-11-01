@@ -1,0 +1,60 @@
+RUN cell 15 [0s]: import json
+RUN cell 17 [9s]: def seed_everything(seed: int = 42, warn_only: bool = True):
+RUN cell 19 [9s]: class Settings:
+RUN cell 21 [9s]: if CFG.SMOKE_TEST:
+RUN cell 23 [9s]: train_files = sorted((CFG.DATA_DIR / 'train').iterdir())
+Train: 640  Test: 32
+RUN cell 26 [9s]: ARCH = {'vit': ('timm/vit_large_patch16_dinov3.lvd1689m', 'vit_large_patch16_din
+RUN cell 28 [9s]: @torch.no_grad()
+embedding (672, 1024) (672, 1536)
+RUN cell 30 [598s]: class CitraIn1k(Dataset):
+Loading weights:   0%|          | 0/380 [00:00<?, ?it/s]Loading weights:   1%|          | 2/380 [00:00<02:37,  2.40it/s]Loading weights:  11%|█         | 40/380 [00:01<00:08, 41.68it/s]Loading weights:  13%|█▎        | 48/380 [00:03<00:25, 13.11it/s]Loading weights:  14%|█▎        | 52/380 [00:03<00:24, 13.59it/s]Loading weights:  15%|█▌        | 58/380 [00:04<00:25, 12.77it/s]Loading weights:  16%|█▌        | 61/380 [00:04<00:24, 12.88it/s]Loading weights:  18%|█▊        | 68/380 [00:04<00:23, 13.44it/s]Loading weights:  19%|█▉        | 74/380 [00:06<00:34,  8.80it/s]Loading weights:  22%|██▏       | 82/380 [00:07<00:36,  8.18it/s]Loading weights:  22%|██▏       | 84/380 [00:09<01:03,  4.63it/s]Loading weights:  25%|██▍       | 94/380 [00:11<01:09,  4.12it/s]Loading weights:  27%|██▋       | 102/380 [00:15<01:32,  3.02it/s]Loading weights:  29%|██▉       | 112/380 [00:16<01:02,  4.26it/s]Loading weights:  30%|███       | 114/380 [00:16<00:58,  4.53it/s]Loading weights:  32%|███▏      | 122/380 [00:22<01:45,  2.44it/s]Loading weights:  37%|███▋      | 142/380 [00:24<00:51,  4.65it/s]Loading weights:  38%|███▊      | 144/380 [00:30<01:47,  2.20it/s]Loading weights:  41%|████      | 154/380 [00:31<01:12,  3.11it/s]Loading weights:  43%|████▎     | 164/380 [00:34<01:04,  3.32it/s]Loading weights:  46%|████▌     | 174/380 [00:40<01:21,  2.51it/s]Loading weights:  48%|████▊     | 182/380 [00:41<01:03,  3.09it/s]Loading weights:  48%|████▊     | 184/380 [00:43<01:17,  2.54it/s]Loading weights:  51%|█████     | 192/380 [00:43<00:50,  3.70it/s]Loading weights:  51%|█████     | 194/380 [00:46<01:09,  2.67it/s]Loading weights:  54%|█████▎    | 204/380 [00:46<00:42,  4.16it/s]Loading weights:  56%|█████▌    | 212/380 [00:47<00:30,  5.51it/s]Loading weights:  56%|█████▋    | 214/380 [00:52<01:14,  2.22it/s]Loading weights:  62%|██████▏   | 234/380 [00:56<00:40,  3.61it/s]Loading weights:  64%|██████▎   | 242/380 [00:56<00:29,  4.62it/s]Loading weights:  64%|██████▍   | 244/380 [00:59<00:46,  2.93it/s]Loading weights:  67%|██████▋   | 254/380 [01:05<00:53,  2.37it/s]Loading weights:  69%|██████▉   | 264/380 [01:05<00:34,  3.35it/s]Loading weights:  72%|███████▏  | 272/380 [01:09<00:35,  3.02it/s]Loading weights:  72%|███████▏  | 274/380 [01:19<01:22,  1.28it/s]Loading weights:  80%|████████  | 304/380 [01:22<00:24,  3.06it/s]Loading weights:  82%|████████▏ | 312/380 [01:22<00:18,  3.70it/s]Loading weights:  83%|████████▎ | 314/380 [01:24<00:20,  3.22it/s]Loading weights:  85%|████████▍ | 322/380 [01:25<00:15,  3.78it/s]Loading weights:  85%|████████▌ | 324/380 [01:31<00:26,  2.08it/s]Loading weights:  88%|████████▊ | 334/380 [01:35<00:20,  2.22it/s]Loading weights:  90%|█████████ | 342/380 [01:35<00:12,  3.13it/s]Loading weights:  91%|█████████ | 344/380 [01:36<00:12,  2.82it/s]Loading weights:  92%|█████████▏| 348/380 [01:39<00:13,  2.45it/s]Loading weights:  94%|█████████▎| 356/380 [01:52<00:21,  1.14it/s]Loading weights:  97%|█████████▋| 368/380 [01:52<00:05,  2.04it/s]Loading weights:  99%|█████████▉| 376/380 [01:59<00:02,  1.60it/s]Loading weights: 100%|██████████| 380/380 [01:59<00:00,  3.17it/s]
+ImageNet-1k (672, 1000)
+RUN cell 32 [779s]: @torch.no_grad()
+{'convnext_l': (672, 21841), 'swinv2_l': (672, 21841), 'beitv2_l': (672, 21841)}
+RUN cell 34 [819s]: DMS46 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 
+E:\datsci\conda_envs\kaggle-py311-d\Lib\site-packages\torch\jit\_serialization.py:176: FutureWarning: `torch.jit.load` is deprecated. Please switch to `torch.export`.
+  warnings.warn(
+DMS46 (672, 46)
+RUN cell 38 [849s]: PETA_IN1K = {
+porsi massa train: {'glass': 0.068, 'paper': 0.079, 'electronic': 0.105, 'metal': 0.073, 'plastic': 0.322, 'cardboard': 0.116, 'textile': 0.134, 'foodwaste': 0.102}
+RUN cell 40 [849s]: pca = PCA(CFG.PCA_DIM, random_state=42).fit(E_tr)
+run 4
+suara train >= 0,75: 538
+RUN cell 42 [850s]: def phash_dari(a):
+group 531 terbesar 18 citra dalam group > 1: 151
+RUN cell 44 [851s]: y_t1 = V_in1k.argmax(1)
+label t1: 538 {'glass': 126, 'paper': 125, 'electronic': 95, 'metal': 0, 'plastic': 0, 'cardboard': 72, 'textile': 60, 'foodwaste': 60}
+RUN cell 48 [852s]: DMS_PETA = {'Cardboard': 'cardboard', 'Carpet/rug': 'textile', 'Fabric/cloth': '
+kelas 22k terpetakan: 3091
+RUN cell 50 [852s]: def lengkap(p, kelas):
+prediksi DS: {'glass': 155, 'paper': 151, 'electronic': 1, 'metal': 0, 'plastic': 126, 'cardboard': 79, 'textile': 62, 'foodwaste': 66}
+RUN cell 52 [852s]: def dukungan(r, c, tanpa_dms):
+keputusan: {'tetap': 538, 'kosong': 69, 'tambah': 33} | label v2: 571
+RUN cell 56 [852s]: def lipat(y_lab, grp_lab, n, seed):
+RUN cell 58 [852s]: y_lab = np.full(nt, -1)
+koreksi 0 | buang 48 | bersih 490
+RUN cell 60 [852s]: isisa = np.where(y_lab < 0)[0]
+isian kandidat 0 | diterima 0 | label v3: 490
+RUN cell 62 [852s]: v2i, v3i = v2.set_index('image_id'), v3.set_index('image_id')
+label v4: 523 {'glass': 136, 'paper': 132, 'electronic': 58, 'metal': 0, 'plastic': 0, 'cardboard': 74, 'textile': 61, 'foodwaste': 62}
+RUN cell 66 [852s]: GRUP_LISTRIK = {
+kena 11 | diubah 5 | baru 0 | label v5: 523
+RUN cell 70 [852s]: def bobot_kelas(y):
+RUN cell 71 [852s]: pt_vit5, ps_vit5 = latih('vit', v5, 'vit_v5')
+E:\datsci\conda_envs\kaggle-py311-d\Lib\site-packages\torch\autograd\graph.py:1072: UserWarning: Memory Efficient attention defaults to a non-deterministic algorithm. To explicitly enable determinism call torch.use_deterministic_algorithms(True, warn_only=False). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\aten\src\ATen\native\transformers\cuda\attention_backward.cu:912.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+vit_v5 epoch 1/1 loss 2.4566 t 36s vram 10.7GiB
+cnn_v5 epoch 1/1 loss 1.9446 t 29s vram 7.9GiB
+tahap pertama selesai (32, 8) (32, 8)
+RUN cell 74 [934s]: GRUP_MATERIAL = {
+cell-74:82: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+foil 4 | isian R2 0 | label v6: 524 {'glass': 131, 'paper': 129, 'electronic': 63, 'metal': 4, 'plastic': 0, 'cardboard': 74, 'textile': 61, 'foodwaste': 62}
+RUN cell 78 [934s]: pt_vit, _ = latih('vit', v6, 'vit_v6')
+vit_v6 epoch 1/1 loss 2.3250 t 36s vram 10.8GiB
+cnn_v6 epoch 1/1 loss 1.8189 t 29s vram 7.9GiB
+training final selesai (32, 8) (32, 8)
+RUN cell 81 [1015s]: test_pred = (pt_vit + pt_cnn) / 2
+{'glass': 11, 'paper': 4, 'electronic': 3, 'metal': 0, 'plastic': 1, 'cardboard': 4, 'textile': 4, 'foodwaste': 5}
+setuju ViT lawan CNN: 0.875
+SMOKE TEST LULUS 1015 detik

@@ -1,0 +1,10 @@
+label 1852 | test 480 | sisa 68 | cfg {'lr': 0.0001, 'head_mult': 10.0, 'layer_decay': 0.75, 'wd': 0.05, 'warmup_epoch': 1, 'label_smoothing': 0.1, 'drop_path': 0.1, 'bs': 8, 'accum': 2}
+fold 0 epoch 1/8 loss 1.0785 val 0.9792 t 134s vram 10.2GiB
+fold 0 epoch 2/8 loss 0.6307 val 1.0000 t 244s vram 10.2GiB
+fold 0 epoch 3/8 loss 0.5771 val 0.9974 t 354s vram 10.2GiB
+fold 0 epoch 4/8 loss 0.5384 val 1.0000 t 464s vram 10.2GiB
+fold 0 epoch 5/8 loss 0.524 val 1.0000 t 574s vram 10.2GiB
+fold 0 epoch 6/8 loss 0.4959 val 1.0000 t 684s vram 10.2GiB
+fold 0 epoch 7/8 loss 0.4921 val 1.0000 t 794s vram 10.2GiB
+fold 0 epoch 8/8 loss 0.4927 val 1.0000 t 903s vram 10.2GiB
+fold 0 selesai val 1.0 hash 537091f6817ccefd

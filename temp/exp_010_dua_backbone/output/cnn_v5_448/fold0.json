@@ -1,0 +1,59 @@
+{
+  "fold": 0,
+  "val_acc": 1.0,
+  "per_kelas": {
+    "glass": 1.0,
+    "paper": 1.0,
+    "electronic": 1.0,
+    "metal": 1.0,
+    "plastic": 1.0,
+    "cardboard": 1.0,
+    "textile": 1.0,
+    "foodwaste": 1.0
+  },
+  "riwayat": [
+    {
+      "epoch": 1,
+      "loss": 1.0785,
+      "val_acc": 0.9792
+    },
+    {
+      "epoch": 2,
+      "loss": 0.6307,
+      "val_acc": 1.0
+    },
+    {
+      "epoch": 3,
+      "loss": 0.5771,
+      "val_acc": 0.9974
+    },
+    {
+      "epoch": 4,
+      "loss": 0.5384,
+      "val_acc": 1.0
+    },
+    {
+      "epoch": 5,
+      "loss": 0.524,
+      "val_acc": 1.0
+    },
+    {
+      "epoch": 6,
+      "loss": 0.4959,
+      "val_acc": 1.0
+    },
+    {
+      "epoch": 7,
+      "loss": 0.4921,
+      "val_acc": 1.0
+    },
+    {
+      "epoch": 8,
+      "loss": 0.4927,
+      "val_acc": 1.0
+    }
+  ],
+  "detik": 949.6,
+  "vram_gib": 10.25,
+  "hash_test": "537091f6817ccefd"
+}

@@ -1,0 +1,8 @@
+{
+  "beda_vit_cnn_lr": 34,
+  "beda_finetune_vit_lr": 25,
+  "beda_finetune_cnn_lr": 28,
+  "beda_finetune_fusi_lr": 23,
+  "tiga_sepakat": 440,
+  "tidak_sepakat": 40
+}

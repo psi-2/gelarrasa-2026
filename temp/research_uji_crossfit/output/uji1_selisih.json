@@ -1,0 +1,62 @@
+{
+  "knn": {
+    "selisih_semua": -0.00074,
+    "ci_semua": [
+      -0.00654,
+      0.00522
+    ],
+    "selisih_pinggir": -0.00997,
+    "ci_pinggir": [
+      -0.03169,
+      0.01152
+    ]
+  },
+  "spreading": {
+    "selisih_semua": -0.00886,
+    "ci_semua": [
+      -0.01712,
+      -0.00082
+    ],
+    "selisih_pinggir": -0.04567,
+    "ci_pinggir": [
+      -0.07797,
+      -0.01522
+    ]
+  },
+  "lr_soft": {
+    "selisih_semua": -0.00308,
+    "ci_semua": [
+      -0.00594,
+      -0.0006
+    ],
+    "selisih_pinggir": -0.01312,
+    "ci_pinggir": [
+      -0.02473,
+      -0.00254
+    ]
+  },
+  "lr_soft_sisa": {
+    "selisih_semua": -0.00443,
+    "ci_semua": [
+      -0.00882,
+      -0.00075
+    ],
+    "selisih_pinggir": -0.01417,
+    "ci_pinggir": [
+      -0.03129,
+      -0.0
+    ]
+  },
+  "proden_sisa": {
+    "selisih_semua": -0.00861,
+    "ci_semua": [
+      -0.01381,
+      -0.00415
+    ],
+    "selisih_pinggir": -0.0336,
+    "ci_pinggir": [
+      -0.05373,
+      -0.01637
+    ]
+  }
+}

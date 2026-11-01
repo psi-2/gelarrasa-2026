@@ -1,0 +1,30 @@
+﻿convnext_l kelas 21841 ukuran 288 mean (0.485, 0.456, 0.406)
+convnext_l test (480, 21841) maks rata 0.2689
+convnext_l train (1920, 21841) maks rata 0.2527
+swinv2_l kelas 21841 ukuran 192 mean (0.485, 0.456, 0.406)
+swinv2_l test (480, 21841) maks rata 0.3164
+swinv2_l train (1920, 21841) maks rata 0.3231
+beitv2_l kelas 21841 ukuran 224 mean (0.485, 0.456, 0.406)
+beitv2_l test (480, 21841) maks rata 0.3516
+beitv2_l train (1920, 21841) maks rata 0.37
+python.exe : E:\datsci\conda_envs\kaggle-py311-d\Lib\site-packages\torch\jit\_serialization.py:176: FutureWarning: 
+`torch.jit.load` is deprecated. Please switch to `torch.export`.
+At line:1 char:381
++ ... OFFLINE='1'; & $py temp/eda_112_label_v2/jalankan_gpu.py *>&1 | Where ...
++                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (E:\datsci\conda...`torch.export`.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  warnings.warn(
+{"convnext_l": {"detik": 72.7, "vram_gib": 1.92}, "swinv2_l": {"detik": 58.0, "vram_gib": 1.85}, "beitv2_l": {"detik": 63.1, "vram_gib": 2.07}}
+kunci taxonomy: ['colormap', 'names', 'semantic_labels', 'shortnames', 'srgb_colormap']
+kelas: ['Animal skin', 'Bone/teeth/horn', 'Brickwork', 'Cardboard', 'Carpet/rug', 'Ceiling tile', 'Ceramic', 'Chalkboard/blackboard', 'Clutter', 'Concrete', 'Cork/corkboard', 'Engineered stone', 'Fabric/cloth', 'Fire', 'Foliage', 'Food', 'Fur', 'Gemstone/quartz', 'Glass', 'Hair', 'Ice', 'Leather', 'Metal', 'Mirror', 'Paint/plaster/enamel', 'Paper', 'Photograph/painting', 'Plastic, clear', 'Plastic, non-clear', 'Rubber/latex', 'Sand', 'Skin/lips', 'Sky', 'Snow', 'Soil/mud', 'Stone, natural', 'Stone, polished', 'Tile', 'Wallpaper', 'Water', 'Wax', 'Whiteboard', 'Wicker', 'Wood', 'Wood, tree', 'Asphalt']
+test 0 0
+test rata porsi teratas: [(0.19200000166893005, 'Paint/plaster/enamel'), (0.13300000131130219, 'Fabric/cloth'), (0.07900000363588333, 'Cardboard'), (0.07699999958276749, 'Paper'), (0.0689999982714653, 'Plastic, non-clear'), (0.061000000685453415, 'Metal'), (0.05299999937415123, 'Glass'), (0.050999999046325684, 'Ceramic')]
+train 0 24
+train 500 48
+train 1000 73
+train 1500 97
+train rata porsi teratas: [(0.21799999475479126, 'Paint/plaster/enamel'), (0.10999999940395355, 'Fabric/cloth'), (0.08100000023841858, 'Paper'), (0.07599999755620956, 'Plastic, non-clear'), (0.07100000232458115, 'Cardboard'), (0.050999999046325684, 'Glass'), (0.04600000008940697, 'Metal'), (0.03999999910593033, 'Ceramic')]
+vram puncak 0.58 detik 118
+GPU_SELESAI

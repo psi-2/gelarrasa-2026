@@ -1,0 +1,25 @@
+{
+  "distribusi_test": {
+    "glass": 58,
+    "paper": 64,
+    "electronic": 53,
+    "metal": 65,
+    "plastic": 58,
+    "cardboard": 61,
+    "textile": 61,
+    "foodwaste": 60
+  },
+  "prob_maks_rata": 0.885,
+  "porsi_prob_maks_lt_0.5": 0.025,
+  "setuju_convnextv2": 0.7167,
+  "distribusi_sisa_train": {
+    "glass": 37,
+    "paper": 46,
+    "electronic": 21,
+    "metal": 59,
+    "plastic": 81,
+    "cardboard": 27,
+    "textile": 9,
+    "foodwaste": 14
+  }
+}

@@ -1,0 +1,32 @@
+﻿foil train di v6: 7 group 5
+
+== 1. recall leave-group-out ==
+bobot 1: metal 6 dari 7, median p_metal 0.756, median p_paper 0.112
+bobot 3: metal 7 dari 7, median p_metal 0.823, median p_paper 0.043
+bobot 10: metal 7 dari 7, median p_metal 0.914, median p_paper 0.015
+
+== 2. prediksi test LR ==
+LR v5 test: {'glass': 58, 'paper': 67, 'electronic': 60, 'metal': 59, 'plastic': 55, 'cardboard': 58, 'textile': 62, 'foodwaste': 61}
+bobot 1: berubah 3, test {'glass': 58, 'paper': 64, 'electronic': 60, 'metal': 62, 'plastic': 55, 'cardboard': 58, 'textile': 62, 'foodwaste': 61}
+v6     metal
+v5          
+paper      3
+   test foil: ['metal', 'metal'] p_metal [0.415, 0.581]
+bobot 3: berubah 3, test {'glass': 58, 'paper': 64, 'electronic': 60, 'metal': 62, 'plastic': 55, 'cardboard': 58, 'textile': 62, 'foodwaste': 61}
+v6     metal
+v5          
+paper      3
+   test foil: ['metal', 'metal'] p_metal [0.52, 0.764]
+bobot 10: berubah 3, test {'glass': 58, 'paper': 64, 'electronic': 60, 'metal': 62, 'plastic': 55, 'cardboard': 58, 'textile': 62, 'foodwaste': 61}
+v6     metal
+v5          
+paper      3
+   test foil: ['metal', 'metal'] p_metal [0.635, 0.887]
+
+== 3. audit glass lawan plastic, dua sumber melawan label ==
+glass berlabel, 22k botol plastik dan DMS plastik: 1 | LR setuju plastic: 0
+plastic berlabel, 22k kaca dan DMS kaca: 1 | LR setuju glass: 0
+paper berlabel, kardus dua sumber: 0 | cardboard berlabel, kertas dua sumber: 3
+
+test_foil.csv: 2 baris, pred {'paper': 2}
+perkiraan test jika foil berpindah: paper 62 metal 61

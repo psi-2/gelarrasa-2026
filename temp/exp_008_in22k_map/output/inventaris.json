@@ -1,0 +1,506 @@
+[
+  {
+    "model": "SmilingWolf/wd-vit-tagger-v3",
+    "gb": 0.38,
+    "kelas": 10861,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--SmilingWolf--wd-vit-tagger-v3\\snapshots\\7f6b584d0bd3f55c4531f14ba3d4761b2bccdc0f",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "nvidia/mit-b0",
+    "gb": 0.01,
+    "kelas": 1000,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--nvidia--mit-b0\\snapshots\\80983a413c30d36a39c20203974ae7807835e2b4",
+    "n_nama": 1000,
+    "contoh": [
+      "tench, Tinca tinca",
+      "goldfish, Carassius auratus",
+      "great white shark, white shark, man-eater, man-eating shark, Carcharodon carcharias"
+    ]
+  },
+  {
+    "model": "smp-hub/resnet34.imagenet",
+    "gb": 0.09,
+    "kelas": 1000,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--smp-hub--resnet34.imagenet\\snapshots\\7a57b34f723329ff020b3f8bc41771163c519d0c",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "smp-hub/resnet50.imagenet",
+    "gb": 0.1,
+    "kelas": 1000,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--smp-hub--resnet50.imagenet\\snapshots\\00cb74e366966d59cd9a35af57e618af9f88efe9",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/convnextv2_large.fcmae_ft_in22k_in1k",
+    "gb": 0.79,
+    "kelas": 1000,
+    "tag": "fcmae_ft_in22k_in1k",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--convnextv2_large.fcmae_ft_in22k_in1k\\snapshots\\48dcc282a4058de9e3059ee23fdaf8f41bc498f9",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/convnextv2_large.fcmae_ft_in22k_in1k_384",
+    "gb": 0.79,
+    "kelas": 1000,
+    "tag": "fcmae_ft_in22k_in1k_384",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--convnextv2_large.fcmae_ft_in22k_in1k_384\\snapshots\\4b4ce03d1a7a884ac2242b5fadcf7f0e55a66482",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "MIT/ast-finetuned-audioset-10-10-0.4593",
+    "gb": 0.35,
+    "kelas": 527,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--MIT--ast-finetuned-audioset-10-10-0.4593\\snapshots\\f826b80d28226b62986cc218e5cec390b1096902",
+    "n_nama": 527,
+    "contoh": [
+      "Speech",
+      "Male speech, man speaking",
+      "Female speech, woman speaking"
+    ]
+  },
+  {
+    "model": "tue-mps/eomt-dinov3-ade-semantic-large-512",
+    "gb": 1.26,
+    "kelas": 150,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--tue-mps--eomt-dinov3-ade-semantic-large-512\\snapshots\\1d1f172700ab69371df7afe778fe133fff7dd521",
+    "n_nama": 150,
+    "contoh": [
+      "wall",
+      "building",
+      "sky"
+    ]
+  },
+  {
+    "model": "tue-mps/eomt-dinov3-coco-panoptic-base-640",
+    "gb": 0.37,
+    "kelas": 133,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--tue-mps--eomt-dinov3-coco-panoptic-base-640\\snapshots\\589ed003c94fc387d0daae28f12e9e01fc846332",
+    "n_nama": 133,
+    "contoh": [
+      "person",
+      "bicycle",
+      "car"
+    ]
+  },
+  {
+    "model": "tue-mps/eomt-dinov3-coco-panoptic-small-640",
+    "gb": 0.09,
+    "kelas": 133,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--tue-mps--eomt-dinov3-coco-panoptic-small-640\\snapshots\\602edaa2839daf6cb3de3ad46c176098c3be9090",
+    "n_nama": 133,
+    "contoh": [
+      "person",
+      "bicycle",
+      "car"
+    ]
+  },
+  {
+    "model": "kishan4444/upernet-swin-openearthmap-road-segmentation",
+    "gb": 0.24,
+    "kelas": 8,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--kishan4444--upernet-swin-openearthmap-road-segmentation\\snapshots\\e004e478b6fdb024500c77d005023022af5f994f",
+    "n_nama": 8,
+    "contoh": [
+      "bareland",
+      "rangeland",
+      "developed_space"
+    ]
+  },
+  {
+    "model": "IgorNer/segformer-b5-loveda",
+    "gb": 0.34,
+    "kelas": 7,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--IgorNer--segformer-b5-loveda\\snapshots\\6139163b1cf8e953a27ca4960950d6d4c067d72c",
+    "n_nama": 7,
+    "contoh": [
+      "background",
+      "building",
+      "road"
+    ]
+  },
+  {
+    "model": "tabularisai/multilingual-sentiment-analysis",
+    "gb": 0.54,
+    "kelas": 5,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--tabularisai--multilingual-sentiment-analysis\\snapshots\\5637087870c646575e013c27e8b0f7609576f433",
+    "n_nama": 5,
+    "contoh": [
+      "Very Negative",
+      "Negative",
+      "Neutral"
+    ]
+  },
+  {
+    "model": "BAAI/bge-reranker-v2-m3",
+    "gb": 2.27,
+    "kelas": 1,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--BAAI--bge-reranker-v2-m3\\snapshots\\953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "n_nama": 1,
+    "contoh": [
+      "LABEL_0"
+    ]
+  },
+  {
+    "model": "BAAI/bge-small-en-v1.5",
+    "gb": 0.13,
+    "kelas": 1,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--BAAI--bge-small-en-v1.5\\snapshots\\5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+    "n_nama": 1,
+    "contoh": [
+      "LABEL_0"
+    ]
+  },
+  {
+    "model": "amazon/chronos-bolt-base",
+    "gb": 0.82,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--amazon--chronos-bolt-base\\snapshots\\5d9f166d69f47aef3401367a7b842e78fe97b121",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "amazon/chronos-t5-base",
+    "gb": 0.81,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--amazon--chronos-t5-base\\snapshots\\ad294eaacead15db499b740ea4122266dd2a81a2",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "BAAI/bge-m3",
+    "gb": 2.27,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--BAAI--bge-m3\\snapshots\\9a0624b896d81da7492a910ffa53731274b6cf3d",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "facebook/dinov2-large",
+    "gb": 1.22,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--facebook--dinov2-large\\snapshots\\47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "google/flan-t5-base",
+    "gb": 0.99,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--google--flan-t5-base\\snapshots\\7bcac572ce56db69c1ea7c8af255c5d7c9672fc2",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "google/timesfm-2.5-200m-pytorch",
+    "gb": 0.93,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--google--timesfm-2.5-200m-pytorch\\snapshots\\1d952420fba87f3c6dee4f240de0f1a0fbc790e3",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "JonaRuthardt/SteerViT",
+    "gb": 0.09,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--JonaRuthardt--SteerViT\\snapshots\\cdc29ddb5ddb8cfb6c0194c461eba14309b5afc7",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "Layer6/TabDPT",
+    "gb": 0.25,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--Layer6--TabDPT\\snapshots\\a5ca6e01c0fa09ec68c73e958e5199d1932abb3a",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "microsoft/wavlm-base-plus",
+    "gb": 0.38,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--microsoft--wavlm-base-plus\\snapshots\\98fd61b9c652129c839c0a25a05987d8f59256a4",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "MVRL/satmaepp_ViT-L_pretrain_fmow_rgb",
+    "gb": 1.32,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--MVRL--satmaepp_ViT-L_pretrain_fmow_rgb\\snapshots\\76e90f33c7cf2bb1a674f743b5d502cf6fc08b38",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "nvidia/C-RADIOv4-H",
+    "gb": 2.61,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--nvidia--C-RADIOv4-H\\snapshots\\0057b339059c0b9e1b4ba996f975410ebbfdfcc8",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "nvidia/C-RADIOv4-SO400M",
+    "gb": 1.72,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--nvidia--C-RADIOv4-SO400M\\snapshots\\c0457f5dc26ca145f954cd4fc5bb6114e5705ad8",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "openai/whisper-small",
+    "gb": 0.97,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--openai--whisper-small\\snapshots\\973afd24965f72e36ca33b3055d56a652f456b4d",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "openai/whisper-tiny",
+    "gb": 0.15,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--openai--whisper-tiny\\snapshots\\169d4a4341b33bc18d8881c4b69c2e104e1cc0af",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "smp-hub/mit_b2.imagenet",
+    "gb": 0.1,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--smp-hub--mit_b2.imagenet\\snapshots\\868ab6f13871dcf8c3d9f90ee4519403475b65ef",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "tiiuae/siglino-0.6B",
+    "gb": 1.97,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--tiiuae--siglino-0.6B\\snapshots\\ebfeef07dc9eacc49d6989401ed8c25896809b99",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/convnext_base.fb_in22k_ft_in1k",
+    "gb": 0.35,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--convnext_base.fb_in22k_ft_in1k\\snapshots\\67758fcbcf9f007ec7630bf8636b74a8f24e52a0",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/convnext_small.dinov3_lvd1689m",
+    "gb": 0.2,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--convnext_small.dinov3_lvd1689m\\snapshots\\9a0c319ae4531d36df6ef11fc253fdc4b503628a",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/convnextv2_atto.fcmae_ft_in1k",
+    "gb": 0.01,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--convnextv2_atto.fcmae_ft_in1k\\snapshots\\2de59190576d00653aabde4bcd4af7525a93ad1b",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/convnextv2_base.fcmae_ft_in22k_in1k",
+    "gb": 0.35,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--convnextv2_base.fcmae_ft_in22k_in1k\\snapshots\\9e250ed8f88b436472d2b24af26f82a8aa8c719d",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/convnextv2_tiny.fcmae_ft_in1k",
+    "gb": 0.11,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--convnextv2_tiny.fcmae_ft_in1k\\snapshots\\508caf1bc24fd02c69d15778b994e808670dbc28",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/resnet18.a1_in1k",
+    "gb": 0.05,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--resnet18.a1_in1k\\snapshots\\491b427b45c94c7fb0e78b5474cc919aff584bbf",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/resnet34.a1_in1k",
+    "gb": 0.09,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--resnet34.a1_in1k\\snapshots\\0e8757122c4c09b15fb9300c0fd09b3fe89e28bf",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/resnet50.a1_in1k",
+    "gb": 0.1,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--resnet50.a1_in1k\\snapshots\\767268603ca0cb0bfe326fa87277f19c419566ef",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/sam2_hiera_large.fb_r1024",
+    "gb": 0.85,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--sam2_hiera_large.fb_r1024\\snapshots\\c79a0070455c685bcda559edd96210255b222aab",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/swin_large_patch4_window12_384.ms_in22k_ft_in1k",
+    "gb": 0.8,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--swin_large_patch4_window12_384.ms_in22k_ft_in1k\\snapshots\\dfc8b0017a96aa64652f7009ea275c26f21b2a68",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/tf_efficientnetv2_l.in21k_ft_in1k",
+    "gb": 0.48,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--tf_efficientnetv2_l.in21k_ft_in1k\\snapshots\\6c44709e23420722b5b195738875471dcc34d260",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/tf_efficientnetv2_m.in21k_ft_in1k",
+    "gb": 0.22,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--tf_efficientnetv2_m.in21k_ft_in1k\\snapshots\\631698f40fee81ab20478c0724337f1b21c06b28",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/tf_efficientnetv2_s.in21k_ft_in1k",
+    "gb": 0.09,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--tf_efficientnetv2_s.in21k_ft_in1k\\snapshots\\ea9abc143ea2b9d8e1ec1de277bce02149b9cf0e",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/vit_7b_patch16_dinov3.lvd1689m",
+    "gb": 26.86,
+    "kelas": null,
+    "tag": "lvd1689m",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--vit_7b_patch16_dinov3.lvd1689m\\snapshots\\b40f6c827cb02b13c7a23a76cf598489bb0f94e5",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/vit_base_patch16_dinov3.lvd1689m",
+    "gb": 0.34,
+    "kelas": null,
+    "tag": "lvd1689m",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--vit_base_patch16_dinov3.lvd1689m\\snapshots\\c6a5fb7d12bbd3cf3b0079253141c3332aaed7da",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/vit_huge_plus_patch16_dinov3_qkvb.lvd1689m",
+    "gb": 3.36,
+    "kelas": null,
+    "tag": "lvd1689m",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--vit_huge_plus_patch16_dinov3_qkvb.lvd1689m\\snapshots\\2f1120d77def00163a5d553c2fdfabc1d8bc1037",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/vit_large_patch16_dinov3.lvd1689m",
+    "gb": 1.21,
+    "kelas": null,
+    "tag": "lvd1689m",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--vit_large_patch16_dinov3.lvd1689m\\snapshots\\30c1109559f65dea34316b0d4842d35c5771fe11",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/vit_large_patch16_dinov3.sat493m",
+    "gb": 1.21,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--vit_large_patch16_dinov3.sat493m\\snapshots\\ce148bd5ed3de1eb75ebdccafcb2c280bb3e8f7c",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/vit_small_patch14_dinov2.lvd142m",
+    "gb": 0.09,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--vit_small_patch14_dinov2.lvd142m\\snapshots\\4610ca143709d58a633b6397a74412c2c3842454",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "timm/vit_small_patch16_dinov3.lvd1689m",
+    "gb": 0.09,
+    "kelas": null,
+    "tag": "lvd1689m",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--timm--vit_small_patch16_dinov3.lvd1689m\\snapshots\\3bf4720a82ec2066db88137180ff1f83a675cef0",
+    "n_nama": 0,
+    "contoh": []
+  },
+  {
+    "model": "wu-pr-gw/segformer-b2-finetuned-with-LoveDA",
+    "gb": 0.11,
+    "kelas": null,
+    "tag": "",
+    "snapshot": "D:\\cache_moved\\huggingface\\hub\\models--wu-pr-gw--segformer-b2-finetuned-with-LoveDA\\snapshots\\9e00ccba6c4e0cdc2bea42337d0f5545d1ec38af",
+    "n_nama": 0,
+    "contoh": []
+  }
+]

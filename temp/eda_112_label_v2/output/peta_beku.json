@@ -1,0 +1,12 @@
+{
+  "waktu": "2026-10-31 15:36:22",
+  "sha256_peta_in22k": "dc0c01caca1f5282ce0ebb66b100fb6f7feec32794ac5fab4de81a0758ded2a2",
+  "sha256_peta_dms": "a0e4f92044bcfbb0f9ce6b342bca1e9a6696a7a9c2debef4836558b4b55252d2",
+  "sha256_kode": "309c359b79749023fe039745314f88629ce1a41f0fa827b08372548f2acc5afb",
+  "subset": {
+    "convnext_large.fb_in22k": "imagenet-22k",
+    "swinv2_large_window12_192.ms_in22k": "imagenet-22k",
+    "beitv2_large_patch16_224.in1k_ft_in22k": "imagenet-22k"
+  },
+  "catatan": "dibekukan sebelum inferensi p22k dan dms ada"
+}

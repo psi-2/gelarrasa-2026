@@ -1,0 +1,2 @@
+eaafc4012ec1bc6bca7696d4752648b4473e97fb *deteksi.py
+55f2ab31ef80f5a21a87b1235c2c4f01fb3009d8 *sim_label.py

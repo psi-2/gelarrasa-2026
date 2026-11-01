@@ -1,0 +1,8 @@
+pasangan,n_pos,n_neg,n_kosakata,cls,bow,gab
+plastic-glass,263,67,3,0.9895,0.9776,0.9892
+plastic-paper,493,463,3,0.9995,0.9993,0.9996
+glass-paper,540,586,3,0.9986,0.9988,0.9992
+metal-plastic,451,431,2,0.98,0.9872,0.9902
+metal-glass,713,228,2,0.9888,0.9892,0.9913
+metal-paper,649,292,2,0.9936,0.9918,0.9944
+paper-cardboard,519,157,3,0.9966,0.9964,0.9978

@@ -1,0 +1,14 @@
+{
+  "waktu": "2026-10-31 17:05:37",
+  "hash": {
+    "label_v5.py": "b0635488356ebdd32865acad0d043c655faccc6dd636e9c9731a080f2b3dcda4",
+    "kosakata_listrik.py": "30e0010f03425cc77a2849a0d8655de35e89f1a82a4b492815c47464aa1fc5d8"
+  },
+  "AMBANG": 0.2,
+  "GRUP_PAKAI": [
+    "sel",
+    "lampu",
+    "papan"
+  ],
+  "catatan": "dibekukan sebelum label_folds_v5.csv ada"
+}

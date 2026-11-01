@@ -1,0 +1,48 @@
+﻿baterai 14 group unik 13
+
+== 1. recall leave-group-out: baterai ditahan per group ==
+bobot 1: electronic 14 dari 14, median p_electronic 0.958, median p_metal 0.015
+bobot 3: electronic 14 dari 14, median p_electronic 0.983, median p_metal 0.005
+bobot 10: electronic 14 dari 14, median p_electronic 0.994, median p_metal 0.001
+
+== 2. prediksi test LR ==
+bobot 1: berubah 6, test per kelas {'glass': 58, 'paper': 67, 'electronic': 60, 'metal': 59, 'plastic': 55, 'cardboard': 58, 'textile': 62, 'foodwaste': 61}
+v5_w1  electronic
+v4               
+metal           6
+bobot 3: berubah 7, test per kelas {'glass': 58, 'paper': 68, 'electronic': 60, 'metal': 59, 'plastic': 55, 'cardboard': 58, 'textile': 62, 'foodwaste': 60}
+v5_w3      electronic  paper
+v4                          
+foodwaste           0      1
+metal               6      0
+bobot 10: berubah 7, test per kelas {'glass': 58, 'paper': 67, 'electronic': 61, 'metal': 58, 'plastic': 55, 'cardboard': 58, 'textile': 62, 'foodwaste': 61}
+v5_w10  electronic
+v4                
+metal            7
+
+citra test sel >= 0,2: 6 | prediksi v4: {'metal': 6}
+  v5 bobot 1: {'electronic': 6} median p_electronic 0.972
+  v5 bobot 3: {'electronic': 6} median p_electronic 0.99
+  v5 bobot 10: {'electronic': 6} median p_electronic 0.996
+
+== 3. test berprediksi metal: bukti perangkat luas ==
+              p22          coco           ade           sel       
+           median    max median    max median    max median    max
+fam                                                               
+F_416       0.004  0.112  0.008  0.446  0.006  0.148  0.000  0.073
+F_640       0.595  0.595  0.091  0.091  0.019  0.019  0.729  0.729
+F_lain_web  0.535  0.647  0.042  0.213  0.021  0.049  0.700  0.763
+metal non-baterai, massa perangkat 22k tertinggi:
+  fam   p_el   p22  coco   ade    sel  papan  kabel
+F_416 0.0262 0.112 0.067 0.006 0.0665 0.0351 0.0020
+F_416 0.0161 0.046 0.008 0.004 0.0727 0.0214 0.0015
+F_416 0.0134 0.029 0.003 0.007 0.0636 0.0017 0.0008
+F_416 0.0145 0.026 0.005 0.006 0.0343 0.0013 0.0011
+F_416 0.0263 0.021 0.255 0.148 0.0146 0.0035 0.0008
+F_416 0.0167 0.020 0.091 0.010 0.0014 0.0188 0.0010
+F_416 0.0170 0.014 0.005 0.008 0.0047 0.0011 0.0027
+F_416 0.0130 0.012 0.008 0.005 0.0019 0.0008 0.0009
+
+kelas lain dengan bukti perangkat kuat (p22 >= .5) di test: {'metal': 4}
+electronic prediksi vs keluarga: {'F_640': 53}
+baterai test per keluarga: {'F_lain_web': 5, 'F_640': 1} | pred {'metal': 6}

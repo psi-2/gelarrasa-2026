@@ -1,0 +1,156 @@
+
+### train paper F_416 (n=68)
+  22k massa: newspaper 0.048, daily 0.044, gazette 0.038, paper 0.029, paper 0.027, school newspaper 0.022, file folder 0.022, tabloid 0.019, shredder 0.016
+  22k top-1: newspaper 25, paper 20, envelope 13, daily 11, gazette 10, shredder 9, file folder 7, school newspaper 4, packet 4
+  DMS: Paper 0.367, Fabric/cloth 0.107, Foliage 0.049, Mirror 0.030, Plastic, non-clear 0.029, Glass 0.028, Sky 0.024
+  COCO: paper-merged 0.165, book 0.069, cardboard 0.037, tree-merged 0.021, tie 0.018, airplane 0.016, banner 0.012
+
+### TEST pred paper F_416 (n=62)
+  22k massa: paper 0.041, newspaper 0.041, daily 0.038, paper 0.032, gazette 0.024, tinfoil 0.020, packet 0.017, shredder 0.017, tabloid 0.015
+  22k top-1: paper 30, newspaper 16, packet 10, daily 7, shredder 7, gazette 7, envelope 6, diaper 6, book 6
+  DMS: Paper 0.424, Fabric/cloth 0.198, Foliage 0.054, Plastic, clear 0.038, Snow 0.021, Gemstone/quartz 0.017, Photograph/painting 0.015
+  COCO: paper-merged 0.133, book 0.085, tie 0.053, flower 0.023, cardboard 0.022, tree-merged 0.021, teddy bear 0.015
+
+### train paper F_640 (n=153)
+  22k massa: packet 0.044, paper 0.040, envelope 0.039, paper 0.030, newspaper 0.028, envelope 0.026, envelope 0.025, newspaper 0.024, envelope 0.023
+  22k top-1: envelope 68, newspaper 48, packet 46, paper 46, pantile 15, tabloid 12, diameter 12, daily 11, yellow journalism 11
+  DMS: Paper 0.441, Fabric/cloth 0.085, Photograph/painting 0.026, Plastic, non-clear 0.020, Cardboard 0.014, Water 0.014, Mirror 0.008
+  COCO: paper-merged 0.150, book 0.074, tie 0.048, cardboard 0.029, banner 0.010, kite 0.009, umbrella 0.008
+
+### train paper F_q75_4x3 (n=17)
+  22k massa: paper 0.102, paper 0.045, pantile 0.042, newspaper 0.042, daily 0.041, gazette 0.035, newspaper 0.024, tabloid 0.023, school newspaper 0.021
+  22k top-1: paper 12, newspaper 8, daily 4, pantile 4, planner 2, folder 2, film 2, school newspaper 2, channel 2
+  DMS: Paper 0.415, Fabric/cloth 0.064, Metal 0.032, Sky 0.027, Plastic, non-clear 0.017, Mirror 0.013
+  COCO: paper-merged 0.154, tie 0.066, book 0.057, cardboard 0.030, kite 0.025, sink 0.019, banner 0.012
+
+### train cardboard F_416 (n=217)
+  22k massa: carton 0.171, bandbox 0.069, packaging 0.056, packing box 0.054, box 0.031, package 0.019, mailer 0.016, Masonite 0.015, chipboard 0.013
+  22k top-1: carton 263, packaging 38, packing box 35, bandbox 34, chipboard 17, package 16, box 15, Masonite 14, recycling plant 12
+  DMS: Cardboard 0.575, Paper 0.078, Glass 0.058, Fabric/cloth 0.027, Mirror 0.021, Sky 0.016, Plastic, clear 0.015
+  COCO: cardboard 0.159, paper-merged 0.072, suitcase 0.056, book 0.036, bench 0.025, refrigerator 0.014, building-other-merged 0.013
+
+### TEST pred cardboard F_416 (n=59)
+  22k massa: carton 0.174, packing box 0.080, packaging 0.073, package 0.064, bandbox 0.046, box 0.027, garbage heap 0.025, mailer 0.021, benthos 0.015
+  22k top-1: carton 69, package 17, packing box 17, packaging 11, garbage heap 6, recycling plant 5, crate 5, benthos 5, mailer 5
+  DMS: Cardboard 0.622, Glass 0.090, Paper 0.063, Mirror 0.021, Fabric/cloth 0.018, Plastic, clear 0.013, Sky 0.007
+  COCO: cardboard 0.186, paper-merged 0.061, suitcase 0.047, book 0.026, tv 0.019, refrigerator 0.019, building-other-merged 0.015
+
+### train cardboard F_lain_web (n=5)
+  22k massa: carton 0.152, packing box 0.140, packaging 0.074, package 0.073, emerald 0.041, bandbox 0.041, box 0.038, bottle green 0.028, mailer 0.016
+  22k top-1: carton 6, packing box 3, package 2, bottle green 2, emerald 1, packaging 1
+  DMS: Cardboard 0.621, Paper 0.165, Ice 0.114, Glass 0.019, Brickwork 0.011, Gemstone/quartz 0.011, Stone, natural 0.010
+  COCO: suitcase 0.290, cardboard 0.178, paper-merged 0.132, book 0.083, bottle 0.055, laptop 0.007
+
+### train glass F_416 (n=116)
+  22k massa: bottle green 0.027, bottle 0.023, phial 0.023, jampot 0.018, emerald 0.018, jar 0.016, empty 0.013, light beer 0.013, dropper 0.012
+  22k top-1: bottle green 18, phial 13, jampot 13, jar 12, bottle 12, light beer 11, emerald 11, home brew 7, near beer 7
+  DMS: Glass 0.295, Paper 0.078, Plastic, non-clear 0.057, Sky 0.048, Plastic, clear 0.041, Snow 0.041, Metal 0.036
+  COCO: bottle 0.324, vase 0.045, cup 0.033, paper-merged 0.024, toilet 0.010, umbrella 0.009, food-other-merged 0.008
+
+### train glass F_640 (n=12)
+  22k massa: bottle green 0.160, emerald 0.069, Ferris wheel 0.026, windshield 0.026, Mason jar 0.023, cobweb 0.022, jar 0.021, display window 0.020, quadrate 0.018
+  22k top-1: bottle green 10, emerald 5, quadrate 2, windshield 1, ring 1, gray 1, solar dish 1, Mason jar 1, mucor 1
+  DMS: Glass 0.180, Metal 0.135, Plastic, non-clear 0.110, Sky 0.082, Stone, natural 0.062, Ice 0.044, Foliage 0.024
+  COCO: bottle 0.096, vase 0.072, clock 0.043, rug-merged 0.039, potted plant 0.023, kite 0.022, umbrella 0.021
+
+### TEST pred glass F_640 (n=19)
+  22k massa: flute 0.041, liqueur glass 0.034, chicken wire 0.026, tumbler 0.023, cup 0.023, champagne cup 0.019, tumbrel 0.017, glass 0.016, suction pump 0.015
+  22k top-1: flute 5, liqueur glass 4, chicken wire 3, cup 2, glass 2, wine 2, emerald 2, tumbler 2, concertina 1
+  DMS: Glass 0.249, Metal 0.147, Foliage 0.091, Sky 0.048, Carpet/rug 0.030, Fabric/cloth 0.024, Paper 0.010
+  COCO: cup 0.102, bottle 0.070, wine glass 0.054, vase 0.034, keyboard 0.031, potted plant 0.029, fence-merged 0.027
+
+### train glass F_lain_web (n=31)
+  22k massa: flute 0.068, liqueur glass 0.064, glass 0.035, tumbler 0.022, highball glass 0.020, empty 0.018, bottle 0.017, jug 0.015, phial 0.015
+  22k top-1: flute 14, liqueur glass 10, glass 6, empty 4, cookie cutter 4, tumbler 3, screwtop 3, cream pitcher 3, jug 3
+  DMS: Glass 0.217, Paper 0.104, Metal 0.073, Mirror 0.059, Plastic, non-clear 0.034, Cardboard 0.030, Chalkboard/blackboard 0.028
+  COCO: cup 0.202, bottle 0.118, wine glass 0.066, vase 0.056, paper-merged 0.011, sink 0.007, toilet 0.005
+
+### TEST pred glass F_lain_web (n=9)
+  22k massa: Mason jar 0.083, bottle green 0.065, emerald 0.034, soda water 0.022, light beer 0.017, bottle 0.017, oxygen mask 0.016, pasteurized milk 0.013, near beer 0.012
+  22k top-1: bottle green 4, Mason jar 3, soda water 2, light beer 2, tessera 2, oxygen mask 2, emerald 2, low-fat milk 1, staple 1
+  DMS: Paper 0.129, Glass 0.109, Snow 0.090, Plastic, non-clear 0.082, Gemstone/quartz 0.068, Ice 0.063, Stone, natural 0.030
+  COCO: bottle 0.258, vase 0.056, paper-merged 0.028, tree-merged 0.027, potted plant 0.025, flower 0.013, broccoli 0.011
+
+### train glass F_q75_4x3 (n=44)
+  22k massa: bottle 0.061, pop bottle 0.023, finger bowl 0.019, glass 0.017, bottle green 0.017, mixing bowl 0.014, fizz 0.014, jampot 0.014, jar 0.013
+  22k top-1: bottle 17, pop bottle 8, bottle green 6, carboy 4, fizz 3, beer mug 3, mixing bowl 3, pitcher 3, liqueur glass 3
+  DMS: Glass 0.228, Fabric/cloth 0.069, Plastic, clear 0.069, Sky 0.062, Ice 0.047, Plastic, non-clear 0.043, Paper 0.040
+  COCO: bottle 0.196, cup 0.056, curtain 0.049, vase 0.046, paper-merged 0.019, bowl 0.017, hair drier 0.011
+
+### TEST pred glass F_q75_4x3 (n=29)
+  22k massa: bottle 0.052, empty 0.037, pop bottle 0.030, fizz 0.029, Coca Cola 0.025, glass 0.023, popgun 0.021, flagon 0.020, Pepsi 0.017
+  22k top-1: bottle 8, empty 6, pop bottle 5, Coca Cola 5, jampot 4, fizz 4, glass 4, flagon 4, popgun 4
+  DMS: Glass 0.268, Plastic, clear 0.093, Metal 0.058, Ice 0.052, Paper 0.035, Snow 0.034, Fabric/cloth 0.023
+  COCO: bottle 0.268, paper-merged 0.087, cup 0.056, bowl 0.048, vase 0.037, tv 0.020, toilet 0.009
+
+### train plastic F_416 (n=130)
+  22k massa: plastic bag 0.092, bottled water 0.080, mineral water 0.051, branch water 0.045, plastic bomb 0.045, seltzer 0.029, empty 0.021, recycling plant 0.017, cellophane 0.016
+  22k top-1: bottled water 66, plastic bag 50, branch water 32, mineral water 28, plastic bomb 24, empty 19, seltzer 15, recycling plant 12, cellophane 10
+  DMS: Plastic, clear 0.286, Plastic, non-clear 0.110, Fabric/cloth 0.092, Ice 0.084, Glass 0.036, Sky 0.035, Mirror 0.033
+  COCO: bottle 0.243, toothbrush 0.037, vase 0.036, paper-merged 0.023, teddy bear 0.018, bird 0.017, umbrella 0.017
+
+### TEST pred plastic F_416 (n=57)
+  22k massa: bottled water 0.100, mineral water 0.095, branch water 0.053, seltzer 0.047, plastic bag 0.022, empty 0.022, soda water 0.016, water bottle 0.015, drinking water 0.014
+  22k top-1: bottled water 37, mineral water 28, branch water 20, seltzer 9, empty 7, plastic bag 7, grocery bag 4, phial 3, first-aid kit 3
+  DMS: Plastic, clear 0.289, Ice 0.151, Fabric/cloth 0.135, Plastic, non-clear 0.041, Water 0.041, Glass 0.036, Mirror 0.034
+  COCO: bottle 0.295, vase 0.063, paper-merged 0.021, cell phone 0.017, cat 0.014, wine glass 0.011, teddy bear 0.010
+
+### train plastic F_640 (n=7)
+  22k massa: bin liner 0.133, garbage heap 0.078, mineral water 0.066, bottled water 0.061, plastic bag 0.049, branch water 0.047, benthos 0.045, seltzer 0.041, aerosol 0.035
+  22k top-1: bottled water 4, bin liner 3, aerosol 2, plastic bag 2, garbage heap 2, branch water 2, seltzer 1, plastic bomb 1, benthos 1
+  DMS: Plastic, non-clear 0.232, Plastic, clear 0.196, Snow 0.142, Ice 0.130, Paper 0.024, Fabric/cloth 0.023, Glass 0.008
+  COCO: bottle 0.279, kite 0.049, vase 0.046, teddy bear 0.034, suitcase 0.026, food-other-merged 0.023, umbrella 0.022
+
+### train plastic F_lain_web (n=47)
+  22k massa: bottled water 0.106, plastic bag 0.073, mineral water 0.067, branch water 0.057, seltzer 0.039, plastic bomb 0.039, soda water 0.023, bottle 0.023, empty 0.022
+  22k top-1: bottled water 36, plastic bag 18, branch water 16, mineral water 12, plastic bomb 8, seltzer 6, empty 5, bottle 5, garbage heap 3
+  DMS: Ice 0.182, Plastic, clear 0.181, Fabric/cloth 0.144, Plastic, non-clear 0.085, Mirror 0.054, Photograph/painting 0.029, Paper 0.019
+  COCO: bottle 0.363, vase 0.054, paper-merged 0.022, kite 0.013, food-other-merged 0.012, teddy bear 0.008, cardboard 0.008
+
+### train plastic F_q75_4x3 (n=5)
+  22k massa: bottle green 0.107, bottled water 0.089, mineral water 0.081, branch water 0.057, seltzer 0.055, empty 0.055, pop bottle 0.043, emerald 0.037, bottle 0.028
+  22k top-1: bottled water 4, bottle green 4, seltzer 2, emerald 2, branch water 1, empty 1, mineral water 1
+  DMS: Ice 0.251, Plastic, clear 0.174, Plastic, non-clear 0.161, Paper 0.024, Cardboard 0.019, Glass 0.010
+  COCO: bottle 0.388
+
+### train plastic F_q74fb (n=29)
+  22k massa: packet 0.154, litter 0.045, Greek fire 0.044, bottled water 0.038, plastic bag 0.037, empty 0.024, branch water 0.021, mineral water 0.019, water bottle 0.016
+  22k top-1: packet 24, bottled water 7, plastic bag 6, litter 6, Greek fire 6, branch water 4, garbage heap 3, empty 3, mineral water 2
+  DMS: Plastic, clear 0.219, Plastic, non-clear 0.129, Paper 0.108, Soil/mud 0.073, Metal 0.040, Fabric/cloth 0.038, Foliage 0.029
+  COCO: bottle 0.144, paper-merged 0.041, umbrella 0.038, book 0.028, food-other-merged 0.026, cake 0.016, vase 0.015
+
+### train plastic F_q4885_besar (n=58)
+  22k massa: litter 0.112, packet 0.074, Greek fire 0.067, plastic bag 0.029, empty 0.019, sack 0.015, plastic bomb 0.015, sunsuit 0.010, bottle 0.010
+  22k top-1: litter 44, Greek fire 25, packet 15, plastic bag 9, sack 6, plastic bomb 6, empty 5, mustard 5, bottled water 4
+  DMS: Plastic, non-clear 0.108, Asphalt 0.106, Plastic, clear 0.102, Soil/mud 0.075, Stone, natural 0.068, Paper 0.067, Fabric/cloth 0.045
+  COCO: bottle 0.102, paper-merged 0.040, kite 0.027, book 0.021, handbag 0.013, rug-merged 0.013, umbrella 0.012
+
+### train kosong F_416 (n=37)
+  22k massa: shredder 0.055, shrimper 0.029, icetray 0.026, Masonite 0.018, soap dish 0.017, nail 0.016, cap 0.016, hard candy 0.012, empty 0.011
+  22k top-1: shredder 10, icetray 6, Masonite 6, shrimper 5, soap dish 3, nail 3, cough drop 2, envelope 2, sphagnum 2
+  DMS: Foliage 0.095, Plastic, clear 0.091, Paper 0.068, Plastic, non-clear 0.064, Snow 0.059, Sky 0.040, Ice 0.037
+  COCO: bottle 0.062, frisbee 0.035, cell phone 0.034, potted plant 0.030, tree-merged 0.028, paper-merged 0.023, toothbrush 0.019
+
+### train kosong F_640 (n=8)
+  22k massa: tinfoil 0.082, blinker 0.052, fan 0.049, tippet 0.047, spackle 0.040, low-fat milk 0.026, dripping pan 0.022, chestnut 0.020, drip pan 0.018
+  22k top-1: blinker 3, fan 3, spackle 2, tray 2, tinfoil 2, tippet 2, cigarette case 2, dripping pan 1, chestnut 1
+  DMS: Fabric/cloth 0.205, Mirror 0.154, Paper 0.093, Cardboard 0.049, Plastic, non-clear 0.048, Food 0.028, Soil/mud 0.025
+  COCO: cell phone 0.060, bowl 0.052, paper-merged 0.029, food-other-merged 0.018, orange 0.015, book 0.014, sink 0.013
+
+### train kosong F_lain_web (n=9)
+  22k massa: windfall 0.052, apple 0.046, bottle green 0.044, eating apple 0.032, emerald 0.026, empty 0.020, ice maker 0.018, pannier 0.017, deep-freeze 0.017
+  22k top-1: windfall 3, ice tongs 2, deep-freeze 2, bottle green 2, ice maker 2, apple 2, luggage carrier 1, litter 1, eating apple 1
+  DMS: Ice 0.113, Foliage 0.103, Paper 0.091, Soil/mud 0.078, Food 0.073, Plastic, non-clear 0.070, Glass 0.063
+  COCO: bottle 0.092, cardboard 0.066, paper-merged 0.043, vase 0.035, suitcase 0.035, apple 0.034, food-other-merged 0.027
+
+### train kosong F_q74fb (n=4)
+  22k massa: manhole cover 0.123, can 0.062, manhole 0.055, tarmacadam 0.039, beer can 0.032, tinfoil 0.022, mount 0.020, ear 0.019, tin 0.015
+  22k top-1: manhole cover 3, tinfoil 1, roller 1, tarmacadam 1, mount 1, bulbous plant 1, beer can 1, mineral water 1, ear 1
+  DMS: Soil/mud 0.218, Metal 0.187, Mirror 0.148, Fabric/cloth 0.050, Plastic, non-clear 0.029, Paper 0.010
+  COCO: toilet 0.075, skateboard 0.043, banana 0.031, paper-merged 0.023, vase 0.014, bottle 0.013, cup 0.010
+
+### train kosong F_q75_4x3 (n=8)
+  22k massa: paper 0.061, tinfoil 0.058, polling booth 0.056, voting booth 0.044, tippet 0.029, shower room 0.024, suction cup 0.023, cap 0.023, fire bell 0.022
+  22k top-1: tinfoil 2, paper 2, suction cup 2, shower room 2, polling booth 2, shower curtain 1, cap 1, voting booth 1, refresher 1
+  DMS: Fabric/cloth 0.156, Plastic, non-clear 0.125, Paper 0.108, Sky 0.089, Whiteboard 0.080, Glass 0.038, Metal 0.007
+  COCO: curtain 0.116, paper-merged 0.075, kite 0.047, book 0.040, frisbee 0.039, hair drier 0.028, vase 0.021

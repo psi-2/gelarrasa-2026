@@ -1,0 +1,66 @@
+
+### train electronic F_640 (n=185)
+  22k massa: calculator 0.041, CPU board 0.038, iron 0.030, circuitry 0.014, fan 0.013, hand calculator 0.013, adding machine 0.012, fluorescent lamp 0.012, clothes dryer 0.011, garbage heap 0.011
+  22k top-1: CPU board 53, calculator 52, iron 33, modem 15, key 14, garbage heap 13, fan 12, washer 12, fluorescent lamp 12, cellular telephone 11
+  COCO: cell phone 0.082, remote 0.080, tv 0.052, keyboard 0.042, laptop 0.037, paper-merged 0.036, cardboard 0.028, oven 0.021, rug-merged 0.020
+  ADE : crt screen 0.034, computer 0.031, box 0.028, washer 0.027, clock 0.018, fan 0.015, book 0.008, monitor 0.008, chair 0.006
+
+### train metal F_640 (n=125)
+  22k massa: can 0.130, tin 0.122, beer can 0.059, tinderbox 0.051, canister 0.035, soda can 0.031, canned food 0.024, canned meat 0.014, soda fountain 0.012, aerosol 0.010
+  22k top-1: tin 87, can 58, beer can 33, tinderbox 27, soda can 19, canister 19, canned food 12, aerosol 7, soda fountain 5, canned meat 5
+  COCO: bottle 0.110, cup 0.090, vase 0.048, food-other-merged 0.042, cell phone 0.020, clock 0.018, bowl 0.016, handbag 0.011, paper-merged 0.011
+  ADE : box 0.047, tank 0.043, bottle 0.041, car 0.020, signboard 0.018, bag 0.015, tray 0.010, base 0.010, house 0.009
+
+### train metal F_q74fb (n=52)
+  22k massa: beer can 0.137, litter 0.099, Greek fire 0.095, tin 0.057, soda can 0.045, can 0.044, Pepsi 0.028, Coca Cola 0.024, soda fountain 0.023, tinderbox 0.017
+  22k top-1: beer can 31, litter 27, Greek fire 23, tin 14, soda can 8, Coca Cola 5, coffee can 5, Pepsi 5, soda fountain 4, blacktop 2
+  COCO: tree-merged 0.086, bottle 0.034, fire hydrant 0.029, cell phone 0.027, paper-merged 0.022, cup 0.022, food-other-merged 0.018, hair drier 0.018, backpack 0.015
+  ADE : bottle 0.029, bag 0.026, signboard 0.025, tree 0.024, plant 0.023, car 0.018, box 0.012, pole 0.010, rug 0.009
+
+### train metal F_q75_4x3 (n=35)
+  22k massa: tin 0.147, can 0.096, Pepsi 0.043, beer can 0.043, tinderbox 0.037, Coca Cola 0.030, cola extract 0.027, soda can 0.026, cola 0.022, macadamia nut 0.020
+  22k top-1: tin 27, can 13, refresher 7, beer can 6, Coca Cola 5, cola extract 5, Pepsi 5, tinderbox 5, macadamia nut 4, smoothie 3
+  COCO: bottle 0.091, paper-merged 0.032, food-other-merged 0.030, vase 0.021, cup 0.020, bowl 0.016, rug-merged 0.013, towel 0.011, cell phone 0.010
+  ADE : bottle 0.042, signboard 0.024, bag 0.015, car 0.014, box 0.014, tank 0.012, poster 0.011, chair 0.010, booth 0.010
+
+### train metal F_lain_web (n=22)
+  22k massa: energizer 0.081, canister 0.070, can 0.069, tin 0.058, dry battery 0.040, dry cell 0.038, dripping pan 0.037, tinderbox 0.032, nicad 0.031, battery 0.026
+  22k top-1: tin 7, canister 7, energizer 7, dripping pan 5, dry battery 4, C battery 3, dry cell 3, can 3, battery 3, nicad 3
+  COCO: bottle 0.124, cup 0.102, food-other-merged 0.047, cell phone 0.022, toilet 0.022, paper-merged 0.022, tree-merged 0.014, bowl 0.013, sink 0.012
+  ADE : box 0.083, tray 0.061, bottle 0.035, tank 0.023, car 0.010, base 0.007
+
+### train metal F_416 (n=7)
+  22k massa: yogurt 0.062, blueberry yogurt 0.040, tin 0.037, sour cream 0.031, whipping cream 0.031, margarine 0.029, bushing 0.027, cap 0.027, can 0.023, mincemeat 0.016
+  22k top-1: cap 2, margarine 2, yogurt 2, fixative 2, sour cream 2, can 2, antiperspirant 1, bushing 1, mincemeat 1, whipping cream 1
+  COCO: bottle 0.171, food-other-merged 0.113, cup 0.097, paper-merged 0.017, cell phone 0.011, cardboard 0.009, vase 0.009, refrigerator 0.008, bowl 0.007
+  ADE : bottle 0.056, box 0.051, signboard 0.022, car 0.017, house 0.015, bag 0.008, tank 0.008, poster 0.006, glass 0.006
+
+### TEST prediksi metal F_416 (n=58)
+  22k massa: can 0.102, tin 0.100, canister 0.055, tinderbox 0.045, beer can 0.031, canned food 0.026, soda can 0.022, aerosol 0.016, cola extract 0.014, Pepsi 0.013
+  22k top-1: tin 26, can 20, canister 16, tinderbox 13, beer can 8, canned food 8, aerosol 7, soda fountain 4, soda can 3, Coca Cola 3
+  COCO: bottle 0.148, cup 0.093, food-other-merged 0.045, bowl 0.038, vase 0.030, paper-merged 0.018, cell phone 0.017, clock 0.013, frisbee 0.013
+  ADE : box 0.052, bottle 0.051, tank 0.041, tray 0.037, car 0.016, base 0.015, signboard 0.013, bag 0.011, house 0.006
+
+### TEST prediksi metal F_lain_web (n=5)
+  22k massa: C battery 0.107, battery 0.103, battery 0.086, dry battery 0.075, nicad 0.069, A battery 0.064, storage cell 0.048, Weston cell 0.039, dry cell 0.037, storage ring 0.025
+  22k top-1: battery 6, C battery 3, storage cell 2, dry battery 2, A battery 1, storage ring 1
+  COCO: bottle 0.125, food-other-merged 0.068, hot dog 0.041, remote 0.026, paper-merged 0.024, cell phone 0.024, baseball bat 0.016, fire hydrant 0.014, cake 0.011
+  ADE : box 0.078, car 0.014, bottle 0.012, tank 0.009, monitor 0.008, crt screen 0.008, signboard 0.008, skyscraper 0.008, clock 0.007
+
+### TEST prediksi electronic F_640 (n=53)
+  22k massa: electric guitar 0.038, key 0.030, mouse 0.030, mouse button 0.024, CPU board 0.022, portable computer 0.021, calculator 0.016, iPod 0.015, iron 0.015, fingerboard 0.015
+  22k top-1: key 12, electric guitar 11, mouse 10, portable computer 8, projector 6, CPU board 6, portable circular saw 6, calculator 5, mouse button 5, iron 4
+  COCO: laptop 0.067, cell phone 0.064, keyboard 0.050, mouse 0.034, tv 0.029, suitcase 0.028, remote 0.023, paper-merged 0.023, cardboard 0.014
+  ADE : computer 0.066, crt screen 0.032, box 0.021, fan 0.021, bed  0.016, clock 0.015, tree 0.014, monitor 0.009, airplane 0.007
+
+### train kosong F_416 (n=37)
+  22k massa: shredder 0.055, shrimper 0.029, icetray 0.026, Masonite 0.018, soap dish 0.017, nail 0.016, cap 0.016, hard candy 0.012, empty 0.011, phial 0.011
+  22k top-1: shredder 10, icetray 6, Masonite 6, shrimper 5, soap dish 3, nail 3, cough drop 2, envelope 2, sphagnum 2, thatch 2
+  COCO: bottle 0.062, frisbee 0.035, cell phone 0.034, potted plant 0.030, tree-merged 0.028, paper-merged 0.023, toothbrush 0.019, food-other-merged 0.019, flower 0.018
+  ADE : box 0.111, bottle 0.069, bag 0.023, tray 0.012, plant 0.009, tree 0.008, signboard 0.006, fence 0.006
+
+### train kosong F_640 (n=17)
+  22k massa: fluorescent lamp 0.185, light bulb 0.075, bulb 0.052, concave shape 0.040, tinfoil 0.039, light 0.027, blinker 0.025, fan 0.023, tippet 0.022, spackle 0.019
+  22k top-1: fluorescent lamp 16, bulb 4, concave shape 4, blinker 3, light bulb 3, fan 3, spackle 2, tray 2, tinfoil 2, tippet 2
+  COCO: bottle 0.061, bowl 0.035, cup 0.033, cell phone 0.031, vase 0.024, paper-merged 0.019, food-other-merged 0.012, light 0.011, building-other-merged 0.008
+  ADE : tray 0.109, lamp 0.016, railing 0.015, box 0.012, bannister 0.011, fan 0.010, food 0.007, signboard 0.005, column 0.005

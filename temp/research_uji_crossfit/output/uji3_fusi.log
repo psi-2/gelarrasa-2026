@@ -1,0 +1,29 @@
+[    2.2s] ulangan 1/5
+[    4.2s] ulangan 2/5
+[    6.3s] ulangan 3/5
+[    8.2s] ulangan 4/5
+[   10.1s] ulangan 5/5
+suhu vit [0.32  0.343 0.319 0.353 0.326] cnn [0.465 0.476 0.46  0.466 0.466]
+           ok_label      sd  ok_pinggir     nll  ok_eomt
+metode                                                  
+vit          0.9903  0.0008      0.9690  0.1542   0.8598
+cnn          0.9724  0.0017      0.9160  0.1956   0.8541
+concat       0.9843  0.0014      0.9454  0.1529   0.8594
+avg_prob     0.9849  0.0007      0.9480  0.1671   0.8595
+avg_logit    0.9846  0.0008      0.9470  0.1544   0.8595
+avg_suhu     0.9860  0.0012      0.9522  0.0475   0.8597
+geo_suhu     0.9860  0.0012      0.9522  0.0414   0.8597
+stacking     0.9882  0.0005      0.9638  0.0589   0.8598
+{'beda': 35.6, 'vit_benar_label': 31.6, 'cnn_benar_label': 2.6, 'eomt_dukung_vit': 19.4, 'eomt_dukung_cnn': 10.2}
+cnn         glass  paper  electronic  metal  plastic  cardboard  textile  foodwaste
+vit                                                                                
+glass         161      0           0      1        2          0        0          1
+paper           1    211           0      0        1          3        0          0
+electronic      0      1         178      0        0          0        1          0
+metal           0      0           0    193        3          0        1          2
+plastic         0      1           0      1      217          0        2          2
+cardboard       0      9           1      0        0        197        0          0
+textile         0      0           0      0        2          2      203          0
+foodwaste       0      2           0      0        2          0        0        225
+{'test_setuju_vit_cnn': 0.9292, 'test_beda_vit_cnn': 34, 'test_setuju_gabung_finetune': 0.9542, 'test_setuju_vit_finetune': 0.9479, 'test_setuju_cnn_finetune': 0.9417, 'distribusi_test_gabung': {'glass': 56, 'paper': 67, 'electronic': 54, 'metal': 69, 'plastic': 52, 'cardboard': 57, 'textile': 63, 'foodwaste': 62}, 'suhu_vit': 0.332, 'suhu_cnn': 0.467}
+[   12.3s] selesai

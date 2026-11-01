@@ -1,0 +1,28 @@
+[    0.2s] label 1626, sisa 294, pinggir suara<0,95: 381, dim EoMT (1920, 566)
+[   14.7s] ulangan 1/5
+[   27.8s] ulangan 2/5
+[   41.4s] ulangan 3/5
+[   54.9s] ulangan 4/5
+[   69.3s] ulangan 5/5
+      metode  ok_semua      sd  ok_pinggir  sd_pinggir  ok_lintas  stabil_antar_split
+    lr_keras    0.9903 0.00072      0.9690     0.00348     0.8598              0.9953
+         knn    0.9895 0.00123      0.9591     0.00458     0.8550              0.9914
+   spreading    0.9814 0.00171      0.9234     0.00731     0.8545              0.9945
+     lr_soft    0.9872 0.00072      0.9559     0.00306     0.8587              0.9947
+lr_soft_sisa    0.9859 0.00087      0.9549     0.00420     0.8604              0.9937
+ proden_sisa    0.9817 0.00204      0.9354     0.00888     0.8584              0.9925
+        eomt    0.8605 0.00776      0.7554     0.01322     1.0000              0.9296
+      metode  glass  paper  electronic  metal  plastic  cardboard  textile  foodwaste
+    lr_keras  0.970  0.988       1.000  0.977    0.989      0.998    0.996      1.000
+         knn  0.992  0.970       0.993  0.979    0.994      1.000    1.000      0.989
+   spreading  0.992  0.922       0.994  0.962    0.995      1.000    1.000      0.991
+     lr_soft  0.965  0.988       1.000  0.967    0.992      0.998    0.984      1.000
+lr_soft_sisa  0.970  0.991       1.000  0.964    0.987      0.991    0.984      0.997
+ proden_sisa  0.953  0.977       0.999  0.962    0.984      0.995    0.980      0.999
+        eomt  0.818  0.881       0.836  0.849    0.758      0.899    0.948      0.887
+knn {'selisih_semua': -0.00074, 'ci_semua': [-0.00654, 0.00522], 'selisih_pinggir': -0.00997, 'ci_pinggir': [-0.03169, 0.01152]}
+spreading {'selisih_semua': -0.00886, 'ci_semua': [-0.01712, -0.00082], 'selisih_pinggir': -0.04567, 'ci_pinggir': [-0.07797, -0.01522]}
+lr_soft {'selisih_semua': -0.00308, 'ci_semua': [-0.00594, -0.0006], 'selisih_pinggir': -0.01312, 'ci_pinggir': [-0.02473, -0.00254]}
+lr_soft_sisa {'selisih_semua': -0.00443, 'ci_semua': [-0.00882, -0.00075], 'selisih_pinggir': -0.01417, 'ci_pinggir': [-0.03129, -0.0]}
+proden_sisa {'selisih_semua': -0.00861, 'ci_semua': [-0.01381, -0.00415], 'selisih_pinggir': -0.0336, 'ci_pinggir': [-0.05373, -0.01637]}
+[   72.6s] selesai

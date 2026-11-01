@@ -1,0 +1,22 @@
+[   54.0s] OOF selesai
+{'tetap': 1609, 'buang': 14, 'koreksi': 3}
+aksi        buang  koreksi  tetap
+label                            
+glass           3        2    162
+paper           4        1    211
+electronic      0        0    179
+metal           6        0    197
+plastic         1        0    220
+cardboard       0        0    205
+textile         0        0    209
+foodwaste       0        0    226
+aksi     label    label_baru
+buang    glass                  3
+         metal                  6
+         paper                  4
+         plastic                1
+koreksi  glass    plastic       2
+         paper    cardboard     1
+label bersih: 1612 {'glass': 162, 'paper': 211, 'electronic': 179, 'metal': 197, 'plastic': 222, 'cardboard': 206, 'textile': 209, 'foodwaste': 226}
+{'koreksi_n': 3, 'buang_n': 14, 'paruh_1_n': 18, 'paruh_2_n': 17, 'paruh_iris': 16, 'paruh_jaccard': 0.8421, 'eomt_setuju_label_semua': 0.8665, 'koreksi_eomt_setuju_lama': 1.0, 'koreksi_eomt_setuju_alt': 0.0, 'buang_eomt_setuju_lama': 0.5, 'buang_eomt_setuju_alt': 0.4286, 'sel_langka_semua': 0.0166, 'koreksi_sel_langka': 0.0, 'koreksi_porsi_fam_lama_median': 0.223, 'buang_sel_langka': 0.0714, 'buang_porsi_fam_lama_median': 0.154, 'koreksi_porsi_fam_alt_median': 0.281, 'koreksi_alt_lebih_umum_di_fam': 1.0, 'citra_beda_mayoritas_group': 2, 'koreksi_dalam_group': 2, 'koreksi_ke_mayoritas_group': 2}
+[   54.8s] selesai

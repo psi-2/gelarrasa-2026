@@ -1,0 +1,6 @@
+{
+  "sisa_antar_seed": 0.9667,
+  "test_antar_seed": 0.9938,
+  "test_setuju_lr_gabung": 0.9792,
+  "test_setuju_finetune": 0.95
+}

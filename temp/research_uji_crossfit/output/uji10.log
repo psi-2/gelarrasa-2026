@@ -1,0 +1,11 @@
+[    0.1s] bersih 1612, isian 162, gabungan 1774
+ditandai ronde 2: 7 | isian ditolak: 0 | baris lama ditandai, dibiarkan: 7
+isian ditolak per kelas: {}
+v3: 1774 {'glass': 192, 'paper': 224, 'electronic': 183, 'metal': 234, 'plastic': 272, 'cardboard': 224, 'textile': 211, 'foodwaste': 234}
+fold       0     1
+sumber            
+exp009   384  1225
+isian      0   162
+koreksi    0     3
+isian diterima: {'glass': 30, 'paper': 13, 'electronic': 4, 'metal': 37, 'plastic': 50, 'cardboard': 18, 'textile': 2, 'foodwaste': 8}
+[   57.9s] selesai

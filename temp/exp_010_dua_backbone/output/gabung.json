@@ -1,0 +1,21 @@
+{
+  "setuju_vit_cnn_test": 0.9896,
+  "beda_vit_cnn_test": 5,
+  "distribusi_gabungan": {
+    "glass": 60,
+    "paper": 64,
+    "electronic": 53,
+    "metal": 64,
+    "plastic": 57,
+    "cardboard": 62,
+    "textile": 60,
+    "foodwaste": 60
+  },
+  "prob_maks_rata": 0.8988,
+  "porsi_prob_maks_lt_0.7": 0.0312,
+  "setuju_vit_cnn_holdout": 0.9897,
+  "fold": {
+    "vit_v2": 0.9845,
+    "cnn_v2": 0.9871
+  }
+}

@@ -1,0 +1,36 @@
+[   16.0s] kontrol bingung 0.05
+[   30.5s] kontrol cluster 0.05
+[   45.4s] kontrol cluster 0.15
+                   n_kotor  diubah  pulih  recall  presisi
+jenis   laju lupa                                         
+bingung 0.05 0.0      81.0    56.0   54.5   0.673    0.973
+             0.2      81.0    76.5   72.0   0.889    0.941
+cluster 0.05 0.0      95.0    11.5    8.0   0.084    0.696
+             0.2      95.0    61.5   56.0   0.589    0.911
+        0.15 0.0     258.0    23.5   21.5   0.083    0.915
+             0.2     258.0   127.5  116.0   0.450    0.910
+[  150.0s] aturan bersih 0.0
+[  253.1s] aturan acak 0.05
+[  357.0s] aturan bingung 0.05
+[  460.3s] aturan cluster 0.03
+[  564.7s] aturan cluster 0.05
+[  668.8s] aturan cluster 0.1
+              n_kotor  koreksi  koreksi_pulih  koreksi_kena_bersih  buang  buang_kotor  kotor_tersentuh  recall_koreksi  presisi_koreksi  presisi_buang  kotor_tersisa_porsi
+jenis   laju                                                                                                                                                                
+bersih  0.00      0.0      4.5            0.0                  4.5   13.0          0.0              0.0             NaN            0.000          0.000                  NaN
+acak    0.05     81.0     73.0           71.0                  2.0   22.5         10.0             81.0           0.877            0.973          0.444                0.000
+bingung 0.05     81.0     75.0           71.5                  3.5   18.5          7.5             79.0           0.883            0.953          0.405                0.025
+cluster 0.03     51.0     36.0           34.5                  1.5   26.0         11.0             45.5           0.676            0.958          0.423                0.108
+        0.05    104.0     55.5           52.5                  3.0   19.5          8.5             61.0           0.505            0.946          0.436                0.413
+        0.10    165.0     84.0           81.5                  2.5   30.0         18.0             99.5           0.494            0.970          0.600                0.397
+[  724.8s] hold-out bersih 0.0
+[  781.2s] hold-out bingung 0.05
+[  838.0s] hold-out cluster 0.05
+[  895.2s] hold-out cluster 0.1
+              vit_kotor  gabung_kotor  vit_aturan  gabung_aturan
+jenis   laju                                                    
+bersih  0.00     0.9899        0.9859      0.9869         0.9836
+bingung 0.05     0.9860        0.9836      0.9877         0.9830
+cluster 0.05     0.9634        0.9667      0.9777         0.9730
+        0.10     0.9191        0.9260      0.9758         0.9744
+[  895.2s] selesai
