@@ -35,7 +35,7 @@ Sumber: teks halaman Kaggle yang ditempel user (2026-10-31).
 
 ## Catatan kepatuhan (bukan aturan resmi, interpretasi proyek ini)
 
-**Claude tidak boleh melihat citra kompetisi.** Membaca citra train/test lewat tool `Read` atau menampilkan citra ke Claude berarti inference VLM pihak ketiga terhadap data kompetisi (rule 8, 9). Claude hanya boleh membaca angka, tabel, dan statistik hasil script. Plot yang memuat citra asli (montage, grid sampel, galeri salah prediksi) hanya untuk dilihat manusia. Pelabelan train oleh Claude juga masuk larangan ini.
+**Claude boleh melihat citra dan plot untuk EDA serta QA preprocessing (keputusan user 2026-11-02).** Larangan lama soal melihat citra adalah interpretasi internal, bukan aturan panitia, dan sudah dicabut. Claude boleh membuka grid before/after augmentasi, montage, dan plot EDA untuk menilai apakah preprocessing merusak citra. Yang tetap dilarang: Claude memberi label atau nama kelas pada citra/cluster dan hasil penglihatan Claude dipakai sebagai label. Penamaan cluster tetap diputuskan user (rule 9).
 
 **Keputusan user (2026-10-31):** rule 9 dimaknai melarang LLM melakukan klasifikasi manual pada data kompetisi. Asisten LLM boleh menulis kode.
 
