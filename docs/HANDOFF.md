@@ -28,4 +28,4 @@ Cache ImageNet-22k sekitar 600 MB, token bag-of-words sekitar 169 MB, dan checkp
 2. Skrip Python yang memakai data kini menunjuk ke `<repo>/data`. Model pretrained perlu tersedia di cache lokal atau diunduh oleh loader. Atur cache lewat variabel lingkungan NGEDATA_CACHE; default memakai D:\cache_moved bila tersedia, lalu folder .cache pengguna.
 3. Gunakan skrip dan label di `temp/exp_010_dua_backbone/` sebagai titik lanjut kandidat CNN satu model. Baca catatan eksperimen sebelum menjalankan; beberapa arsip lama tidak sesuai constraint terbaru.
 
-File `data/temuan/anotate.csv` tidak dimasukkan karena memuat anotasi test. Tidak ada perubahan git staging, commit, atau push pada salinan ini.
+File `data/temuan/anotate.csv` tidak dimasukkan karena memuat anotasi test. Snapshot berbagi progres 3 November 2026 menambahkan referensi, hasil run Kaggle, serta arsip cache/environment; lihat [README](../README.md) dan [petunjuk arsip](../archives/README.md).

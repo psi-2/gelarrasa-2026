@@ -13,4 +13,13 @@ kaggle.json
 **/.ipynb_checkpoints/
 .cache/
 # Keep private test annotations out of the repository
-data/temuan/anotate.csv.venv/
+data/temuan/anotate.csv
+
+# Local runtime; shared ZIP snapshot lives in archives/
+.venv/
+results/cache/
+.agents/
+.codex/
+.aws/
+*.pem
+*.key
