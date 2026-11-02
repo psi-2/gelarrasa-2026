@@ -1,0 +1,443 @@
+{
+ "final": {
+  "ukuran": 384,
+  "resize": "trim_hitam_lalu_stretch_bicubic",
+  "exif_transpose": true,
+  "konversi": "RGB",
+  "rrc_scale": [
+   0.4,
+   1.0
+  ],
+  "rrc_ratio": [
+   0.75,
+   1.3333
+  ],
+  "hflip": 0.5,
+  "vflip": 0.5,
+  "rot90": true,
+  "rotasi_deg": 0,
+  "color_jitter_bcsh": [
+   0.2,
+   0.1,
+   0,
+   0
+  ],
+  "denoise": null,
+  "catatan": "iterasi 5 visual: letterbox dan rotasi kecil ditolak",
+  "trim_hitam": {
+   "ambang": 12,
+   "std_maks": 4,
+   "porsi_min": 0.03
+  }
+ },
+ "log": {
+  "resize": {
+   "centercrop_potong_box_gt10pct": 0.1671875,
+   "stretch_distorsi_gt1.2": 0.21041666666666667,
+   "stretch_distorsi_gt1.34": 0.0671875,
+   "letterbox_pad_median_nonpersegi": 0.25
+  },
+  "rrc": {
+   "0.08": {
+    "p_sisa_lt50": 0.23477653631284917,
+    "median_sisa": 0.8250630107357106,
+    "q10_sisa": 0.2771131651209817
+   },
+   "0.2": {
+    "p_sisa_lt50": 0.11592178770949721,
+    "median_sisa": 0.8779913619700435,
+    "q10_sisa": 0.47715104305281647
+   },
+   "0.3": {
+    "p_sisa_lt50": 0.027793296089385473,
+    "median_sisa": 0.919618897560668,
+    "q10_sisa": 0.632923458804737
+   },
+   "0.4": {
+    "p_sisa_lt50": 0.005167597765363128,
+    "median_sisa": 0.9499461784373091,
+    "q10_sisa": 0.7392311596330516
+   },
+   "0.5": {
+    "p_sisa_lt50": 0.0018156424581005587,
+    "median_sisa": 0.9729308847838111,
+    "q10_sisa": 0.8255929246823288
+   },
+   "0.6": {
+    "p_sisa_lt50": 0.0,
+    "median_sisa": 0.9889627383091726,
+    "q10_sisa": 0.8919250523732762
+   },
+   "0.7": {
+    "p_sisa_lt50": 0.0,
+    "median_sisa": 0.9979590495481538,
+    "q10_sisa": 0.939853813297647
+   },
+   "0.8": {
+    "p_sisa_lt50": 0.0,
+    "median_sisa": 1.0,
+    "q10_sisa": 0.9745675120696372
+   }
+  },
+  "rrc_pilih": 0.4,
+  "rotasi": {
+   "10": {
+    "sudut_kosong_mean": 0.04488525390625,
+    "fg_keluar_q90": 0.00719674149973928
+   },
+   "15": {
+    "sudut_kosong_mean": 0.06278076171875,
+    "fg_keluar_q90": 0.013645789743790578
+   },
+   "20": {
+    "sudut_kosong_mean": 0.07810465494791667,
+    "fg_keluar_q90": 0.016630933674342343
+   },
+   "30": {
+    "sudut_kosong_mean": 0.10234578450520833,
+    "fg_keluar_q90": 0.017461400680437687
+   },
+   "45": {
+    "sudut_kosong_mean": 0.10981038411458334,
+    "fg_keluar_q90": 0.01908979499383441
+   }
+  },
+  "jitter": [
+   {
+    "bcsh": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "geser_per_std_Lab": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "cardboard_ke_paper": 0.0
+   },
+   {
+    "bcsh": [
+     0.1,
+     0.1,
+     0.05,
+     0
+    ],
+    "geser_per_std_Lab": [
+     0.157,
+     0.028,
+     0.035
+    ],
+    "cardboard_ke_paper": 0.008064516129032258
+   },
+   {
+    "bcsh": [
+     0.2,
+     0.2,
+     0.1,
+     0
+    ],
+    "geser_per_std_Lab": [
+     0.291,
+     0.043,
+     0.063
+    ],
+    "cardboard_ke_paper": 0.04032258064516129
+   },
+   {
+    "bcsh": [
+     0.2,
+     0.2,
+     0.2,
+     0.02
+    ],
+    "geser_per_std_Lab": [
+     0.312,
+     0.073,
+     0.084
+    ],
+    "cardboard_ke_paper": 0.024193548387096774
+   },
+   {
+    "bcsh": [
+     0.3,
+     0.3,
+     0.3,
+     0.05
+    ],
+    "geser_per_std_Lab": [
+     0.456,
+     0.152,
+     0.151
+    ],
+    "cardboard_ke_paper": 0.08870967741935484
+   },
+   {
+    "bcsh": [
+     0.4,
+     0.4,
+     0.4,
+     0.1
+    ],
+    "geser_per_std_Lab": [
+     0.608,
+     0.256,
+     0.212
+    ],
+    "cardboard_ke_paper": 0.14516129032258066
+   },
+   {
+    "bcsh": [
+     0.2,
+     0.2,
+     0,
+     0
+    ],
+    "geser_per_std_Lab": [
+     0.302,
+     0.036,
+     0.06
+    ],
+    "cardboard_ke_paper": 0.008064516129032258
+   },
+   {
+    "bcsh": [
+     0.3,
+     0.3,
+     0.1,
+     0
+    ],
+    "geser_per_std_Lab": [
+     0.452,
+     0.059,
+     0.095
+    ],
+    "cardboard_ke_paper": 0.04032258064516129
+   },
+   {
+    "bcsh": [
+     0.3,
+     0.3,
+     0.2,
+     0
+    ],
+    "geser_per_std_Lab": [
+     0.434,
+     0.063,
+     0.094
+    ],
+    "cardboard_ke_paper": 0.04838709677419355
+   }
+  ],
+  "jitter_pilih": [
+   0.2,
+   0.2,
+   0.2,
+   0.02
+  ],
+  "denoise": {
+   "3": {
+    "noise_turun_bising": -0.008267906357403598,
+    "tekstur_hilang_bersih": 0.019430011510849
+   },
+   "6": {
+    "noise_turun_bising": 0.006957374975307684,
+    "tekstur_hilang_bersih": 0.16729393601417542
+   },
+   "10": {
+    "noise_turun_bising": 0.05973005736276532,
+    "tekstur_hilang_bersih": 0.39688119292259216
+   }
+  },
+  "jitter_iterasi3": [
+   {
+    "bcsh": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0,
+    "se": 0.0,
+    "chroma_turun_q10": 0.0
+   },
+   {
+    "bcsh": [
+     0.2,
+     0.2,
+     0,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0327,
+    "se": 0.0048,
+    "chroma_turun_q10": -0.201
+   },
+   {
+    "bcsh": [
+     0.3,
+     0.3,
+     0,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0545,
+    "se": 0.0061,
+    "chroma_turun_q10": -0.292
+   },
+   {
+    "bcsh": [
+     0.2,
+     0.2,
+     0.1,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0225,
+    "se": 0.004,
+    "chroma_turun_q10": -0.223
+   },
+   {
+    "bcsh": [
+     0.2,
+     0.2,
+     0.2,
+     0.02
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0465,
+    "se": 0.0057,
+    "chroma_turun_q10": -0.253
+   },
+   {
+    "bcsh": [
+     0.2,
+     0.2,
+     0.2,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0494,
+    "se": 0.0058,
+    "chroma_turun_q10": -0.247
+   },
+   {
+    "bcsh": [
+     0.3,
+     0.3,
+     0.1,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0603,
+    "se": 0.0064,
+    "chroma_turun_q10": -0.297
+   }
+  ],
+  "jitter_iterasi4": [
+   {
+    "bcsh": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0,
+    "se": 0.0,
+    "chroma_turun_q10": 0.0
+   },
+   {
+    "bcsh": [
+     0.05,
+     0.05,
+     0,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0116,
+    "se": 0.0029,
+    "chroma_turun_q10": -0.05
+   },
+   {
+    "bcsh": [
+     0.1,
+     0.1,
+     0,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0124,
+    "se": 0.003,
+    "chroma_turun_q10": -0.1
+   },
+   {
+    "bcsh": [
+     0.15,
+     0.15,
+     0,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0189,
+    "se": 0.0037,
+    "chroma_turun_q10": -0.159
+   },
+   {
+    "bcsh": [
+     0.15,
+     0,
+     0,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0044,
+    "se": 0.0018,
+    "chroma_turun_q10": -0.101
+   },
+   {
+    "bcsh": [
+     0.2,
+     0.1,
+     0,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0167,
+    "se": 0.0035,
+    "chroma_turun_q10": -0.152
+   },
+   {
+    "bcsh": [
+     0.1,
+     0.1,
+     0.05,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.016,
+    "se": 0.0034,
+    "chroma_turun_q10": -0.106
+   },
+   {
+    "bcsh": [
+     0.2,
+     0.2,
+     0,
+     0
+    ],
+    "n": 1376,
+    "cardboard_ke_paper": 0.0327,
+    "se": 0.0048,
+    "chroma_turun_q10": -0.205
+   }
+  ],
+  "iterasi5": {
+   "trim_train": 123,
+   "trim_test": 45,
+   "trim_train_electronic": 113
+  }
+ }
+}

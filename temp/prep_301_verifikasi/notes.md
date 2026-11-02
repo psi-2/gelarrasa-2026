@@ -1,0 +1,16 @@
+# PREP 301: verifikasi preprocessing dan augmentasi
+
+Skrip `verifikasi.py` (jalankan lebih dulu), lalu `jitter_cardboard.py` (iterasi 3 dan 4 jitter, menimpa `color_jitter_bcsh` di `output/prep_final.json`). Grid before/after per cluster lama ada di `output/grid_*.png`. Iterasi 1 sampai 4 memakai proksi tanpa model. Setelah `docs/rule.md` diubah (2026-11-02), Claude membuka semua grid untuk QA (tanpa memberi label), lalu iterasi 5 (`iterasi_visual.py`) memperbaiki temuan visual.
+
+| Langkah | Iterasi dan angka | Keputusan |
+|---|---|---|
+| Resize | Center crop memotong lebih dari 10% box objek pada 16,7% citra (terlihat: gelas dan botol ujung terpotong). Stretch mendistorsi lebih dari 1,34 kali pada 6,7% (terlihat: gelas dan botol memanjang). Letterbox menjaga bentuk, tetapi setelah trim, citra distorsi > 1,34 masih 31,5% electronic (basis 10,1%), jadi pita isian akan berkorelasi dengan kelas | Trim pita hitam, lalu stretch bicubic ke 384 |
+| Trim pita hitam (iterasi 5) | Grid memperlihatkan pita letterbox hitam dari sumber. 123 train (113 electronic) dan 45 test, median 30% luas terbuang. Pita sumber terpotong bersih. Efek samping: latar studio hitam polos ikut terpotong (zoom ringan), tanpa merusak objek. Hasil notebook identik dengan versi lokal di 2.400 citra | Dipakai, ambang 12, std 4, porsi minimal 3% |
+| RandomResizedCrop | Iterasi 1 (sisa < 50% ≤ 5%): lolos dari 0,3. Iterasi 2 diperketat (≤ 1% dan median ≥ 0,9) karena mask hanya andal di latar polos: 0,3 gagal (2,8%), 0,4 lolos (0,5%, median 0,95). Scale 0,08 membuang lebih dari separuh objek pada 23% crop | `scale=(0,4; 1)` |
+| Rotasi | ±15°: sudut kosong 6,3%, foreground keluar 1,1% (q90). Visual: isian konstan coklat-abu mencolok di latar putih, isian median tepi memunculkan sudut hitam pada citra electronic berpita | Rot90 acak dan flip H/V saja. Rotasi kecil ditolak |
+| Color jitter | Visual: jitter kuat (hue 0,1) membuat kardus merah marun dan kari hijau. Jitter final hampir hanya mengubah kecerahan. Iterasi 1: metrik nearest-centroid 8 kelas terlalu sensitif, dibuang. Iterasi 2: flip biner cardboard→paper tidak monoton (sampel kecil). Iterasi 3 (semua cardboard × 8 draw): jitter lama (0,2; 0,2; 0,2; 0,02) memindahkan 4,65% cardboard ke paper. (0,2; 0,2; 0; 0) memindahkan 3,3%. Iterasi 4: brightness 0,15 saja 0,44%, (0,2; 0,1; 0; 0) 1,67% ± 0,35%, contrast 0,15 sudah 1,9% dengan chroma q10 -16% | brightness 0,2, contrast 0,1, saturation 0, hue 0. Mentok: contrast lebih besar menurunkan chroma |
+| Denoise | Visual: citra "bising" ternyata tumpukan kain atau sampah bertekstur padat, beberapa dengan artefak blok dan watermark stok foto (gettyimages, depositphotos). NLM h=6 menghaluskan kain. NLM h=3/6/10: noise pada citra bising turun -1%, 1%, dan 6%. Tekstur citra bersih hilang 2%, 17%, dan 40% | Tanpa denoise |
+
+Penilaian visual RRC: scale 0,4 menjaga identitas objek di semua sampel (sebagian botol terpotong tutupnya). Scale 0,08 jelas merusak: kardus jadi bidang coklat polos, setrika jadi lengkung putih.
+
+Batasan: penilaian visual hanya pada 24 sampel per grid (3 per cluster lama) dan 16 sampel trim. Watermark tidak dibuang, karena deteksinya butuh model dan porsinya belum terukur.
