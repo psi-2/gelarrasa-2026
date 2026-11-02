@@ -1,0 +1,15 @@
+{
+  "id": "riantamaputra/dsc-gelarrasa-2026-dinov3",
+  "title": "DSC GelarRasa 2026 DINOv3",
+  "code_file": "dsc_gelarrasa_2026_dinov3.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": ["dsc-gelar-rasa-2026"],
+  "kernel_sources": [],
+  "model_sources": []
+}
