@@ -10,7 +10,7 @@ import ast
 import json
 from pathlib import Path
 
-SECTIONS = ["docs", "eda", "scripts", "notebooks", "results", "submission", "temp"]
+SECTIONS = ["docs", "eda", "scripts", "notebook", "notebooks", "results", "submission", "temp"]
 SKIP = {"__pycache__", ".ipynb_checkpoints", ".git"}
 AUTO_START, AUTO_END = "<!-- AUTO:START -->", "<!-- AUTO:END -->"
 
@@ -33,9 +33,9 @@ def describe(p: Path) -> str:
             nb = json.loads(p.read_text(encoding="utf-8"))
             for c in nb.get("cells", []):
                 if c.get("cell_type") == "markdown":
-                    s = "".join(c.get("source", [])).strip()
-                    if s:
-                        return s.splitlines()[0].lstrip("# ").strip()[:120]
+                    baris = [l for l in "".join(c.get("source", [])).splitlines() if l.strip() and l.strip() != "---"]
+                    if baris:
+                        return baris[0].lstrip("# ").strip()[:120]
     except Exception:
         pass
     return ""

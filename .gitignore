@@ -13,4 +13,4 @@ kaggle.json
 **/.ipynb_checkpoints/
 .cache/
 # Keep private test annotations out of the repository
-data/temuan/anotate.csv
+data/temuan/anotate.csv.venv/
