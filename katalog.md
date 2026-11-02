@@ -11,6 +11,7 @@ Pintu masuk untuk melanjutkan kompetisi DSC Gelar Rasa 2026.
 - **Riwayat**: [log_exp.md](log_exp.md), dengan detail di `temp/`.
 - **Cache DINOv3**: embedding train/test dan ID ada di `temp/exp_006_cluster_dinov3/output/`.
 - **Perhatian**: hasil ensemble lama tidak sesuai batasan terbaru. Anotasi test tidak disimpan di repo.
+- **Jalur aktif (2026-11-02)**: [docs/rencana_7b.md](docs/rencana_7b.md), notebook Kaggle di `notebook/` (utama `dsc_gelarrasa_2026_dinov3.ipynb` dan `konversi_dinov3_7b_fp16.ipynb`, belum dijalankan; builder di `temp/nb_7b/` dan `temp/exp_014_dinov3_7b/`), EDA `temp/eda_201` s.d. `eda_209`, preprocessing `temp/prep_301_verifikasi/`. Label v4 sampai v6 dan t1 tidak dipakai karena dipengaruhi skor anotasi test. EDA lokal memakai `.venv` (uv, Python 3.12).
 <!-- MANUAL:END -->
 
 <!-- AUTO:START -->
@@ -25,16 +26,17 @@ Pintu masuk untuk melanjutkan kompetisi DSC Gelar Rasa 2026.
 
 | file | ukuran | deskripsi |
 |---|---|---|
+| `docs/HANDOFF.md` | 3 KB | Handoff eksperimen — DSC Gelar Rasa 2026 |
 | `docs/constraint.md` | 4 KB | Constraint — DSC Gelar Rasa 2026 |
 | `docs/context.md` | 9 KB | Data Science Competition Gelar Rasa 2026 |
 | `docs/data.md` | 3 KB | Data |
 | `docs/environment.md` | 3 KB | > Snapshot komputer sumber per 2026-10-31. Path conda, cache model, dan GPU di bawah ini hanya referensi; sesuaikan di p |
-| `docs/HANDOFF.md` | 3 KB | Handoff eksperimen — DSC Gelar Rasa 2026 |
 | `docs/lock_2026-10-31_archived.md` | 2 KB | > Arsip 2026-10-31; superseded by docs/constraint.md. The old two-backbone/ensemble path is not approved under current c |
 | `docs/overview.md` | 3 KB | Overview: Data Science Competition (DSC) Gelar Rasa 2026 |
+| `docs/rencana_7b.md` | 10 KB | Rencana DINOv3 ViT-7B untuk clustering train |
 | `docs/research_material.md` | 12 KB | Riset pembedaan material untuk penamaan kelas sampah |
 | `docs/research_unsupervised.md` | 37 KB | Riset klasifikasi sampah tanpa label dan tanpa VLM |
-| `docs/rule.md` | 4 KB | Aturan |
+| `docs/rule.md` | 5 KB | Aturan |
 
 ### eda
 
@@ -55,6 +57,13 @@ Pintu masuk untuk melanjutkan kompetisi DSC Gelar Rasa 2026.
 | `scripts/utils/update_katalog.py` | 4 KB | Regenerasi bagian AUTO di katalog.md. Bagian MANUAL tidak disentuh. |
 | `scripts/utils/vram_monitor.py` | 5 KB | Pantau VRAM dedicated dan shared GPU memory (deteksi bocor ke RAM di Windows). |
 
+### notebook
+
+| file | ukuran | deskripsi |
+|---|---|---|
+| `notebook/dsc_gelarrasa_2026_dinov3.ipynb` | 61 KB | DSC Gelar Rasa 2026: Klasifikasi Citra Sampah |
+| `notebook/konversi_dinov3_7b_fp16.ipynb` | 7 KB | DSC Gelar Rasa 2026: Konversi Bobot DINOv3 ViT-7B ke fp16 |
+
 ### notebooks
 
 (kosong)
@@ -69,7 +78,9 @@ Pintu masuk untuk melanjutkan kompetisi DSC Gelar Rasa 2026.
 
 ### temp (BELUM TERBUKTI, jangan dianggap final)
 
-(kosong)
+| file | ukuran | deskripsi |
+|---|---|---|
+| `temp/eda_common.py` | 3 KB | Helper bersama untuk skrip EDA 2xx (laptop, CPU, tanpa inference model). |
 
 - `log_exp.md`: log semua eksperimen
 <!-- AUTO:END -->
