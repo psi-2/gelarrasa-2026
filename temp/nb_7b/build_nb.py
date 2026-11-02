@@ -154,6 +154,7 @@ cells.append(code(
     "from accelerate.utils import set_module_tensor_to_device\n"
     "from huggingface_hub import hf_hub_download\n"
     "from IPython.display import display\n"
+    "from kaggle_secrets import UserSecretsClient\n"
     "from PIL import Image, ImageOps\n"
     "from safetensors import safe_open\n"
     "from scipy.fft import dctn\n"
@@ -195,7 +196,9 @@ cells.append(code(
 
 cells.append(md(
     "## Settings\n\n"
-    "Semua path, revisi bobot, ambang, dan hyperparameter dikumpulkan di sini. Parameter augmentasi berasal dari "
+    "Semua path, revisi bobot, ambang, dan hyperparameter dikumpulkan di sini. Token Hugging Face dibaca dari "
+    "Kaggle Secrets bernama `HF_TOKEN` bila dilampirkan. Token tidak wajib karena repo bobot tidak gated, tetapi "
+    "mempercepat unduhan dan menghindari batas laju. Parameter augmentasi berasal dari "
     "verifikasi preprocessing lokal (`temp/prep_301_verifikasi`), bukan dari skor test. Aturan pemilihan ruang "
     "embedding, K, dan ambang stabilitas ditetapkan sebelum run."
 ))
@@ -253,7 +256,12 @@ cells.append(code(
     "\n"
     "CFG = Settings()\n"
     "for d in (CFG.CACHE_DIR, CFG.FIG_DIR, CFG.HF_CACHE):\n"
-    "    d.mkdir(parents=True, exist_ok=True)"
+    "    d.mkdir(parents=True, exist_ok=True)\n"
+    "try:\n"
+    "    os.environ['HF_TOKEN'] = UserSecretsClient().get_secret('HF_TOKEN')\n"
+    "    print('HF_TOKEN dari Kaggle Secrets dipakai')\n"
+    "except Exception:\n"
+    "    print('HF_TOKEN tidak terpasang; repo timm DINOv3 tidak gated, unduhan tetap jalan tanpa token')"
 ))
 
 cells.append(md(
@@ -417,7 +425,8 @@ cells.append(code(
 ))
 cells.append(md(
     "#### Insights\n\n"
-    "> Taksiran noise tinggi hanya sekitar 2,4% dan blur sekitar 2%, terkumpul di citra hasil unduhan web. "
+    "> Pada resolusi asli (EDA lokal), taksiran noise tinggi hanya sekitar 2,4% dan blur sekitar 2%, terkumpul di "
+    "citra hasil unduhan web. Angka di atas lebih kecil karena dihitung pada cache 512 px, dan downscale meredam noise. "
     "Inspeksi visual menunjukkan citra dengan noise tertinggi sebenarnya adalah tumpukan pakaian atau sampah yang "
     "teksturnya padat, beberapa dengan artefak blok upscale dan watermark situs stok foto. Jadi estimator Immerkaer "
     "di sini lebih banyak mengukur tekstur daripada noise sensor. Denoise NLM h=6 menghaluskan tumpukan kain dan "
@@ -695,6 +704,7 @@ cells.append(code(
     "        print(nama, 'dimuat dari cache', cari_cache(nama_berkas[kunci[0]]).parent)\n"
     "        return {k: np.load(cari_cache(b)).astype(np.float32) for k, b in nama_berkas.items()}\n"
     "    for i in range(torch.cuda.device_count()):\n"
+    "        torch.empty(0, device=f'cuda:{i}')\n"
     "        torch.cuda.reset_peak_memory_stats(i)\n"
     "    t0 = time.time()\n"
     "    m = muat_dinov3(arsitektur, berkas_fn(), dua_gpu)\n"
