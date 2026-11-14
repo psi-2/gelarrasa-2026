@@ -26,3 +26,8 @@ results/cache/
 
 # Keluaran run notebook 7B QLoRA (submission, adapter, checkpoint)
 **/keluaran_7b/
+# Bobot hasil run 7B (>100 MB, melebihi batas GitHub); unduh ulang dari output Kaggle
+**/keluaran_7b_new/*.pt
+**/keluaran_7b_new/*.safetensors
+# Anotasi test (sama alasannya dengan data/temuan/anotate.csv)
+results/anotate*.csv
