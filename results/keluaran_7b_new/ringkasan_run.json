@@ -1,0 +1,96 @@
+{
+ "gpu": {
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "kapabilitas": "sm_120",
+  "vram_gib": 31.4,
+  "python": "3.12.15",
+  "torch": "2.14.1+cu130",
+  "cuda_torch": "13.0",
+  "cudnn": 92400,
+  "bitsandbytes": "0.50.2",
+  "timm": "1.0.29",
+  "peft": "0.21.3",
+  "arsitektur_build": "sm_75 sm_80 sm_86 sm_90 sm_100 sm_120"
+ },
+ "mode": "nf4",
+ "konfigurasi": {
+  "ukuran": 384,
+  "bs_mikro": 16,
+  "detik_per_citra": 0.23182770609855652,
+  "vram_gib": 12.4,
+  "jam_final": 0.52
+ },
+ "ukuran": 384,
+ "bs_mikro": 16,
+ "akumulasi": 1,
+ "lora": {
+  "r": 16,
+  "alpha": 32,
+  "dropout": 0.05,
+  "lapis": 200,
+  "parameter_latih": 39387144
+ },
+ "detik_muat": 17,
+ "detik_fitur": 146,
+ "jam_final": 0.46,
+ "riwayat_final": [
+  {
+   "epoch": 1,
+   "loss": 0.6424,
+   "detik": 415
+  },
+  {
+   "epoch": 2,
+   "loss": 0.4896,
+   "detik": 415
+  },
+  {
+   "epoch": 3,
+   "loss": 0.4813,
+   "detik": 415
+  },
+  {
+   "epoch": 4,
+   "loss": 0.4791,
+   "detik": 414
+  }
+ ],
+ "linear_probe": {
+  "per_fold": [
+   0.9914529914529915,
+   0.9971428571428571,
+   1.0,
+   0.9914529914529915,
+   0.9914285714285714
+  ],
+  "mean": 0.9942954822954823,
+  "std": 0.004031989337185755
+ },
+ "cv": {
+  "fold": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "per_fold": [
+   0.11714285714285715,
+   0.12,
+   0.11965811965811966,
+   0.11714285714285715
+  ],
+  "mean": 0.1184859584859585,
+  "std": 0.0015571476011653081
+ },
+ "submission": {
+  "paper": 62,
+  "glass": 62,
+  "cardboard": 61,
+  "foodwaste": 60,
+  "electronic": 60,
+  "textile": 59,
+  "metal": 58,
+  "plastic": 58
+ },
+ "pseudo": null
+}

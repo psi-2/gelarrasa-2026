@@ -297,7 +297,7 @@ image_id,cluster,stab,ruang,grup,sub,kode,nama,stab_nama,knn_nama,konflik_grup,b
 296,12,0.25,vitl,266,12a,12a,foodwaste,1.0,1.0,False,True
 297,31,1.0,vitl,71,31b,31b,cardboard,1.0,1.0,False,True
 298,5,0.2,vitl,267,5a,5a,cardboard,0.2,0.9,False,False
-299,3,0.6,vitl,268,3a,3a,metal,1.0,1.0,False,True
+299,3,0.6,vitl,268,3a,3a,glass,1.0,1.0,False,True
 300,13,1.0,vitl,269,13b,13b,foodwaste,1.0,1.0,False,True
 301,36,1.0,vitl,270,36a,36a,electronic,1.0,1.0,False,True
 302,26,0.95,vitl,271,26a,26a,foodwaste,1.0,1.0,False,True
@@ -614,7 +614,7 @@ image_id,cluster,stab,ruang,grup,sub,kode,nama,stab_nama,knn_nama,konflik_grup,b
 613,40,0.95,vitl,511,40b,40b,textile,1.0,1.0,False,True
 614,14,1.0,vitl,512,14b,14b,glass,1.0,1.0,False,True
 615,1,0.9,vitl,513,1b,1b,textile,1.0,1.0,False,True
-616,3,0.55,vitl,514,3a,3a,metal,0.55,0.9,False,False
+616,3,0.55,vitl,514,3a,3a,glass,0.55,0.9,False,True
 617,22,1.0,vitl,515,22a,22a,paper,1.0,1.0,False,True
 618,38,1.0,vitl,212,38b,38b,metal,1.0,1.0,False,True
 619,12,0.2,vitl,516,12a,12a,foodwaste,1.0,1.0,False,True
@@ -736,7 +736,7 @@ image_id,cluster,stab,ruang,grup,sub,kode,nama,stab_nama,knn_nama,konflik_grup,b
 735,8,0.9,vitl,600,8b,8b,paper,1.0,1.0,False,True
 736,33,1.0,vitl,601,33a,33a,plastic,1.0,1.0,False,True
 737,8,0.45,vitl,602,8b,8b,paper,0.6,0.4444444444444444,False,False
-738,3,0.85,vitl,603,3a,3a,metal,0.85,0.9,False,True
+738,3,0.85,vitl,603,3a,3a,glass,0.85,0.9,False,True
 739,13,0.95,vitl,604,13a,13a,foodwaste,1.0,1.0,False,True
 740,30,0.5,vitl,605,30b,30b,textile,0.95,1.0,False,True
 741,12,0.25,vitl,606,12b,12b,foodwaste,1.0,1.0,False,True
@@ -1058,7 +1058,7 @@ image_id,cluster,stab,ruang,grup,sub,kode,nama,stab_nama,knn_nama,konflik_grup,b
 1057,36,1.0,vitl,139,36a,36a,electronic,1.0,1.0,False,True
 1058,11,0.85,vitl,833,11b,11b,cardboard,1.0,1.0,False,True
 1059,38,1.0,vitl,834,38b,38b,metal,1.0,1.0,False,True
-1060,3,0.85,vitl,835,3a,3a,metal,0.95,1.0,False,True
+1060,3,0.85,vitl,835,3a,3a,glass,0.95,1.0,False,True
 1061,28,1.0,vitl,836,28a,28a,glass,1.0,1.0,False,True
 1062,4,1.0,vitl,837,4a,4a,plastic,1.0,1.0,False,True
 1063,30,1.0,vitl,154,30b,30b,textile,1.0,1.0,False,True
@@ -1190,7 +1190,7 @@ image_id,cluster,stab,ruang,grup,sub,kode,nama,stab_nama,knn_nama,konflik_grup,b
 1189,31,1.0,vitl,71,31b,31b,cardboard,1.0,1.0,False,True
 1190,18,0.7,vitl,933,18a,18a,electronic,0.95,0.9,False,True
 1191,35,1.0,vitl,640,35a,35a,metal,1.0,1.0,False,True
-1192,3,0.5,vitl,934,3a,3a,metal,0.5,0.9,False,False
+1192,3,0.5,vitl,934,3a,3a,glass,0.5,0.9,False,True
 1193,8,0.75,vitl,935,8a,8a,paper,0.8,1.0,False,True
 1194,47,0.3,vitl,936,47a,47a,electronic,0.95,0.7,False,True
 1195,26,0.95,vitl,271,26a,26a,foodwaste,1.0,1.0,False,True
