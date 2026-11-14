@@ -67,6 +67,28 @@ def kelompok(k=8):
                          "label_lama": lama.label.values, "suara": lama.suara.values})
 
 
+RUN1 = ROOT / "results/cache"  # cache Run 1 Kaggle (ekstrak dari archives/cache.zip.part*)
+
+
+def norml2(a):
+    return a / np.linalg.norm(a, axis=1, keepdims=True)
+
+
+def run1():
+    """Partisi Run 1 (DINOv3 ViT-L, K=48), bootstrap, embedding resep, dan ZP (PCA128 train-only) seperti notebook."""
+    from sklearn.decomposition import PCA
+
+    e = {k: np.load(RUN1 / f"emb_vitl_train_{k}.npy").astype(np.float32)
+         for k in ("asli_cls", "asli_patch", "flip_cls", "flip_patch")}
+    eg = norml2(np.hstack([norml2(e["asli_cls"] + e["flip_cls"]), norml2(e["asli_patch"] + e["flip_patch"])]))
+    zp = norml2(PCA(128, random_state=SEED).fit_transform(eg))
+    return pd.read_csv(RUN1 / "cluster_train.csv"), np.load(RUN1 / "boot_train.npy"), eg, zp
+
+
+def path_train(i):
+    return next((DATA / "train").glob(f"{i:04d}.*"))
+
+
 def montage(paths, captions, out, ncol=8, sel=160):
     n = len(paths)
     nrow = max(1, int(np.ceil(n / ncol)))

@@ -1,9 +1,12 @@
-"""Builder notebook final DSC Gelar Rasa 2026: DINOv3 7B (clustering) + ConvNeXt-L DINOv3 (classifier tunggal).
+"""Builder notebook final DSC Gelar Rasa 2026: DINOv3 ViT-L (clustering, dipilih di Run 1) + ConvNeXt-L DINOv3 (classifier tunggal).
 
-    .venv/bin/python temp/nb_7b/build_nb.py
+    .venv/Scripts/python.exe temp/nb_7b/build_nb.py
 
 Output ke folder notebook/ di root repo. Notebook TIDAK dijalankan di lokal. Target: Kaggle T4 x2, path /kaggle/input.
+Versi 2 (2026-11-13): tanpa head ImageNet, sub-cluster k=2, pembersihan label program, kuota label tangan,
+fallback fp32 untuk DINOv3 di T4, RRC 0,5 (prep_302), dan uji jalan kode training saat nama cluster belum diisi.
 """
+import csv
 import json
 import sys
 from pathlib import Path
@@ -14,7 +17,14 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 OUT = Path(__file__).resolve().parents[2] / "notebook" / "dsc_gelarrasa_2026_dinov3.ipynb"
 HR = "---"
-PREP = json.loads((Path(__file__).resolve().parents[1] / "prep_301_verifikasi/output/prep_final.json").read_text())["final"]
+PREP = json.loads((Path(__file__).resolve().parents[1] / "prep_302_verifikasi_run1/output/prep_final.json").read_text())["final"]
+# nama cluster diisi tim (bukan asisten AI) di CSV ini, disalin apa adanya ke sel NAMA_CLUSTER
+_NAMA = list(csv.DictReader(open(Path(__file__).resolve().parents[2] / "results/nama_cluster_templat.csv", encoding="utf-8")))
+_PER = {}
+for _r in _NAMA:
+    _PER.setdefault("".join(ch for ch in _r["kode"] if ch.isdigit()), []).append(_r)
+BARIS_NAMA = [" ".join(f"'{r['kode']}': '{r['nama']}'," for r in rs) for rs in _PER.values()]
+PECAH_TIM = [k for k, rs in _PER.items() if len({r["nama"] for r in rs}) > 1]
 
 
 def md(source: str) -> dict:
@@ -49,8 +59,8 @@ cells = []
 cells.append(md(
     f"{HR}\n\n"
     "# DSC Gelar Rasa 2026: Klasifikasi Citra Sampah\n\n"
-    "*Label train dari clustering embedding DINOv3, nama cluster diputuskan tim dengan bukti visual, "
-    "lalu satu classifier ConvNeXt-L DINOv3 untuk 8 kategori sampah.*"
+    "*Label train dari clustering embedding DINOv3, nama cluster diputuskan tim dengan bukti visual, label "
+    "dibersihkan dengan aturan program, lalu satu classifier ConvNeXt-L DINOv3 untuk 8 kategori sampah.*"
 ))
 cells.append(md(
     f"{HR}\n\n"
@@ -69,10 +79,11 @@ cells.append(md(
     "5. [**Perbandingan Ruang Embedding**](#5)\n"
     "6. [**Clustering Train**](#6)\n"
     "7. [**Penamaan Cluster**](#7)\n"
-    "8. [**Training Classifier**](#8)\n"
-    "9. [**Validasi Lokal**](#9)\n"
-    "10. [**Inference Test**](#10)\n"
+    "8. [**Pembersihan Label**](#8)\n"
+    "9. [**Training Classifier**](#9)\n"
+    "10. [**Model Final dan Inference Test**](#10)\n"
     "11. [**Submission**](#11)\n"
+    "12. [**Validasi Lokal**](#12)\n"
 ))
 
 # ---------------------------------------------------------------------------
@@ -95,8 +106,12 @@ cells.append(md(
     "## Kepatuhan\n\n"
     "| Aturan | Penerapan di notebook |\n"
     "|---|---|\n"
-    "| Tanpa VLM | Hanya DINOv3 (self-supervised, citra saja) dan ConvNeXtV2 ImageNet-1k (citra saja) |\n"
-    "| Label train dari clustering | KMeans pada embedding train, nama cluster diisi tim di bagian 7 |\n"
+    "| Tanpa VLM | Hanya keluarga DINOv3 (self-supervised, citra saja, tanpa teks) |\n"
+    "| Model pretrained wajib di-fine-tune | ConvNeXt-L DINOv3 di-fine-tune penuh pada train panitia. Tidak ada model jadi yang menebak train atau test |\n"
+    "| Label train dari clustering | KMeans pada embedding train, nama cluster atau sub-cluster diisi tim di bagian 7 |\n"
+    "| Tanpa bantuan AI saat pelabelan | Montage hanya berisi citra, ukuran, dan stabilitas. Head ImageNet versi 1 tidak dipakai lagi |\n"
+    "| Label tangan maksimal 5 per kelas, total 40 | `LABEL_TANGAN` diperiksa dengan assert |\n"
+    "| Koreksi label lewat aturan program | Citra hanya dibuang (stabilitas bootstrap, kemiripan tetangga, konflik grup duplikat), tidak dipindah kelas |\n"
     "| Test hanya untuk inference | Test tidak ikut PCA, clustering, grup, normalisasi, atau seleksi model |\n"
     "| Satu model | Submission dari satu ConvNeXt-L yang dilatih ulang pada seluruh label, tanpa ensemble dan tanpa TTA |\n"
     "| Tanpa LB probing | Semua keputusan dari aturan yang ditetapkan sebelum run dan dari validasi lokal |"
@@ -104,12 +119,12 @@ cells.append(md(
 cells.append(md(
     "## Pendekatan\n\n"
     "1. EDA ringkas: resolusi, kualitas JPEG, noise dan blur, warna, serta duplikat.\n"
-    "2. Embedding train dari DINOv3 ViT-7B (bobot fp16 dibagi ke dua T4) dan DINOv3 ViT-L sebagai pembanding.\n"
-    "3. Ruang embedding dipilih dengan aturan beku berbasis metrik tanpa label.\n"
-    "4. KMeans train-only, stabilitas per citra dari bootstrap, citra rapuh tidak diberi label.\n"
-    "5. Tim menamai tiap cluster dari montage dan top-5 kelas ImageNet sebagai bukti pendukung.\n"
+    "2. Embedding train dari DINOv3 ViT-L dan DINOv3 ViT-7B. Versi 1 notebook ini (Run 1) memilih ViT-L lewat aturan beku.\n"
+    "3. KMeans train-only K = 48, stabilitas per citra dari 20 bootstrap, dan usulan pecah k = 2 untuk tiap cluster.\n"
+    "4. Tim menamai tiap cluster, atau tiap sub-cluster bila cluster campuran, hanya dari montage citra.\n"
+    "5. Label dibersihkan dengan tiga aturan buang: stabilitas nama bootstrap, kesepakatan tetangga di ruang 7B, dan konflik grup duplikat.\n"
     "6. ConvNeXt-L DINOv3 di-fine-tune, divalidasi dengan StratifiedGroupKFold berbasis grup near-duplicate.\n"
-    "7. Model final dilatih ulang pada seluruh label, lalu memprediksi test sekali.\n\n"
+    "7. Model final dilatih ulang pada seluruh label bersih, lalu memprediksi test sekali.\n\n"
     "Embedding 7B hanya dibutuhkan untuk train. Classifier final membaca piksel, jadi test tidak perlu diekstrak dengan 7B."
 ))
 
@@ -119,9 +134,11 @@ cells.append(md(
 cells.append(section("Inisialisasi", "2"))
 cells.append(md(
     "## Environment Setup\n\n"
-    "Notebook dirancang untuk Kaggle GPU T4 x2 dengan Internet aktif. Bila dataset cache embedding dan cluster "
-    "dilampirkan, `Settings.PAKAI_CACHE = True` melewati ekstraksi 7B. Perkiraan waktu: ekstraksi 7B train dua "
-    "pandangan sekitar 30 menit, cross-validation 5 fold sekitar 1 jam, model final sekitar 15 menit."
+    "Notebook dirancang untuk Kaggle GPU T4 x2 dengan Internet aktif. Dataset `gelarrasa-cache` berisi embedding "
+    "dan partisi dari Run 1. Bila dilampirkan, `Settings.PAKAI_CACHE = True` melewati ekstraksi sehingga nama cluster "
+    "dari tim menunjuk citra yang sama persis. Waktu terukur Run 1: muat 7B 238 detik, ekstraksi 7B 2.119 detik, "
+    "ekstraksi ViT-L 160 detik. Perkiraan waktu training: cross-validation 5 fold sekitar 25 menit dengan fp16, "
+    "atau sekitar 70 menit bila pemeriksaan presisi memaksa fp32. Model final menambah seperlima dari angka itu."
 ))
 cells.append(code("!nvidia-smi"))
 cells.append(md("Sel berikut memasang pustaka yang versinya perlu dikunci."))
@@ -165,7 +182,6 @@ cells.append(code(
     "from sklearn.decomposition import PCA\n"
     "from sklearn.metrics import adjusted_rand_score, confusion_matrix, silhouette_score\n"
     "from sklearn.model_selection import StratifiedGroupKFold\n"
-    "from timm.data import ImageNetInfo\n"
     "from timm.optim import create_optimizer_v2\n"
     "from torch.utils.data import DataLoader, Dataset\n"
     "from torchvision.transforms import v2 as T\n"
@@ -181,8 +197,9 @@ cells.append(code(
     "    np.random.seed(seed)\n"
     "    torch.manual_seed(seed)\n"
     "    torch.cuda.manual_seed_all(seed)\n"
-    "    torch.backends.cudnn.benchmark = False\n"
-    "    torch.backends.cudnn.deterministic = True\n"
+    "    # cuDNN deterministik membuat backward depthwise conv 7x7 ConvNeXt sangat lambat (run versi 4: 6 detik per langkah)\n"
+    "    torch.backends.cudnn.benchmark = True\n"
+    "    torch.backends.cudnn.deterministic = False\n"
     "\n"
     "\n"
     "def seed_worker(worker_id):\n"
@@ -199,8 +216,11 @@ cells.append(md(
     "Semua path, revisi bobot, ambang, dan hyperparameter dikumpulkan di sini. Token Hugging Face dibaca dari "
     "Kaggle Secrets bernama `HF_TOKEN` bila dilampirkan. Token tidak wajib karena repo bobot tidak gated, tetapi "
     "mempercepat unduhan dan menghindari batas laju. Parameter augmentasi berasal dari "
-    "verifikasi preprocessing lokal (`temp/prep_301_verifikasi`), bukan dari skor test. Aturan pemilihan ruang "
-    "embedding, K, dan ambang stabilitas ditetapkan sebelum run."
+    "verifikasi preprocessing lokal (`temp/prep_301_verifikasi` dan `temp/prep_302_verifikasi_run1`), bukan dari skor "
+    "test. Aturan pemilihan ruang embedding, K, ambang stabilitas, dan ambang pembersihan label ditetapkan sebelum run. "
+    "`PRESISI = 'auto'` memeriksa aktivasi ConvNeXt-L di fp16 dan pindah ke fp32 bila ada nilai di luar jangkauan fp16. "
+    "`UJI_JALAN = True` menjalankan training 1 epoch dengan label acak selama nama cluster belum lengkap, hanya untuk "
+    "menguji kode GPU, tanpa submission."
 ))
 cells.append(code(
     "class Settings:\n"
@@ -217,7 +237,6 @@ cells.append(code(
     "    M7B = ('timm/vit_7b_patch16_dinov3.lvd1689m', 'b40f6c827cb02b13c7a23a76cf598489bb0f94e5', 'vit_7b_patch16_dinov3')\n"
     "    MVITL = ('timm/vit_large_patch16_dinov3.lvd1689m', '30c1109559f65dea34316b0d4842d35c5771fe11', 'vit_large_patch16_dinov3')\n"
     "    MCNN = ('timm/convnext_large.dinov3_lvd1689m', '0f8b496db5dea10c7533e85304400f0eddad55ac', 'convnext_large.dinov3_lvd1689m')\n"
-    "    MHEAD = ('timm/convnextv2_huge.fcmae_ft_in22k_in1k_384', 'e2ddce36b729b827f01e8c3fd72be459d212c95c', 'convnextv2_huge.fcmae_ft_in22k_in1k_384')\n"
     "    POLA_7B_FP16 = 'dinov3_7b_fp16*.safetensors'\n"
     "    DISK_MIN_GIB = 30\n"
     "\n"
@@ -226,7 +245,7 @@ cells.append(code(
     "    MEAN = (0.485, 0.456, 0.406)\n"
     "    STD = (0.229, 0.224, 0.225)\n"
     "    BS_EMB = 16\n"
-    "    LAPIS_7B = (19, 29)\n"
+    "    LAPIS_7B = ()\n"
     "\n"
     "    PCA_DIM = 128\n"
     "    K_BANDING = 48\n"
@@ -237,7 +256,14 @@ cells.append(code(
     "    SELISIH_ARI_7B = 0.03\n"
     "    H_MAX = 4\n"
     "    PORSI_PASANGAN = 0.000721\n"
+    "    KNN_K = 10\n"
+    "    KNN_MIN = 0.5\n"
+    "    TANGAN_PER_KELAS = 5\n"
+    "    TANGAN_TOTAL = 40\n"
     "\n"
+    "    PRESISI = 'auto'\n"
+    "    UJI_JALAN = True\n"
+    "    BATAS_CV_JAM = 2.0\n"
     "    N_FOLD = 5\n"
     "    EPOCH = 8\n"
     "    BS = 16\n"
@@ -473,9 +499,12 @@ cells.append(md(
 
 cells.append(md(
     "## Verifikasi Augmentasi\n\n"
-    "Parameter augmentasi dipilih lewat iterasi lokal (`temp/prep_301_verifikasi`) dengan proksi tanpa model. "
-    "RandomResizedCrop scale minimum 0,4 adalah nilai terkecil dengan peluang sisa objek di bawah 50% tidak lebih "
-    "dari 1% (diukur pada citra berlatar polos). Rotasi 90 derajat dan flip meniru salinan dihedral yang memang ada "
+    "Parameter augmentasi dipilih lewat iterasi lokal (`temp/prep_301_verifikasi` dan `temp/prep_302_verifikasi_run1`) "
+    "dengan proksi tanpa model dan inspeksi grid per cluster Run 1. Grid prep_302 memperlihatkan objek tipis atau "
+    "kecil di latar polos (kipas berdiri, kaleng penyok) hilang dari sebagian besar crop scale 0,4. Dengan kriteria yang "
+    "ditetapkan sebelum pengukuran (crop yang menyisakan kurang dari 50% objek paling banyak 10% pada objek kecil dan 2% "
+    "pada semua latar polos), scale 0,4 gagal tipis (10,05%), sedangkan scale 0,5 lolos (7,3% dan 0,3%). RandomResizedCrop "
+    "memakai scale minimum 0,5. Rotasi 90 derajat dan flip meniru salinan dihedral yang memang ada "
     "di data. Rotasi kecil 15 derajat ditolak setelah inspeksi grid: isian sudut konstan mencolok, dan isian warna "
     "tepi memunculkan sudut hitam pada citra electronic berpita. Color jitter dibatasi pada brightness 0,2 dan "
     "contrast 0,1 tanpa saturation dan hue. Jitter lama (0,2; 0,2; 0,2; 0,02) memindahkan 4,7% cardboard ke sisi "
@@ -509,9 +538,17 @@ cells.append(code(
 ))
 cells.append(md(
     "#### Insights\n\n"
-    "> Augmentasi menjaga isyarat material: crop tidak lebih kecil dari 40% luas, warna kardus tidak dipudarkan "
-    "lewat saturation, tekstur tidak dihaluskan, dan tidak ada sudut isian yang bisa menjadi artefak. Grid lengkap per cluster lama (resize, trim pita hitam, crop, "
-    "rotasi, jitter final, serta contoh parameter yang ditolak) ada di `temp/prep_301_verifikasi/output` untuk diperiksa tim."
+    "> Augmentasi menjaga isyarat material: crop tidak lebih kecil dari 50% luas, warna kardus tidak dipudarkan "
+    "lewat saturation, tekstur tidak dihaluskan, dan tidak ada sudut isian yang bisa menjadi artefak. Grid lengkap "
+    "(resize, trim pita hitam, crop, rotasi, jitter final, serta contoh parameter yang ditolak) ada di "
+    "`temp/prep_301_verifikasi/output` dan `temp/prep_302_verifikasi_run1/output`.\n\n"
+    "> Augmentasi kompresi JPEG atau penurunan resolusi tidak dipakai. EDA 212 menemukan cluster sangat terkait "
+    "sumber berkas (Cramer's V 0,73) dan tabel kuantisasi JPEG (0,77). Namun sumber yang hanya ada di train tidak "
+    "pernah muncul di test, sehingga isyarat sumber itu tidak bisa memicu prediksi salah di test. Sebaran resolusi "
+    "train dan test juga mirip, jadi bias resolusi yang ada dimiliki kedua split.\n\n"
+    "> Stretch pada citra beraspek ekstrem memanjangkan bentuk sampai dua kali (49 citra train beraspek di atas 1,6 atau "
+    "di bawah 0,62), tetapi tekstur dan warna material tetap. Porsi aspek di luar [0,67; 1,5] mirip antar split "
+    "(train 5,4%, test 3,7%, EDA 201), dan test diproses identik."
 ))
 
 # ---------------------------------------------------------------------------
@@ -734,37 +771,6 @@ cells.append(code(
     "print({k: v.shape for k, v in E_7B.items()})"
 ))
 
-cells.append(md(
-    "## Head ImageNet-1k sebagai Bukti Pendukung\n\n"
-    "ConvNeXtV2-Huge (pretraining FCMAE, fine-tune ImageNet-1k, citra saja) memberi probabilitas 1.000 kelas "
-    "ImageNet untuk tiap citra train. Keluarannya dipakai untuk dua hal: referensi independen pada perbandingan ruang "
-    "embedding, dan daftar top-5 nama kelas ImageNet per cluster sebagai bukti pendukung penamaan. Tidak ada pemetaan "
-    "kelas ImageNet ke 8 kategori. Nama mentah ditampilkan, dan tim yang menafsirkannya."
-))
-cells.append(code(
-    "def prob_head():\n"
-    "    b = 'head_in1k_train.npy'\n"
-    "    if CFG.PAKAI_CACHE and cari_cache(b):\n"
-    "        return np.load(cari_cache(b)).astype(np.float32)\n"
-    "    m = timm.create_model(CFG.MHEAD[2], pretrained=True, pretrained_cfg_overlay={'file': str(unduh(*CFG.MHEAD[:2]))})\n"
-    "    m = m.cuda().eval().half()\n"
-    "    dl = DataLoader(Citra(X_train, tf_eval), batch_size=32, num_workers=CFG.NUM_WORKERS)\n"
-    "    with torch.no_grad(), torch.autocast('cuda', dtype=torch.float16):\n"
-    "        p = np.concatenate([torch.softmax(m(x.cuda()).float(), 1).cpu().numpy() for x in dl])\n"
-    "    np.save(CFG.CACHE_DIR / b, p.astype(np.float16))\n"
-    "    del m\n"
-    "    gc.collect()\n"
-    "    torch.cuda.empty_cache()\n"
-    "    return p\n"
-    "\n"
-    "\n"
-    "P_HEAD = prob_head()\n"
-    "INFO_IN = ImageNetInfo()\n"
-    "NAMA_IN = [INFO_IN.index_to_description(i) for i in range(1000)]\n"
-    "TOP1 = P_HEAD.argmax(1)\n"
-    "print('kelas ImageNet top-1 terbanyak:', pd.Series([NAMA_IN[i].split(',')[0] for i in TOP1]).value_counts().head(8).to_dict())"
-))
-
 # ---------------------------------------------------------------------------
 # 5. Perbandingan ruang
 # ---------------------------------------------------------------------------
@@ -777,12 +783,14 @@ cells.append(md(
     "|---|---|---|\n"
     "| `ari_boot` | ARI partisi subsample 80% terhadap partisi acuan, rata-rata 20 bootstrap | Ya |\n"
     "| `rapuh` | jumlah cluster acuan dengan Jaccard bootstrap < 0,6 | Ya |\n"
-    "| `knn_top1` | porsi 10 tetangga terdekat yang berbagi kelas top-1 ImageNet (referensi independen) | Ya |\n"
     "| `ari_seed` | ARI antar 5 seed KMeans | Ya |\n"
     "| `silhouette` | silhouette cosine | Tidak, bergantung geometri ruang |\n\n"
     "Aturan beku, dievaluasi pada K = 48: 7B dipakai bila `ari_boot` 7B minimal 0,03 di atas ViT-L, `knn_top1` "
     "tidak lebih rendah, dan `rapuh` tidak lebih banyak. Bila salah satu gagal, ViT-L dipakai karena lebih murah. "
-    "Baseline lokal ViT-L pada K = 48 (resep CLS satu pandangan, `temp/eda_208`): `ari_boot` 0,638, `rapuh` 18 dari 48."
+    "`knn_top1` memakai head ImageNet sebagai referensi. Head itu tidak dipakai lagi di versi ini supaya tidak ada "
+    "model jadi yang ikut dalam alur pelabelan, sehingga nilainya dikutip dari Run 1: 0,475 (7B) lawan 0,476 (ViT-L). "
+    "Run 1 juga mencatat `ari_boot` 0,665 lawan 0,692 dan `rapuh` 19 lawan 15. Dua syarat lain sudah gagal, jadi "
+    "keputusan tidak bergantung pada `knn_top1`."
 ))
 cells.append(code(
     "def norml2(a):\n"
@@ -820,13 +828,10 @@ cells.append(code(
     "        boot.append(adjusted_rand_score(acuan, lab))\n"
     "        jac.append(jaccard_cluster(acuan, lab, idx))\n"
     "    jac = np.mean(jac, 0)\n"
-    "    S = z @ z.T\n"
-    "    np.fill_diagonal(S, -np.inf)\n"
-    "    nn10 = np.argsort(-S, 1)[:, :10]\n"
     "    uk = np.bincount(acuan)\n"
     "    return dict(k=k, silhouette=silhouette_score(z, acuan, metric='cosine'), ari_seed=ari_seed, ari_boot=np.mean(boot),\n"
     "                ari_boot_std=np.std(boot), jaccard_med=np.median(jac), rapuh=int((jac < .6).sum()),\n"
-    "                knn_top1=np.mean(TOP1[nn10] == TOP1[:, None]), uk_min=int(uk.min()), uk_max=int(uk.max()))\n"
+    "                uk_min=int(uk.min()), uk_max=int(uk.max()))\n"
     "\n"
     "\n"
     "Z = {'vitl': siapkan(resep(E_VITL)), '7b': siapkan(resep(E_7B))}\n"
@@ -834,23 +839,20 @@ cells.append(code(
     "display(banding.round(3))\n"
     "a, b = banding.loc['7b'], banding.loc['vitl']\n"
     "syarat = {'ari_boot naik >= 0,03': a.ari_boot - b.ari_boot >= CFG.SELISIH_ARI_7B,\n"
-    "          'knn_top1 tidak turun': a.knn_top1 >= b.knn_top1, 'rapuh tidak bertambah': a.rapuh <= b.rapuh}\n"
+    "          'knn_top1 tidak turun (Run 1: 0,475 vs 0,476)': 0.475 >= 0.476, 'rapuh tidak bertambah': a.rapuh <= b.rapuh}\n"
     "PAKAI = '7b' if all(syarat.values()) else 'vitl'\n"
     "print(syarat)\n"
     "print('ARI partisi K=48 antara 7B dan ViT-L:',\n"
     "      round(adjusted_rand_score(km(Z['7b'], CFG.K_BANDING, CFG.SEED).labels_, km(Z['vitl'], CFG.K_BANDING, CFG.SEED).labels_), 3))\n"
-    "lama = cari_cache('label_lama.csv')\n"
-    "if lama:\n"
-    "    lab_lama = pd.read_csv(lama).sort_values('image_id').label.values\n"
-    "    for r, z in Z.items():\n"
-    "        print(f'ARI {r} K=48 vs label lama (melingkar untuk ViT-L):',\n"
-    "              round(adjusted_rand_score(lab_lama, km(z, CFG.K_BANDING, CFG.SEED).labels_), 3))\n"
     "print('RUANG DIPAKAI:', PAKAI)"
 ))
 cells.append(md(
     "#### Insights\n\n"
-    "> Isi setelah run: tulis angka `ari_boot`, `rapuh`, dan `knn_top1` kedua ruang beserta ruang yang terpilih. "
-    "Bila 7B tidak lolos, ekstraksi 7B tetap tercatat di notebook sebagai bukti bahwa keputusan diambil dari metrik."
+    "> Run 1 mencatat 7B gagal ketiga syarat: `ari_boot` 0,665 lawan 0,692, `rapuh` 19 lawan 15, dan `knn_top1` 0,475 "
+    "lawan 0,476. Model 7B yang 22 kali lebih besar tidak memberi partisi yang lebih stabil di data ini, sesuai "
+    "laporan DINOv3 bahwa selisih ViT-L hasil distilasi dan 7B pada tugas global hanya beberapa poin. ViT-L dipakai "
+    "untuk clustering. Embedding 7B tetap berguna sebagai pandangan kedua yang independen untuk pembersihan label di "
+    "bagian 8 (ARI partisi kedua ruang hanya 0,64, EDA lokal 213)."
 ))
 
 # ---------------------------------------------------------------------------
@@ -951,106 +953,206 @@ cells.append(md(
 # ---------------------------------------------------------------------------
 cells.append(section("Penamaan Cluster", "7"))
 cells.append(md(
-    "Penamaan dilakukan manual oleh tim, sesuai jawaban resmi panitia. Untuk tiap cluster, notebook menampilkan "
-    "montage berisi 20 citra inti (stabilitas tertinggi, diambil acak) dan 6 citra paling pinggir (bingkai merah), "
-    "serta tabel ukuran, stabilitas rata-rata, dan top-5 kelas ImageNet. Skor head hanya bukti pendukung. Keputusan "
-    "nama ada pada tim, dan cluster campuran boleh dipecah atau ditandai `campur`. Asisten AI yang membantu menulis "
-    "kode hanya melihat grid preprocessing untuk QA, dan tidak memberi label maupun nama cluster."
+    "Penamaan dilakukan manual oleh tim, sesuai jawaban resmi panitia. Tiap cluster punya montage berisi sampai 40 "
+    "citra, dipisah menurut usulan pecah k = 2, dengan judul merah untuk citra yang stabilitas bootstrap-nya di bawah "
+    "0,7. Montage tidak memuat nama kelas, skor model, atau saran nama. Tim boleh memberi satu nama untuk seluruh "
+    "cluster, nama berbeda untuk sub-cluster `a` dan `b` bila montage memperlihatkan dua material, atau `campur` bila "
+    "isinya tidak bisa diputuskan. Asisten AI yang membantu menulis kode hanya memeriksa grid preprocessing, dan tidak "
+    "membuka montage cluster maupun mengusulkan nama."
+))
+cells.append(md(
+    "## Usulan Pecah k = 2\n\n"
+    "Setiap cluster dibagi dua dengan KMeans k = 2 (`n_init = 20`) di ruang yang sama dengan clustering. Huruf `a` "
+    "diberikan ke sub-cluster yang memuat ID citra terkecil, sehingga hurufnya tidak bergantung urutan label internal "
+    "KMeans. Cluster ditandai calon pecah bila jarak kedua sub-centroid setidaknya sama dengan jarak cluster ke "
+    "tetangga terdekatnya, kedua sub berisi minimal 5 citra, dan tetangga terdekat kedua sub berbeda. Tanda ini hanya "
+    "membantu urutan pemeriksaan, sedangkan keputusan pecah ada pada tim. Bila cache tersedia, sub-cluster dimuat dari "
+    "`subcluster_train.csv` supaya huruf di montage lokal dan di notebook sama, lalu dibandingkan dengan hitung ulang."
+))
+cells.append(code(
+    "def pecah_k2(z, cluster):\n"
+    "    sub = np.empty(len(cluster), object)\n"
+    "    for k in np.unique(cluster):\n"
+    "        idx = np.flatnonzero(cluster == k)\n"
+    "        s = KMeans(2, n_init=20, random_state=CFG.SEED).fit_predict(z[idx])\n"
+    "        s = s if s[0] == 0 else 1 - s\n"
+    "        sub[idx] = [str(k) + 'ab'[v] for v in s]\n"
+    "    return sub\n"
+    "\n"
+    "\n"
+    "assert (CL.image_id.values == id_train).all()\n"
+    "sub_ulang = pecah_k2(ZP, CL.cluster.values)\n"
+    "cache_sub = cari_cache('subcluster_train.csv')\n"
+    "if CFG.PAKAI_CACHE and cache_sub:\n"
+    "    CL['sub'] = pd.read_csv(cache_sub).set_index('image_id').loc[id_train, 'sub'].values\n"
+    "    print('sub-cluster dimuat dari cache; kesepakatan dengan hitung ulang:', round(float(np.mean(CL['sub'].values == sub_ulang)), 4))\n"
+    "else:\n"
+    "    CL['sub'] = sub_ulang\n"
+    "    CL[['image_id', 'cluster', 'sub']].to_csv(CFG.CACHE_DIR / 'subcluster_train.csv', index=False)\n"
+    "\n"
+    "cen = norml2(np.stack([ZP[CL.cluster.values == k].mean(0) for k in range(K)]))\n"
+    "S_cen = cen @ cen.T\n"
+    "np.fill_diagonal(S_cen, -1)\n"
+    "tukar = np.zeros((K, K))\n"
+    "for b in BOOT:\n"
+    "    np.add.at(tukar, (CL.cluster.values, b), 1)\n"
+    "tukar /= tukar.sum(1, keepdims=True)\n"
+    "np.fill_diagonal(tukar, 0)\n"
+    "AUDIT = []\n"
+    "for k in range(K):\n"
+    "    idx = np.flatnonzero(CL.cluster.values == k)\n"
+    "    s = CL['sub'].values[idx]\n"
+    "    sc = norml2(np.stack([ZP[idx[s == f'{k}{h}']].mean(0) for h in 'ab']))\n"
+    "    lain = np.delete(np.arange(K), k)\n"
+    "    tet = [int(lain[np.argmax(cen[lain] @ v)]) for v in sc]\n"
+    "    rasio = (1 - sc[0] @ sc[1]) / (1 - S_cen[k].max())\n"
+    "    n_ab = [int((s == f'{k}{h}').sum()) for h in 'ab']\n"
+    "    AUDIT.append(dict(cluster=k, n=len(idx), n_a=n_ab[0], n_b=n_ab[1], stab=round(float(CL.stab.values[idx].mean()), 3),\n"
+    "                      tukar_utama=int(np.argmax(tukar[k])), porsi_tukar=round(float(tukar[k].max()), 3),\n"
+    "                      rasio_pisah=round(float(rasio), 3), calon_pecah=bool(rasio >= 1 and min(n_ab) >= 5 and tet[0] != tet[1])))\n"
+    "AUDIT = pd.DataFrame(AUDIT).set_index('cluster')\n"
+    "AUDIT.to_csv(CFG.OUTPUT_DIR / 'audit_cluster.csv')\n"
+    "print('calon pecah:', AUDIT.index[AUDIT.calon_pecah].tolist())\n"
+    "with pd.option_context('display.max_rows', 60):\n"
+    "    display(AUDIT)"
+))
+cells.append(md(
+    "#### Insights\n\n"
+    "> EDA lokal 210 pada partisi yang sama menemukan 16 dari 48 cluster rapuh (Jaccard bootstrap < 0,6) dan tiga "
+    "calon pecah: cluster 5, 6, dan 47. Pasangan 12 dan 24 bertukar 74% anggotanya antar bootstrap, diikuti 7 dan 29 "
+    "(51%). Pertukaran sebesar ini tidak masalah bila kedua cluster diberi nama yang sama, tetapi menjadi sumber noise "
+    "bila namanya berbeda. Karena itu pasangan dengan `porsi_tukar` besar perlu dinamai dengan melihat kedua montage "
+    "berdampingan.\n\n"
+    "> EDA lokal 212 menemukan cluster 1, 2, 34, dan 40 hampir seluruhnya berasal dari satu sumber berkas (JPEG q70, "
+    "400 px) yang hanya ada di train. Cluster seperti ini bisa terbentuk karena gaya foto sumbernya, jadi montage-nya "
+    "perlu diperiksa apakah materialnya memang seragam."
 ))
 cells.append(md(
     "## Bukti Visual per Cluster\n\n"
-    "Montage juga disimpan sebagai `gambar/cluster_<kode>.png` supaya bisa diperiksa di luar notebook."
+    "Montage disimpan juga sebagai `gambar/cluster_<k>.png`. Judul tiap citra berisi ID, huruf sub-cluster, dan "
+    "stabilitas. Citra di dalam tiap sub diurutkan dari yang paling stabil, ditambah sampai 3 citra paling ragu."
 ))
 cells.append(code(
-    "def urut_kode(kode):\n"
-    "    return sorted(set(kode), key=lambda s: (int(''.join(c for c in s if c.isdigit())), s))\n"
-    "\n"
-    "\n"
-    "def top_in(idx, n=5):\n"
-    "    p = P_HEAD[idx].mean(0)\n"
-    "    return ', '.join(f\"{NAMA_IN[i].split(',')[0]} {p[i]:.2f}\" for i in np.argsort(-p)[:n])\n"
-    "\n"
-    "\n"
-    "def montage(kd, inti, pinggir):\n"
-    "    idx = list(inti) + list(pinggir)\n"
-    "    fig, ax = plt.subplots(2, 13, figsize=(16, 2.9))\n"
+    "def montage(k, maks=40, ncol=10):\n"
+    "    d = CL[CL.cluster == k]\n"
+    "    bagian = []\n"
+    "    for _, ds in d.groupby('sub'):\n"
+    "        jatah = round(maks * len(ds) / len(d)) if len(d) > maks else len(ds)\n"
+    "        ds = ds.sort_values('stab', ascending=False)\n"
+    "        ragu = ds[ds.stab < CFG.STAB_MIN].iloc[::-1][:3]\n"
+    "        bagian.append(pd.concat([ds.iloc[:max(jatah - 3, 1)], ragu]).drop_duplicates('image_id'))\n"
+    "    nrow = sum(math.ceil(len(b) / ncol) for b in bagian)\n"
+    "    fig, ax = plt.subplots(nrow, ncol, figsize=(ncol * 1.5, nrow * 1.6 + .4), squeeze=False)\n"
     "    for a in ax.ravel():\n"
     "        a.axis('off')\n"
-    "    for j, (a, i) in enumerate(zip(ax.ravel(), idx)):\n"
-    "        a.imshow(cv2.resize(X_train[i], (112, 112), interpolation=cv2.INTER_AREA))\n"
-    "        a.set_title(f'{id_train[i]} {CL.stab[i]:.2f}', fontsize=6, color='r' if j >= len(inti) else 'k')\n"
-    "    fig.suptitle(f'cluster {kd} (n={int((CL.kode == kd).sum())}) | merah = paling pinggir', fontsize=9)\n"
+    "    r = 0\n"
+    "    for b in bagian:\n"
+    "        for j, (i, row) in enumerate(b.iterrows()):\n"
+    "            huruf = row['sub'][-1]\n"
+    "            a = ax[r + j // ncol, j % ncol]\n"
+    "            a.imshow(cv2.resize(X_train[i], (144, 144), interpolation=cv2.INTER_AREA))\n"
+    "            a.set_title(f'{row.image_id} {huruf} {row.stab:.2f}', fontsize=6, color='r' if row.stab < CFG.STAB_MIN else 'k')\n"
+    "        r += math.ceil(len(b) / ncol)\n"
+    "    au = AUDIT.loc[k]\n"
+    "    tanda = ' | CALON PECAH' if au.calon_pecah else ''\n"
+    "    fig.suptitle(f'cluster {k} | n={au.n} | sub a={au.n_a} b={au.n_b}{tanda} | stab {au.stab:.2f} | '\n"
+    "                 f'sering bertukar dengan {au.tukar_utama}', fontsize=9)\n"
     "    fig.tight_layout()\n"
-    "    fig.savefig(CFG.FIG_DIR / f'cluster_{kd}.png', dpi=80)\n"
+    "    fig.savefig(CFG.FIG_DIR / f'cluster_{k}.png', dpi=80)\n"
     "    plt.show()\n"
     "\n"
     "\n"
-    "def bukti(daftar_kode):\n"
-    "    rows = []\n"
-    "    rng = np.random.default_rng(CFG.SEED)\n"
-    "    for kd in daftar_kode:\n"
-    "        d = CL[CL.kode == kd].sort_values('stab', ascending=False)\n"
-    "        inti = rng.permutation(d.index.values[:max(20, len(d) // 2)])[:20]\n"
-    "        pinggir = d.index.values[::-1][:min(6, max(0, len(d) - len(inti)))]\n"
-    "        montage(kd, inti, pinggir)\n"
-    "        rows.append(dict(kode=kd, n=len(d), stab_mean=round(d.stab.mean(), 3), n_pinggir=int((d.stab < CFG.STAB_MIN).sum()),\n"
-    "                         top5_imagenet=top_in(d.index.values)))\n"
-    "    return pd.DataFrame(rows)\n"
-    "\n"
-    "\n"
-    "CL['kode'] = CL.cluster.astype(str)\n"
-    "BUKTI = bukti(urut_kode(CL.kode))\n"
-    "BUKTI.to_csv(CFG.OUTPUT_DIR / 'bukti_cluster.csv', index=False)\n"
-    "with pd.option_context('display.max_colwidth', 200, 'display.max_rows', 200):\n"
-    "    display(BUKTI)"
-))
-cells.append(md(
-    "## Pecah Cluster Campuran\n\n"
-    "Bila montage sebuah cluster memuat dua material atau lebih, cluster itu bisa dipecah dengan KMeans lokal. "
-    "Contoh: `PECAH = {12: 2}` memecah cluster 12 menjadi `12a` dan `12b`, lalu montage keduanya ditampilkan. "
-    "Biarkan kosong bila tidak ada cluster yang perlu dipecah."
-))
-cells.append(code(
-    "PECAH = {}\n"
-    "\n"
-    "CL['kode'] = CL.cluster.astype(str)\n"
-    "for c, n in PECAH.items():\n"
-    "    idx = CL.index[CL.cluster == c]\n"
-    "    sub = KMeans(n, n_init=10, random_state=CFG.SEED).fit_predict(ZP[idx])\n"
-    "    CL.loc[idx, 'kode'] = [f'{c}{chr(97 + s)}' for s in sub]\n"
-    "if PECAH:\n"
-    "    display(bukti(urut_kode(CL.kode[CL.cluster.isin(list(PECAH))])))\n"
-    "print('templat NAMA_CLUSTER:')\n"
-    "print('{' + ', '.join(f\"'{k}': ''\" for k in urut_kode(CL.kode)) + '}')"
+    "for k in range(K):\n"
+    "    montage(k)"
 ))
 cells.append(md(
     "## Nama Cluster dari Tim\n\n"
     "Isi `NAMA_CLUSTER` dengan salah satu nama kelas (`glass`, `paper`, `electronic`, `metal`, `plastic`, "
-    "`cardboard`, `textile`, `foodwaste`) atau `campur` untuk setiap kode, berdasarkan montage di atas. Salin templat "
-    "dari sel sebelumnya. Citra pada cluster `campur` tidak diberi label. Selama kamus ini belum lengkap, run "
-    "tetap selesai normal: sel berikutnya mencetak pesan tahap 1, dan bagian 8 sampai 11 dilewati supaya cache "
-    "serta montage tetap tersimpan sebagai output."
+    "`cardboard`, `textile`, `foodwaste`) atau `campur`. Kuncinya nomor cluster (`'5'`) untuk menamai seluruh cluster, "
+    "atau kode sub-cluster (`'5a'`, `'5b'`) untuk menamai tiap bagian. Kunci sub-cluster mengalahkan kunci cluster. "
+    "Citra bernama `campur` tidak diberi label.\n\n"
+    "`LABEL_TANGAN` menampung label manual per citra dalam bentuk `{image_id: kelas}`, maksimal 5 per kelas dan 40 "
+    "total sesuai QnA 7 November. Kuota ini juga berlaku untuk koreksi manual per citra. Label tangan menimpa label "
+    "cluster dan tidak ikut dibuang oleh aturan pembersihan. Selama `NAMA_CLUSTER` belum mencakup semua citra, bagian "
+    "pembersihan, cross-validation, inference, dan submission dilewati, sedangkan uji jalan kode tetap berjalan.\n\n"
+    f"Kamus di bawah diisi tim pada 13 sampai 14 November 2026 dari montage yang sama (versi lokal "
+    "`results/gambar_v2`, 150 px per citra), lalu disalin apa adanya dari `results/nama_cluster_templat.csv`. Tim "
+    f"memecah {len(PECAH_TIM)} cluster menjadi sub dengan nama berbeda: {', '.join(PECAH_TIM)}. Cluster lain diberi satu "
+    "nama yang sama untuk cluster dan kedua sub-nya. Tidak ada label tangan."
+))
+cells.append(code(
+    "print('templat:')\n"
+    "print('NAMA_CLUSTER = {' + ', '.join(f\"'{k}': ''\" for k in range(K)) + '}')"
 ))
 cells.append(code(
     "NAMA_CLUSTER = {\n"
+    + "".join(f"    {baris}\n" for baris in BARIS_NAMA)
+    + "}\n"
+    "LABEL_TANGAN = {\n"
     "}"
 ))
 cells.append(code(
-    "belum = [k for k in urut_kode(CL.kode) if k not in NAMA_CLUSTER]\n"
-    "LABEL_SIAP = not belum\n"
-    + jaga(
+    "CL['kode'] = [s if s in NAMA_CLUSTER else str(k) for k, s in zip(CL.cluster, CL['sub'])]\n"
+    "belum = sorted(set(CL.kode) - set(NAMA_CLUSTER), key=lambda s: (int(''.join(c for c in s if c.isdigit())), s))\n"
     "salah = {k: v for k, v in NAMA_CLUSTER.items() if v not in CFG.KELAS + ['campur']}\n"
     "assert not salah, f'nama tidak valid: {salah}'\n"
+    "assert all(v in CFG.KELAS for v in LABEL_TANGAN.values()), 'kelas LABEL_TANGAN tidak valid'\n"
+    "assert set(LABEL_TANGAN) <= set(id_train.tolist()), 'image_id LABEL_TANGAN tidak ada di train'\n"
+    "per_kelas = pd.Series(list(LABEL_TANGAN.values()), dtype=object).value_counts()\n"
+    "assert len(LABEL_TANGAN) <= CFG.TANGAN_TOTAL and (per_kelas <= CFG.TANGAN_PER_KELAS).all(), 'kuota label tangan terlampaui'\n"
+    "LABEL_SIAP = not belum\n"
+    "print('kode belum dinamai:', belum if belum else 'tidak ada', '| label tangan:', len(LABEL_TANGAN))"
+))
+
+# ---------------------------------------------------------------------------
+# 8. Pembersihan label
+# ---------------------------------------------------------------------------
+cells.append(section("Pembersihan Label", "8"))
+cells.append(md(
+    "Nama cluster memberi label awal untuk semua citra di luar `campur`. Label awal ini membawa dua sumber noise yang "
+    "terukur di EDA lokal: citra pinggir yang berpindah cluster antar bootstrap (22% citra berstabilitas di bawah 0,7) "
+    "dan salinan hampir identik yang jatuh di cluster berbeda (5,9% pasangan Hamming 2 atau kurang). Tiga aturan "
+    "program berikut hanya membuang citra dari training dan tidak memindahkan citra ke kelas lain, sesuai QnA 2 dan "
+    "5 November.\n\n"
+    "| Aturan | Definisi | Syarat lolos |\n"
+    "|---|---|---|\n"
+    "| Stabilitas nama | porsi bootstrap yang menaruh citra di cluster bernama sama | >= 0,7 |\n"
+    "| Kesepakatan tetangga | porsi 10 tetangga terdekat di ruang 7B yang bernama sama, tanpa tetangga dari grup duplikat sendiri | >= 0,5 |\n"
+    "| Konflik grup | grup near-duplicate yang anggotanya bernama berbeda dibuang seluruhnya | tanpa konflik |\n\n"
+    "Ruang 7B dipakai untuk tetangga karena tidak ikut membentuk cluster, sehingga menjadi pandangan kedua yang "
+    "independen. Ambang ditetapkan sebelum run dan tidak disetel ulang setelah melihat hasil."
+))
+cells.append(code(jaga(
     "CL['nama'] = CL.kode.map(NAMA_CLUSTER)\n"
+    "bernama = CL.nama.isin(CFG.KELAS).values\n"
+    "nama_arr = CL.nama.to_numpy(dtype=object)\n"
     "nama_cluster = CL.groupby('cluster').nama.agg(lambda s: s.mode()[0]).reindex(range(K)).to_numpy(dtype=object)\n"
-    "# cluster yang dipecah (PECAH) bisa berisi beberapa nama; jatuh ke cluster sendiri tetap dihitung konsisten\n"
-    "CL['stab_nama'] = ((nama_cluster[BOOT] == CL.nama.to_numpy(dtype=object)) | (BOOT == CL.cluster.values)).mean(0)\n"
-    "CL['berlabel'] = CL.nama.isin(CFG.KELAS) & (CL.stab_nama >= CFG.STAB_MIN)\n"
+    "CL['stab_nama'] = ((nama_cluster[BOOT] == nama_arr) | (BOOT == CL.cluster.values)).mean(0)\n"
+    "E2 = resep(E_7B)\n"
+    "S2 = E2 @ E2.T\n"
+    "S2[GRUP[:, None] == GRUP[None, :]] = -np.inf\n"
+    "NN = np.argsort(-S2, 1)[:, :CFG.KNN_K]\n"
+    "del S2\n"
+    "CL['knn_nama'] = [float(np.mean(nama_arr[nn][bernama[nn]] == nama_arr[i])) if bernama[nn].any() else 0.0\n"
+    "                  for i, nn in enumerate(NN)]\n"
+    "n_nama = CL[bernama].groupby('grup').nama.nunique()\n"
+    "CL['konflik_grup'] = CL.grup.map(n_nama).fillna(1).values > 1\n"
+    "aturan = {'stab_nama': CL.stab_nama.values >= CFG.STAB_MIN, 'knn_nama': CL.knn_nama.values >= CFG.KNN_MIN,\n"
+    "          'tanpa_konflik': ~CL.konflik_grup.values}\n"
+    "CL['berlabel'] = bernama & np.logical_and.reduce(list(aturan.values()))\n"
+    "tangan = CL.image_id.isin(list(LABEL_TANGAN)).values\n"
+    "CL.loc[tangan, 'nama'] = CL.loc[tangan, 'image_id'].map(LABEL_TANGAN)\n"
+    "CL.loc[tangan, 'berlabel'] = True\n"
     "CL.to_csv(CFG.OUTPUT_DIR / 'label_train.csv', index=False)\n"
     "L = np.flatnonzero(CL.berlabel.values)\n"
     "Y = np.array([CFG.KELAS.index(n) for n in CL.nama.values[L]])\n"
-    "print(f'berlabel {len(L)} dari 1.920 | campur {int((CL.nama == \"campur\").sum())} | ambigu antar nama {int((CL.stab_nama < CFG.STAB_MIN).sum())}')\n"
-    "display(pd.Series(Y).map(dict(enumerate(CFG.KELAS))).value_counts().rename('n').to_frame().T)\n"
+    "print(f'bernama {int(bernama.sum())} | campur {int((CL.nama == \"campur\").sum())} | label tangan {int(tangan.sum())} | '\n"
+    "      f'berlabel akhir {len(L)} dari {len(CL)}')\n"
+    "display(pd.DataFrame({k: [int((bernama & ~v).sum())] for k, v in aturan.items()}, index=['gagal aturan (bisa tumpang tindih)']))\n"
+    "tabel = pd.DataFrame({'awal': CL.nama[bernama].value_counts(), 'bersih': pd.Series(np.array(CFG.KELAS)[Y]).value_counts()})\n"
+    "tabel = tabel.reindex(CFG.KELAS).fillna(0).astype(int)\n"
+    "tabel['porsi_dibuang'] = (1 - tabel.bersih / tabel.awal.clip(lower=1)).round(3)\n"
+    "display(tabel.T)\n"
     "\n"
     "rng = np.random.default_rng(CFG.SEED)\n"
     "fig, ax = plt.subplots(8, 10, figsize=(13, 11))\n"
@@ -1063,27 +1165,42 @@ cells.append(code(
     "    ax[r, 0].set_title(kls, fontsize=8, loc='left')\n"
     "plt.tight_layout()\n"
     "plt.show()",
-        "TAHAP 1 SELESAI: NAMA_CLUSTER belum diisi. Lihat gambar/cluster_*.png dan bukti_cluster.csv, isi nama, lalu jalankan ulang dengan cache.")
-))
+    "TAHAP 1: NAMA_CLUSTER belum lengkap. Isi nama dari montage, lalu jalankan ulang dengan cache.")))
 cells.append(md(
     "#### Insights\n\n"
-    "> Isi setelah penamaan: jumlah citra berlabel per kelas, cluster yang ditandai `campur` beserta alasannya, dan "
-    "cluster yang nama dari montage berbeda dari top-5 ImageNet."
+    "> Dari 1.920 citra, 1.869 bernama dan 51 berada di sub-cluster `campur`. Setelah tiga aturan, 1.750 citra (91%) "
+    "tetap berlabel. Stabilitas nama membuang 97 citra, kesepakatan tetangga 7B membuang 50 (sebagian tumpang tindih), "
+    "dan tidak ada grup duplikat yang namanya konflik. Angka ini sama dengan simulasi lokal yang memakai kode dan cache "
+    "yang sama.\n\n"
+    "> Kelas tetap seimbang setelah pembersihan, dengan 189 sampai 261 citra per kelas (rasio 1,38), sehingga bobot "
+    "kelas akar-invers hanya koreksi ringan. Electronic kehilangan porsi terbesar (11,3%) karena beberapa cluster "
+    "electronic bertetangga dan sering bertukar anggota dengan cluster lain (pasangan 6-46, 6-18, 18-47 di EDA lokal 210)."
 ))
 
 # ---------------------------------------------------------------------------
-# 8. Training
+# 9. Training
 # ---------------------------------------------------------------------------
-cells.append(section("Training Classifier", "8"))
+cells.append(section("Training Classifier", "9"))
 cells.append(md(
-    "Classifier final adalah ConvNeXt-L DINOv3 yang di-fine-tune pada piksel, bukan head di atas embedding 7B. Ada "
-    "tiga alasan. Pertama, head linear pada ruang yang sama dengan ruang clustering hanya mereproduksi batas cluster, "
-    "termasuk kesalahannya, dan skor validasinya melingkar. Kedua, uji lama menunjukkan fine-tune menambah informasi "
-    "di atas head linear. Ketiga, inference test tidak membutuhkan 7B sehingga notebook final lebih ringan.\n\n"
-    "Resep mengikuti EXP-010 yang sudah teruji di data ini: AdamW, LR 1e-4 dengan pengali head 10, layer decay 0,75, "
-    "weight decay 0,05, warmup 1 epoch lalu cosine, label smoothing 0,1, drop path 0,1, bobot kelas akar-invers "
-    "frekuensi, dan 8 epoch. Karena T4 tidak punya bf16, training memakai AMP fp16 dengan GradScaler. Batch 16 "
-    "dibagi ke dua GPU lewat DataParallel."
+    "Classifier final adalah ConvNeXt-L DINOv3 yang di-fine-tune pada piksel, bukan head di atas embedding clustering. "
+    "Ada tiga alasan. Pertama, head linear di ruang yang sama dengan ruang clustering hanya mereproduksi batas cluster, "
+    "termasuk kesalahannya, dan skor validasinya melingkar. Kedua, arsitektur CNN memberi pandangan yang berbeda dari "
+    "ViT-L yang membentuk cluster, sehingga citra pinggir yang tidak konsisten di ruang lain diperlakukan sebagai noise. "
+    "Ketiga, inference test hanya membutuhkan satu model ini.\n\n"
+    "Hyperparameter memakai nilai baku fine-tune ConvNeXt dan tidak disetel terhadap skor apa pun: AdamW, LR 1e-4 "
+    "dengan pengali head 10, layer decay 0,75, weight decay 0,05, warmup 1 epoch lalu cosine, label smoothing 0,1, "
+    "drop path 0,1, gradient clipping 1,0, bobot kelas akar-invers frekuensi, dan 8 epoch. Epoch yang sedikit dan label "
+    "smoothing membatasi hafalan terhadap label yang masih bernoise. Batch 16 dibagi ke dua GPU lewat DataParallel."
+))
+cells.append(md(
+    "## Pemeriksaan Presisi\n\n"
+    "T4 tidak mendukung bf16, padahal DINOv3 dilatih dengan bf16. Run 1 mencatat aktivasi blok pertama ViT-L DINOv3 "
+    "mencapai 156.789, di atas batas fp16 (65.504), dan studi lain melaporkan pola serupa pada DINOv3-L. Sebelum "
+    "training, notebook membandingkan fitur ConvNeXt-L di fp16 dan fp32 pada 8 citra, serta mencatat aktivasi "
+    "maksimum tiap stage. fp16 hanya dipakai bila keluarannya finite, galat relatifnya di bawah 1%, dan aktivasi "
+    "maksimum di bawah 30.000. Selama training, loss non-finite menghentikan fold, lalu fold itu diulang dalam fp32. "
+    "Aktivasi ConvNeXt-L di 384 px berukuran sekitar 1 GB per citra dalam fp32, sehingga mode fp32 memakai gradient "
+    "checkpointing agar batch 8 per GPU muat di T4."
 ))
 cells.append(code(
     "def buat_cnn():\n"
@@ -1091,6 +1208,41 @@ cells.append(code(
     "                             pretrained_cfg_overlay={'file': str(unduh(*CFG.MCNN[:2]))})\n"
     "\n"
     "\n"
+    "@torch.no_grad()\n"
+    "def cek_presisi_cnn(n=8):\n"
+    "    m = buat_cnn().cuda().eval()\n"
+    "    maks = []\n"
+    "    kait = [s.register_forward_hook(lambda mod, inp, out: maks.append(out.float().abs().max().item())) for s in m.stages]\n"
+    "    x = torch.stack([tf_eval(X_train[i]) for i in range(n)]).cuda()\n"
+    "    f32 = m.forward_features(x).float()\n"
+    "    for h in kait:\n"
+    "        h.remove()\n"
+    "    with torch.autocast('cuda', dtype=torch.float16):\n"
+    "        f16 = m.forward_features(x).float()\n"
+    "    hasil = dict(aktivasi_maks_stage=[round(v) for v in maks], finite16=bool(torch.isfinite(f16).all()),\n"
+    "                 galat_relatif=((f16 - f32).norm() / f32.norm()).item())\n"
+    "    del m\n"
+    "    torch.cuda.empty_cache()\n"
+    "    return hasil\n"
+    "\n"
+    "\n"
+    "def pilih_presisi():\n"
+    "    if CFG.PRESISI != 'auto':\n"
+    "        return CFG.PRESISI\n"
+    "    h = cek_presisi_cnn()\n"
+    "    ok = h['finite16'] and h['galat_relatif'] < 1e-2 and max(h['aktivasi_maks_stage']) < 3e4\n"
+    "    print('cek presisi ConvNeXt-L DINOv3:', h, '->', 'fp16' if ok else 'fp32')\n"
+    "    return 'fp16' if ok else 'fp32'\n"
+    "\n"
+    "\n"
+    "PRESISI = pilih_presisi() if (LABEL_SIAP or CFG.UJI_JALAN) else None"
+))
+cells.append(md(
+    "## Fungsi Training\n\n"
+    "`latih` melatih satu model dari bobot pretrained dan, bila diberi indeks validasi, mencetak accuracy validasi per "
+    "epoch. `latih_aman` mengulang training dalam fp32 bila fp16 menghasilkan loss non-finite."
+))
+cells.append(code(
     "def bungkus(model):\n"
     "    return nn.DataParallel(model) if torch.cuda.device_count() > 1 else model\n"
     "\n"
@@ -1105,15 +1257,17 @@ cells.append(code(
     "    net.eval()\n"
     "    dl = DataLoader(Citra(X, tf_eval, idx), batch_size=32, num_workers=CFG.NUM_WORKERS)\n"
     "    out = []\n"
-    "    with torch.autocast('cuda', dtype=torch.float16):\n"
+    "    with torch.autocast('cuda', dtype=torch.float16, enabled=PRESISI == 'fp16'):\n"
     "        for x in dl:\n"
     "            out.append(torch.softmax(net(x.cuda().to(memory_format=torch.channels_last)).float(), 1).cpu())\n"
     "    return torch.cat(out).numpy()\n"
     "\n"
     "\n"
-    "def latih(idx_tr, y_tr, idx_va=None, y_va=None):\n"
+    "def latih(idx_tr, y_tr, idx_va=None, y_va=None, epoch=CFG.EPOCH):\n"
     "    seed_everything(CFG.SEED)\n"
+    "    amp = PRESISI == 'fp16'\n"
     "    model = buat_cnn().cuda().to(memory_format=torch.channels_last)\n"
+    "    model.set_grad_checkpointing(not amp)\n"
     "    opt = create_optimizer_v2(model, opt='adamw', lr=CFG.LR, weight_decay=CFG.WD, layer_decay=CFG.LAYER_DECAY)\n"
     "    puncak = max(g.get('lr_scale', 1.0) for g in opt.param_groups)\n"
     "    for g in opt.param_groups:\n"
@@ -1122,11 +1276,11 @@ cells.append(code(
     "    dl = DataLoader(Citra(X_train, tf_train, idx_tr, y_tr), batch_size=CFG.BS, shuffle=True, drop_last=True,\n"
     "                    num_workers=CFG.NUM_WORKERS, worker_init_fn=seed_worker,\n"
     "                    generator=torch.Generator().manual_seed(CFG.SEED), persistent_workers=True)\n"
-    "    total, warm = len(dl) * CFG.EPOCH, len(dl) * CFG.WARMUP\n"
+    "    total, warm = len(dl) * epoch, len(dl) * CFG.WARMUP\n"
     "    kriteria = nn.CrossEntropyLoss(weight=bobot_kelas(y_tr).cuda(), label_smoothing=CFG.SMOOTH)\n"
-    "    scaler = torch.amp.GradScaler('cuda')\n"
+    "    scaler = torch.amp.GradScaler('cuda', enabled=amp)\n"
     "    riwayat, langkah, pv = [], 0, None\n"
-    "    for ep in range(CFG.EPOCH):\n"
+    "    for ep in range(epoch):\n"
     "        net.train()\n"
     "        rugi = []\n"
     "        t0 = time.time()\n"
@@ -1137,10 +1291,14 @@ cells.append(code(
     "                f = 0.5 * (1 + math.cos(math.pi * (langkah - warm) / max(1, total - warm)))\n"
     "            for g in opt.param_groups:\n"
     "                g['lr'] = CFG.LR * g['lr_scale'] * f\n"
-    "            with torch.autocast('cuda', dtype=torch.float16):\n"
+    "            with torch.autocast('cuda', dtype=torch.float16, enabled=amp):\n"
     "                loss = kriteria(net(x.cuda(non_blocking=True).to(memory_format=torch.channels_last)), y.cuda())\n"
+    "            if not torch.isfinite(loss):\n"
+    "                raise FloatingPointError(f'loss non-finite di epoch {ep + 1}, langkah {langkah}')\n"
     "            opt.zero_grad(set_to_none=True)\n"
     "            scaler.scale(loss).backward()\n"
+    "            scaler.unscale_(opt)\n"
+    "            nn.utils.clip_grad_norm_(model.parameters(), 1.0)\n"
     "            scaler.step(opt)\n"
     "            scaler.update()\n"
     "            rugi.append(loss.item())\n"
@@ -1151,103 +1309,70 @@ cells.append(code(
     "            r['val_acc'] = round(float((pv.argmax(1) == y_va).mean()), 4)\n"
     "        riwayat.append(r)\n"
     "        print(r, flush=True)\n"
-    "    return model, riwayat, pv"
-))
-cells.append(md(
-    "## Cross-validation\n\n"
-    "StratifiedGroupKFold 5 fold memakai grup near-duplicate, sehingga salinan sebuah citra tidak muncul di train dan "
-    "validasi sekaligus. Hasil OOF disimpan ke `cache/cv_oof.npz`. Cache dipakai ulang hanya bila himpunan label sama "
-    "persis dan `ULANG_CV = False`."
-))
-cells.append(code(jaga(
-    "sgkf = StratifiedGroupKFold(n_splits=CFG.N_FOLD, shuffle=True, random_state=CFG.SEED)\n"
-    "FOLD = np.full(len(L), -1)\n"
-    "for f, (_, b) in enumerate(sgkf.split(L, Y, GRUP[L])):\n"
-    "    FOLD[b] = f\n"
-    "cache_cv = cari_cache('cv_oof.npz')\n"
-    "cv = np.load(cache_cv) if cache_cv and not CFG.ULANG_CV else None\n"
-    "if cv is not None and np.array_equal(cv['L'], L) and np.array_equal(cv['Y'], Y) and np.array_equal(cv['fold'], FOLD):\n"
-    "    OOF, RIWAYAT = cv['oof'], json.loads(str(cv['riwayat']))\n"
-    "    print('OOF dimuat dari cache')\n"
-    "else:\n"
-    "    OOF, RIWAYAT = np.zeros((len(L), len(CFG.KELAS))), []\n"
-    "    for f in range(CFG.N_FOLD):\n"
-    "        a, b = np.flatnonzero(FOLD != f), np.flatnonzero(FOLD == f)\n"
-    "        print(f'fold {f}: latih {len(a)}, validasi {len(b)}')\n"
-    "        model, riw, pv = latih(L[a], Y[a], L[b], Y[b])\n"
-    "        OOF[b] = pv\n"
-    "        RIWAYAT += [dict(fold=f, **r) for r in riw]\n"
-    "        del model\n"
+    "    return model, riwayat, pv\n"
+    "\n"
+    "\n"
+    "def latih_aman(*args, **kw):\n"
+    "    global PRESISI\n"
+    "    try:\n"
+    "        return latih(*args, **kw)\n"
+    "    except FloatingPointError as e:\n"
+    "        if PRESISI == 'fp32':\n"
+    "            raise\n"
+    "        print('fp16 gagal:', e, '-> diulang dengan fp32')\n"
+    "        PRESISI = 'fp32'\n"
     "        gc.collect()\n"
     "        torch.cuda.empty_cache()\n"
-    "    np.savez(CFG.CACHE_DIR / 'cv_oof.npz', oof=OOF, L=L, Y=Y, fold=FOLD, riwayat=json.dumps(RIWAYAT))"
-)))
-
-# ---------------------------------------------------------------------------
-# 9. Validasi lokal
-# ---------------------------------------------------------------------------
-cells.append(section("Validasi Lokal", "9"))
-cells.append(md(
-    "Accuracy di sini adalah kesepakatan model dengan label cluster yang dinamai tim, bukan accuracy terhadap ground "
-    "truth. Simpangan baku antar fold menunjukkan seberapa besar skor bisa bergeser hanya karena sampel yang berbeda. "
-    "Sebagai pembanding, galat baku binomial pada accuracy 0,95 dengan 145 citra (public) sekitar 1,8 poin persen, "
-    "dan dengan 335 citra (private) sekitar 1,2 poin persen."
+    "        return latih(*args, **kw)"
 ))
-cells.append(code(jaga(
-    "acc = np.array([(OOF[FOLD == f].argmax(1) == Y[FOLD == f]).mean() for f in range(CFG.N_FOLD)])\n"
-    "print('accuracy per fold:', acc.round(4))\n"
-    "print(f'accuracy CV: {acc.mean():.4f} +- {acc.std(ddof=1):.4f} (mean +- std antar fold)')\n"
-    "for n in (145, 335):\n"
-    "    print(f'galat baku binomial pada n={n}: {math.sqrt(acc.mean() * (1 - acc.mean()) / n):.4f}')\n"
-    "pred = OOF.argmax(1)\n"
-    "cm = confusion_matrix(Y, pred, labels=range(len(CFG.KELAS)))\n"
-    "recall = pd.Series(cm.diagonal() / cm.sum(1), CFG.KELAS).round(3)\n"
-    "display(recall.to_frame('recall OOF').T)\n"
-    "riw = pd.DataFrame(RIWAYAT)\n"
-    "fig, ax = plt.subplots(1, 2, figsize=(13, 4.5))\n"
-    "im = ax[0].imshow(cm, cmap='Blues')\n"
-    "ax[0].set_xticks(range(8), CFG.KELAS, rotation=45, fontsize=7)\n"
-    "ax[0].set_yticks(range(8), CFG.KELAS, fontsize=7)\n"
-    "for i in range(8):\n"
-    "    for j in range(8):\n"
-    "        ax[0].text(j, i, cm[i, j], ha='center', va='center', fontsize=7)\n"
-    "ax[0].set(xlabel='prediksi OOF', ylabel='label cluster', title='confusion matrix OOF')\n"
-    "for f, d in riw.groupby('fold'):\n"
-    "    ax[1].plot(d.epoch, d.val_acc, marker='o', label=f'fold {f}')\n"
-    "ax[1].set(xlabel='epoch', ylabel='accuracy validasi', title='kurva validasi per fold')\n"
-    "ax[1].legend()\n"
-    "plt.tight_layout()\n"
-    "plt.show()\n"
-    "\n"
-    "beda = CL.iloc[L].assign(pred=np.array(CFG.KELAS)[pred], benar=pred == Y)\n"
-    "tinjau = beda.groupby('kode').agg(nama=('nama', 'first'), n=('benar', 'size'), setuju=('benar', 'mean'),\n"
-    "                                  pred_lain=('pred', lambda s: s.value_counts().index[0]))\n"
-    "display(tinjau[tinjau.setuju < .9].sort_values('setuju').round(3))"
-)))
 cells.append(md(
-    "#### Insights\n\n"
-    "> Isi setelah run: mean +- std accuracy per fold, kelas dengan recall terendah, dan cluster di tabel terakhir. "
-    "Cluster dengan kesepakatan di bawah 0,9 adalah kandidat nama yang perlu ditinjau ulang lewat montage-nya. "
-    "Penggantian nama tetap keputusan tim berdasarkan citra train. Bila std antar fold lebih besar dari sekitar 1,5 "
-    "poin persen, selisih skor public dan private yang besar wajar terjadi."
+    "## Uji Jalan Kode\n\n"
+    "Selama nama cluster belum lengkap, sel ini melatih model 1 epoch pada 64 citra train dengan label acak, lalu "
+    "memprediksi 32 citra train dan 16 citra test. Tujuannya hanya memastikan unduhan bobot, DataParallel, presisi, "
+    "DataLoader, dan jalur inference berjalan di Kaggle sebelum run final. Label acak membuat keluarannya tidak "
+    "bermakna, jadi tidak ada yang disimpan dan tidak ada submission."
+))
+cells.append(code(
+    "if not LABEL_SIAP and CFG.UJI_JALAN:\n"
+    "    rng = np.random.default_rng(CFG.SEED)\n"
+    "    idx = rng.choice(len(X_train), 96, replace=False)\n"
+    "    y = rng.integers(0, len(CFG.KELAS), 96)\n"
+    "    t0 = time.time()\n"
+    "    model, _, pv = latih_aman(idx[:64], y[:64], idx[64:], y[64:], epoch=1)\n"
+    "    with ThreadPoolExecutor(8) as ex:\n"
+    "        xt = np.stack(list(ex.map(muat_citra, f_test[:16])))\n"
+    "    pt = prediksi(bungkus(model), xt)\n"
+    "    assert pt.shape == (16, len(CFG.KELAS)) and np.isfinite(pt).all() and np.isfinite(pv).all()\n"
+    "    print(f'UJI JALAN OK | presisi {PRESISI} | {time.time() - t0:.0f} detik | VRAM maks',\n"
+    "          [round(torch.cuda.max_memory_allocated(i) / 2**30, 2) for i in range(torch.cuda.device_count())], 'GiB')\n"
+    "    del model\n"
+    "    gc.collect()\n"
+    "    torch.cuda.empty_cache()\n"
+    "else:\n"
+    "    print('uji jalan dilewati')"
 ))
 
 # ---------------------------------------------------------------------------
 # 10. Inference
 # ---------------------------------------------------------------------------
-cells.append(section("Inference Test", "10"))
+cells.append(section("Model Final dan Inference Test", "10"))
 cells.append(md(
-    "Model final dilatih ulang pada seluruh citra berlabel dengan resep dan jumlah epoch yang sama dengan "
-    "cross-validation. Model fold tidak dirata-rata karena itu termasuk ensemble. Test baru dimuat di sini, dengan "
-    "preprocessing yang identik dengan validasi (stretch ke 384, tanpa TTA), lalu diprediksi satu kali."
+    "Model final dilatih pada seluruh citra berlabel bersih dengan resep dan jumlah epoch yang sama dengan "
+    "cross-validation di bagian 12. Urutannya sengaja dibalik: semua hyperparameter ditetapkan sebelum run dan tidak "
+    "bergantung pada hasil CV, sehingga model final dan submission dibuat lebih dulu, lalu CV menyusul dengan batas "
+    "waktu. Run versi 4 mati di tengah CV fold 0 sebelum model final sempat dilatih, sehingga urutan ini melindungi "
+    "submission. Model fold tidak dirata-rata karena itu termasuk ensemble. Test baru dimuat di sini, dengan "
+    "preprocessing yang identik dengan validasi (trim pita hitam, stretch ke 384, tanpa TTA), lalu diprediksi satu kali."
 ))
 cells.append(code(jaga(
-    "MODEL, RIW_FINAL, _ = latih(L, Y)\n"
+    "MODEL, RIW_FINAL, _ = latih_aman(L, Y)\n"
     "with ThreadPoolExecutor(8) as ex:\n"
     "    X_test = np.stack(list(ex.map(muat_citra, f_test)))\n"
     "P_TEST = prediksi(bungkus(MODEL), X_test)\n"
     "np.save(CFG.CACHE_DIR / 'prob_test.npy', P_TEST.astype(np.float16))\n"
-    "print('distribusi prediksi test:', pd.Series(np.array(CFG.KELAS)[P_TEST.argmax(1)]).value_counts().to_dict())"
+    "print('presisi model final:', PRESISI)\n"
+    "print('distribusi prediksi test:', pd.Series(np.array(CFG.KELAS)[P_TEST.argmax(1)]).value_counts().to_dict())\n"
+    "print('distribusi label train bersih:', pd.Series(np.array(CFG.KELAS)[Y]).value_counts(normalize=True).round(3).to_dict())"
 )))
 
 # ---------------------------------------------------------------------------
@@ -1268,6 +1393,96 @@ cells.append(code(jaga(
     "print(submission.waste_category.value_counts().to_dict())\n"
     "display(submission.head())"
 )))
+
+# ---------------------------------------------------------------------------
+# 12. Validasi lokal
+# ---------------------------------------------------------------------------
+cells.append(section("Validasi Lokal", "12"))
+cells.append(md(
+    "Accuracy di sini adalah kesepakatan model dengan label cluster yang dinamai tim dan sudah dibersihkan, bukan "
+    "accuracy terhadap ground truth. Karena citra ragu dibuang dari label, angka ini cenderung lebih tinggi daripada "
+    "accuracy test. Simpangan baku antar fold menunjukkan seberapa besar skor bisa bergeser hanya karena sampel yang "
+    "berbeda. Interval binomial 95% untuk 145 citra (public) dan 335 citra (private) dicetak sebagai patokan selisih "
+    "public dan private yang wajar."
+))
+cells.append(md(
+    "## Cross-validation\n\n"
+    "StratifiedGroupKFold 5 fold memakai grup near-duplicate, sehingga salinan sebuah citra tidak muncul di train dan "
+    "validasi sekaligus. EDA lokal 211 mengukur alasannya: dengan split acak, 33% citra validasi punya tetangga "
+    "terdekat dari grup duplikatnya sendiri, dan accuracy kNN naik 3,1 poin (embedding 7B) sampai 7,0 poin (piksel) "
+    "hanya karena salinan. Fold berikutnya hanya dimulai bila perkiraan waktunya masih di dalam `BATAS_CV_JAM`, dan "
+    "metrik dihitung dari fold yang selesai. Hasil OOF disimpan ke `cache/cv_oof.npz`."
+))
+cells.append(code(jaga(
+    "sgkf = StratifiedGroupKFold(n_splits=CFG.N_FOLD, shuffle=True, random_state=CFG.SEED)\n"
+    "FOLD = np.full(len(L), -1)\n"
+    "for f, (_, b) in enumerate(sgkf.split(L, Y, GRUP[L])):\n"
+    "    FOLD[b] = f\n"
+    "OOF, RIWAYAT, SELESAI = np.zeros((len(L), len(CFG.KELAS))), [], []\n"
+    "t_mulai, t_fold = time.time(), 0.0\n"
+    "for f in range(CFG.N_FOLD):\n"
+    "    if (time.time() - t_mulai + t_fold) / 3600 > CFG.BATAS_CV_JAM:\n"
+    "        print(f'fold {f} dst. dilewati: perkiraan melewati batas {CFG.BATAS_CV_JAM} jam')\n"
+    "        break\n"
+    "    t0 = time.time()\n"
+    "    a, b = np.flatnonzero(FOLD != f), np.flatnonzero(FOLD == f)\n"
+    "    print(f'fold {f}: latih {len(a)}, validasi {len(b)}, presisi {PRESISI}')\n"
+    "    model, riw, pv = latih_aman(L[a], Y[a], L[b], Y[b])\n"
+    "    OOF[b] = pv\n"
+    "    RIWAYAT += [dict(fold=f, **r) for r in riw]\n"
+    "    SELESAI.append(f)\n"
+    "    t_fold = time.time() - t0\n"
+    "    del model\n"
+    "    gc.collect()\n"
+    "    torch.cuda.empty_cache()\n"
+    "np.savez(CFG.CACHE_DIR / 'cv_oof.npz', oof=OOF, L=L, Y=Y, fold=FOLD, selesai=SELESAI, riwayat=json.dumps(RIWAYAT))\n"
+    "print('fold selesai:', SELESAI)"
+)))
+
+cells.append(code(jaga(
+    "acc = np.array([(OOF[FOLD == f].argmax(1) == Y[FOLD == f]).mean() for f in SELESAI])\n"
+    "print('accuracy per fold:', acc.round(4))\n"
+    "print(f'accuracy CV ({len(SELESAI)} fold): {acc.mean():.4f} +- {acc.std(ddof=1) if len(acc) > 1 else float(\"nan\"):.4f}')\n"
+    "ada = np.isin(FOLD, SELESAI)\n"
+    "OOF, Y_cv, L_cv = OOF[ada], Y[ada], L[ada]\n"
+    "for n in (145, 335):\n"
+    "    se = math.sqrt(acc.mean() * (1 - acc.mean()) / n)\n"
+    "    print(f'n={n}: galat baku {se:.4f}, interval 95% kira-kira {acc.mean() - 1.96 * se:.3f} sampai {min(1, acc.mean() + 1.96 * se):.3f}')\n"
+    "pred = OOF.argmax(1)\n"
+    "cm = confusion_matrix(Y_cv, pred, labels=range(len(CFG.KELAS)))\n"
+    "display(pd.DataFrame({'recall OOF': cm.diagonal() / cm.sum(1).clip(1), 'n': cm.sum(1)}, index=CFG.KELAS).round(3).T)\n"
+    "tangan = CL.image_id.values[L_cv].astype(int)\n"
+    "m_tangan = np.isin(tangan, list(LABEL_TANGAN))\n"
+    "if m_tangan.any():\n"
+    "    print(f'accuracy OOF pada {int(m_tangan.sum())} label tangan: {(pred[m_tangan] == Y_cv[m_tangan]).mean():.3f}')\n"
+    "riw = pd.DataFrame(RIWAYAT)\n"
+    "fig, ax = plt.subplots(1, 2, figsize=(13, 4.5))\n"
+    "ax[0].imshow(cm, cmap='Blues')\n"
+    "ax[0].set_xticks(range(8), CFG.KELAS, rotation=45, fontsize=7)\n"
+    "ax[0].set_yticks(range(8), CFG.KELAS, fontsize=7)\n"
+    "for i in range(8):\n"
+    "    for j in range(8):\n"
+    "        ax[0].text(j, i, cm[i, j], ha='center', va='center', fontsize=7)\n"
+    "ax[0].set(xlabel='prediksi OOF', ylabel='label cluster bersih', title='confusion matrix OOF')\n"
+    "for f, d in riw.groupby('fold'):\n"
+    "    ax[1].plot(d.epoch, d.val_acc, marker='o', label=f'fold {f}')\n"
+    "ax[1].set(xlabel='epoch', ylabel='accuracy validasi', title='kurva validasi per fold')\n"
+    "ax[1].legend()\n"
+    "plt.tight_layout()\n"
+    "plt.show()\n"
+    "\n"
+    "beda = CL.iloc[L_cv].assign(pred=np.array(CFG.KELAS)[pred], benar=pred == Y_cv)\n"
+    "tinjau = beda.groupby('kode').agg(nama=('nama', 'first'), n=('benar', 'size'), setuju=('benar', 'mean'),\n"
+    "                                  pred_lain=('pred', lambda s: s.value_counts().index[0]))\n"
+    "display(tinjau[tinjau.setuju < .9].sort_values('setuju').round(3))"
+)))
+cells.append(md(
+    "#### Insights\n\n"
+    "> Isi setelah run: mean dan std accuracy per fold, kelas dengan recall terendah, dan kode cluster di tabel "
+    "terakhir. Kode dengan kesepakatan di bawah 0,9 adalah kandidat nama yang perlu ditinjau ulang lewat montage-nya. "
+    "Penggantian nama tetap keputusan tim berdasarkan citra train. Bila std antar fold lebih besar dari sekitar 1,5 "
+    "poin persen, selisih skor public dan private yang besar wajar terjadi."
+))
 
 # ---------------------------------------------------------------------------
 # Notebook writer

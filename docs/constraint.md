@@ -1,51 +1,49 @@
-# Constraint — DSC Gelar Rasa 2026
+# Constraint DSC Gelar Rasa 2026
 
-Batasan wajib untuk seluruh pengerjaan. Sumber: aturan resmi di [context.md](context.md), jawaban resmi panitia di QnA Kaggle (1 Nov 2026), dan batasan internal tim. Panitia **memeriksa notebook dan laporan** di akhir lomba, dan pelanggaran berujung diskualifikasi.
+Sumber: Padlet QnA resmi panitia (folder `Padlet - QnA Data Science Competition Gelar Rasa 2026/`, 25 pos, jawaban akun "Gelar Rasa 2026"). Aturan resmi lomba (Rules 1-15, format submission, metrik) ada di [context.md](context.md). Angka dalam kurung adalah nomor pos Padlet. Satu batasan internal tim ditambahkan di bagian 1.
 
-## 1. Batasan internal tim (lebih ketat dari aturan panitia)
+## 1. Batasan internal tim
 
 | Dilarang | Maksudnya |
 |---|---|
-| **Blending / ensembling prediksi** | Tidak boleh merata-rata, voting, atau stacking output beberapa model untuk submission. Submission final berasal dari **satu model**. (Rule 7 membolehkan beberapa model dalam *pipeline*, misalnya backbone + clustering + classifier, tapi bukan blending prediksi.) |
-| **Semi-supervised learning** | Tidak boleh memakai citra **test** (tanpa label) dalam proses training dalam bentuk apa pun: consistency training, MixMatch/FixMatch, domain adaptation ke test, dan sejenisnya. |
-| **Pseudo-labeling** | Tidak boleh memakai prediksi model pada data **test** sebagai label untuk training ulang, termasuk self-training atau iterasi relabel. |
-| **Probing** | Tidak boleh memakai skor public leaderboard sebagai sinyal tuning (LB probing): menebak label test lewat submission, memilih hyperparameter atau threshold berdasarkan skor LB, atau submit varian untuk "mengintip" distribusi test. Semua keputusan model diambil dari validasi lokal. |
+| **Blending / ensembling prediksi** | Tidak boleh merata-rata, voting, atau stacking output beberapa model untuk submission. Submission berasal dari **satu model**. Beberapa model dalam satu *pipeline* (misalnya backbone untuk clustering lalu classifier) tetap boleh sesuai Rule 7. |
 
 ## 2. Data
 
-- Hanya dataset dari panitia. **Dilarang memakai dataset eksternal** (Rule 4).
-- Data train: 1.920 citra **tanpa label/ground truth**, semuanya dalam satu folder. Data test: 480 citra tanpa label.
-- Data test **hanya untuk inference** akhir, tidak untuk training, clustering, normalisasi statistik, atau seleksi model.
+- Folder train tidak punya ground truth atau label, seluruh citra latih ada di satu folder (#2).
+- Dataset eksternal **tidak boleh**, termasuk TrashNet, RealWaste, maupun dataset publik lain (#22.6).
+- Data test **hanya untuk prediksi akhir**. Test tidak boleh dipakai untuk pelatihan maupun fitting model, termasuk clustering dan normalisasi. Parameter preprocessing diperoleh dari train lalu diterapkan ke test (#24).
+- Tidak wajib memakai seluruh data train. Penanganan citra noise diserahkan ke strategi tim (#15). Menghapus data ambigu atau noise saat data cleaning boleh (#18).
+- Test-time augmentation ditanyakan di #24 tetapi tidak dijawab secara eksplisit.
 
-## 3. Pelabelan train (QnA resmi)
+## 3. Pelabelan train
 
-- Label train **wajib diperoleh lewat clustering** dengan model yang dikembangkan sendiri oleh tim.
-- **Penamaan cluster secara manual diperbolehkan** (misalnya "cluster 0 = textile") berdasarkan karakteristik citra.
-- **Tidak boleh melabeli train secara manual tanpa clustering.** Tim yang sudah terlanjur melakukannya disarankan panitia untuk memodelkan ulang.
-- Clustering hanya dilakukan pada data **train**.
+- **Penamaan cluster secara manual boleh**, berdasarkan karakteristik citra, selama clustering memakai model yang dikembangkan sendiri oleh peserta (#1, #2, #14). Nama folder hasil clustering boleh dipakai sebagai penanda atau identitas cluster (#22.2). Peserta dianjurkan mengembangkan model clustering sendiri (#4).
+- Hasil clustering yang dilabeli lewat metode atau program boleh menjadi dasar model klasifikasi supervised (CNN, transfer learning). Proses ini tidak termasuk pelabelan manual atau pseudo-labeling manual (#12).
+- **Clustering ulang** pada cluster yang anggotanya campur boleh. Jumlah cluster bebas sesuai strategi tim (#19.2).
+- Pemeriksaan hasil clustering boleh dilakukan dengan program atau metode (#10, #12).
+- **Pelabelan atau koreksi manual per gambar:**
+  - Koreksi atau pemindahan gambar antarcluster secara manual satu per satu tidak boleh (#10, #12, #13, #14). Pelabelan manual pada train tidak disarankan (#20).
+  - Koreksi manual pada sebagian kecil data train boleh (#19.1).
+  - Batas hand labeling **5 gambar per kelas, maksimal 40 gambar**. Label boleh ditulis langsung di notebook (#22.1).
+  - Tim yang terlanjur melabeli manual tanpa clustering disarankan memodelkan ulang (#10). Bila hasil clustering belum optimal, peserta disarankan mencoba teknik pelabelan lain (#10).
+- **Pelabelan otomatis boleh**: pseudo-labeling, kNN, label propagation, dan self-training, selama hanya memakai data train panitia, tanpa data test, tanpa dataset eksternal, dan tanpa model atau layanan AI yang dilarang (#22.3).
+- Membuang gambar yang terindikasi salah cluster secara otomatis dengan aturan program (misalnya jarak ke pusat cluster atau kemiripan tetangga) boleh, tanpa memeriksa gambar satu per satu (#19.3).
+- **Perbaikan label train otomatis dari prediksi model:** jawaban panitia bertentangan.
+  - #19.4 membolehkannya pada data train tanpa pengecekan manual per gambar.
+  - #21 menyatakan penggantian label individual berdasarkan confidence model tidak boleh.
+- Bantuan AI dalam anotasi maupun pelabelan data **tidak boleh** (#16, #20).
 
 ## 4. Model
 
-- **Dilarang semua VLM** (CLIP, SigLIP, BLIP, LLaVA, dll.), **termasuk hanya untuk feature extraction** atau tahap lain (QnA resmi + Rule 9).
-- **Dilarang** AutoML, LLM, generative AI, atau layanan AI pihak ketiga untuk membuat model, mengklasifikasi, atau menghasilkan prediksi (Rule 9).
-- **Dilarang** API/layanan pihak ketiga yang melakukan inference, klasifikasi, deteksi, atau prediksi pada data kompetisi (Rule 8).
-- **Boleh** memakai pretrained weights non-VLM (misalnya ResNet/EfficientNet dari ImageNet) untuk feature extraction atau transfer learning, **asal dijalankan dan dilatih/di-fine-tune sendiri** di lingkungan pengerjaan tim (Rule 6 + QnA resmi).
-- Boleh memakai library, framework, dan tools untuk preprocessing, augmentasi, analisis, training, dan evaluasi (Rules 5, 10).
+- **VLM tidak boleh** (misalnya SigLIP dan CLIP), termasuk untuk feature extraction maupun tahapan lain (#4, #22.4). Larangan ini berlaku juga bila hanya memakai image encoder tanpa teks (#23).
+- Zero-shot CLIP dengan prompt teks nama kelas tidak boleh (#22.5).
+- Pretrained model computer vision non-VLM (ResNet, EfficientNet, DINOv2) **boleh** untuk feature extraction maupun fine-tuning, selama dijalankan dan dilatih atau di-fine-tune sendiri oleh peserta di lingkungan pengerjaan (#5, #22.4).
+- Model pretrained dari Hugging Face boleh **hanya sebagai base model** dan wajib di-fine-tune dengan data train panitia. Model yang sudah di-fine-tune menyeluruh oleh pihak lain tidak boleh. Model jadi **dilarang keras** dipakai untuk langsung menebak data test tanpa pelatihan pada dataset kompetisi (#17).
 
-## 5. Submission
+## 5. Submission dan penilaian
 
-- Format CSV: `image_id,waste_category`. Label valid: `glass, paper, electronic, metal, plastic, cardboard, textile, foodwaste`.
-- Metrik: **Accuracy**.
-- Maksimal **3 submission per hari**. Kuota direset pukul 07.00.
-- Public LB ≈ 30% data test (~145 citra), private ≈ 70%. Skor public bukan acuan (lihat larangan probing).
-
-## 6. Administrasi
-
-- Tim berisi 2–3 orang. Nama tim dan nama akun Kaggle harus sesuai registrasi. Merge team dilakukan sebelum submit (Rules 1–3).
-- Dilarang kerja sama antartim (Rule 12).
-- Semua komponen (notebook, laporan, submission) dikumpulkan tepat waktu. Terlambat berarti diskualifikasi (Rules 13–14).
-- Panitia dapat menambah aturan sewaktu-waktu (Rule 15). Pantau QnA.
-
-## 7. Konsekuensi untuk notebook
-
-Notebook harus **reproducible end-to-end** dan menunjukkan alur: EDA → feature extraction (non-VLM) → clustering train → penamaan cluster manual (dengan bukti visual per cluster) → training classifier pada train → validasi lokal → inference test → submission.
+- Kuota submission harian direset setiap pukul 07.00 WIB (#11).
+- Penilaian tidak hanya dari skor Kaggle, tetapi juga notebook dan laporan analisis (#6, #7).
+- Panitia memeriksa model, notebook, dan laporan secara menyeluruh di akhir kompetisi. Pelanggaran berujung diskualifikasi (#3, #7, #8).
+- Laporan mengikuti struktur subbab template laporan yang disediakan (#25).

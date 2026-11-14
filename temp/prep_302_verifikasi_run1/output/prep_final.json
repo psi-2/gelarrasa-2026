@@ -1,0 +1,162 @@
+{
+ "final": {
+  "ukuran": 384,
+  "resize": "trim_hitam_lalu_stretch_bicubic",
+  "exif_transpose": true,
+  "konversi": "RGB",
+  "rrc_scale": [
+   0.5,
+   1.0
+  ],
+  "rrc_ratio": [
+   0.75,
+   1.3333
+  ],
+  "hflip": 0.5,
+  "vflip": 0.5,
+  "rot90": true,
+  "rotasi_deg": 0,
+  "color_jitter_bcsh": [
+   0.2,
+   0.1,
+   0,
+   0
+  ],
+  "denoise": null,
+  "catatan": "prep_302: RRC 0,4 -> 0,5 (objek kecil latar polos p_hilang 0,1005 -> 0,0728, kriteria <= 0,10 ditetapkan sebelum ukur); rotasi kecil ditolak (prep_301)",
+  "trim_hitam": {
+   "ambang": 12,
+   "std_maks": 4,
+   "porsi_min": 0.03
+  }
+ },
+ "log_rrc": [
+  {
+   "varian": "rrc0.4",
+   "himpunan": "kecil",
+   "n_citra": 100,
+   "p_hilang": 0.1005,
+   "median_sisa": 0.918,
+   "q10_sisa": 0.499,
+   "luas_crop_mean": 0.644
+  },
+  {
+   "varian": "rrc0.4",
+   "himpunan": "polos",
+   "n_citra": 150,
+   "p_hilang": 0.0103,
+   "median_sisa": 0.94,
+   "q10_sisa": 0.716,
+   "luas_crop_mean": 0.644
+  },
+  {
+   "varian": "rrc0.5",
+   "himpunan": "kecil",
+   "n_citra": 100,
+   "p_hilang": 0.0728,
+   "median_sisa": 0.952,
+   "q10_sisa": 0.572,
+   "luas_crop_mean": 0.694
+  },
+  {
+   "varian": "rrc0.5",
+   "himpunan": "polos",
+   "n_citra": 150,
+   "p_hilang": 0.003,
+   "median_sisa": 0.966,
+   "q10_sisa": 0.8,
+   "luas_crop_mean": 0.694
+  },
+  {
+   "varian": "rrc0.6",
+   "himpunan": "kecil",
+   "n_citra": 100,
+   "p_hilang": 0.0465,
+   "median_sisa": 0.974,
+   "q10_sisa": 0.659,
+   "luas_crop_mean": 0.746
+  },
+  {
+   "varian": "rrc0.6",
+   "himpunan": "polos",
+   "n_citra": 150,
+   "p_hilang": 0.0008,
+   "median_sisa": 0.981,
+   "q10_sisa": 0.866,
+   "luas_crop_mean": 0.747
+  },
+  {
+   "varian": "rrc0.7",
+   "himpunan": "kecil",
+   "n_citra": 100,
+   "p_hilang": 0.038,
+   "median_sisa": 0.994,
+   "q10_sisa": 0.733,
+   "luas_crop_mean": 0.802
+  },
+  {
+   "varian": "rrc0.7",
+   "himpunan": "polos",
+   "n_citra": 150,
+   "p_hilang": 0.0002,
+   "median_sisa": 0.994,
+   "q10_sisa": 0.918,
+   "luas_crop_mean": 0.803
+  },
+  {
+   "varian": "rrc0.8",
+   "himpunan": "kecil",
+   "n_citra": 100,
+   "p_hilang": 0.0258,
+   "median_sisa": 1.0,
+   "q10_sisa": 0.821,
+   "luas_crop_mean": 0.869
+  },
+  {
+   "varian": "rrc0.8",
+   "himpunan": "polos",
+   "n_citra": 150,
+   "p_hilang": 0.0,
+   "median_sisa": 1.0,
+   "q10_sisa": 0.965,
+   "luas_crop_mean": 0.869
+  },
+  {
+   "varian": "rrc0.4_p0.5",
+   "himpunan": "kecil",
+   "n_citra": 100,
+   "p_hilang": 0.0468,
+   "median_sisa": 1.0,
+   "q10_sisa": 0.665,
+   "luas_crop_mean": 0.816
+  },
+  {
+   "varian": "rrc0.4_p0.5",
+   "himpunan": "polos",
+   "n_citra": 150,
+   "p_hilang": 0.0061,
+   "median_sisa": 1.0,
+   "q10_sisa": 0.8,
+   "luas_crop_mean": 0.821
+  },
+  {
+   "varian": "rrc0.5_p0.5",
+   "himpunan": "kecil",
+   "n_citra": 100,
+   "p_hilang": 0.0338,
+   "median_sisa": 1.0,
+   "q10_sisa": 0.733,
+   "luas_crop_mean": 0.849
+  },
+  {
+   "varian": "rrc0.5_p0.5",
+   "himpunan": "polos",
+   "n_citra": 150,
+   "p_hilang": 0.0008,
+   "median_sisa": 1.0,
+   "q10_sisa": 0.866,
+   "luas_crop_mean": 0.845
+  }
+ ],
+ "sumber": "temp/prep_301_verifikasi + temp/prep_302_verifikasi_run1"
+}

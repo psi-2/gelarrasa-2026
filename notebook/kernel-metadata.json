@@ -8,7 +8,8 @@
   "enable_gpu": true,
   "enable_tpu": false,
   "enable_internet": true,
-  "dataset_sources": [],
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": ["riantamaputra/gelarrasa-cache"],
   "competition_sources": ["dsc-gelar-rasa-2026"],
   "kernel_sources": [],
   "model_sources": []

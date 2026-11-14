@@ -1,0 +1,19 @@
+{
+ "n_trim_train": 123,
+ "n_objek_kecil_polos": 101,
+ "n_aspek_ekstrem": 49,
+ "n_sisi_pendek_lt200": 105,
+ "porsi_luas_dibuang_trim": {
+  "median": 0.303,
+  "maks": 0.776,
+  "sama_dengan_prep301": true
+ },
+ "cluster_berisi_trim": {
+  "18": 42,
+  "36": 23,
+  "46": 19,
+  "6": 15,
+  "42": 10,
+  "45": 4
+ }
+}
