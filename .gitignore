@@ -23,3 +23,6 @@ results/cache/
 .aws/
 *.pem
 *.key
+
+# Keluaran run notebook 7B QLoRA (submission, adapter, checkpoint)
+**/keluaran_7b/
